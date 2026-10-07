@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#11161d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Мореходные расчёты">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Мореходные расчёты — МОС + МАЕ</title>
+<style>
+:root{--bg:#eef3f8;--card:#fff;--text:#182635;--muted:#617083;--line:#d6dee8;--accent:#287bb8;--accent2:#1e618f;--shadow:0 14px 40px rgba(24,40,58,.10);--radius:22px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:linear-gradient(180deg,#eaf2f8 0,#f6f8fb 100%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+.wrap{max-width:980px;margin:auto;padding:24px 16px 48px}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:18px}
+.kicker{font-size:13px;color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.08;margin:7px 0 12px}
+.hero p{margin:0;color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;min-height:250px}
+.icon{font-size:34px;margin-bottom:12px}.card h2{margin:0 0 8px;font-size:23px}.card p{margin:0;color:var(--muted);flex:1}
+.meta{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}.pill{border:1px solid var(--line);background:#f7f9fc;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:700}
+a.btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;background:var(--accent);color:#fff;text-decoration:none;font-weight:800;padding:12px 16px}
+a.btn.secondary{background:#fff;color:var(--accent2);border:1px solid var(--accent2)}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
+@media(max-width:700px){.wrap{padding:12px 10px 32px}.hero,.card{padding:18px;border-radius:18px}.grid{grid-template-columns:1fr;gap:12px}.card{min-height:0}.hero h1{font-size:31px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="kicker">Единый сайт</div>
+    <h1>Мореходные расчёты</h1>
+    <p>Все основные калькуляторы собраны в одном месте: МОС для ЛР2–ЛР4 и мореходная астрономия для ЛР1–ЛР10 с МАЕ-2025.</p>
+  </section>
+  <section class="grid">
+    <article class="card">
+      <div class="icon">🧭</div>
+      <h2>МОС</h2>
+      <p>Морская общая система. ЛР2 — элементы земного сфероида, ЛР3 — сферические треугольники, ЛР4 — ортодромия и локсодромия.</p>
+      <div class="meta"><span class="pill">ЛР2</span><span class="pill">ЛР3</span><span class="pill">ЛР4</span><span class="pill">8 знаков</span><span class="pill">φ λ Φ Λ Δφ Δλ</span></div>
+      <a class="btn" href="./mos.html">Открыть МОС</a>
+    </article>
+    <article class="card">
+      <div class="icon">🌌</div>
+      <h2>Мореходная астрономия</h2>
+      <p>Расчётные ЛР1–ЛР10, таблицы, графики и расчёты по МАЕ-2025. Архив МАЕ включён в сайт и загружается автоматически.</p>
+      <div class="meta"><span class="pill">ЛР1–ЛР10</span><span class="pill">МАЕ-2025</span><span class="pill">Pyodide</span><span class="pill">Графики</span></div>
+      <a class="btn" href="./astronomy.html">Открыть астрономию</a>
+    </article>
+  </section>
+  <div class="footer">Один сайт · один набор файлов · расчёты выполняются в браузере</div>
+</div>
+<script>if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost")){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script>
+</body>
+</html>

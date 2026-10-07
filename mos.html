@@ -1,0 +1,2059 @@
+<!doctype html>
+<!-- BUILD: 2026-10-03-lr2-lr4-greek-symbol-font-fix-v8 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>МОС — Морская общая система</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#f2f2f2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="МОС">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+.back-hub{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:10px 13px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--blue);font-weight:750;text-decoration:none;white-space:nowrap}
+@media(max-width:900px){.back-hub{width:100%;order:-1}}
+/* Локальный шрифт математических символов: одинаковое отображение на ПК и телефоне. */
+@font-face{
+  font-family:'MATH_STANDARD';
+  src:url('./math-standard.woff2') format('woff2');
+  font-style:normal;
+  font-weight:400;
+  font-display:block;
+}
+:root {
+  --bg:#f2f2f2; --card:#fff; --ink:#222222; --muted:#666666; --line:#cccccc;
+  --blue:#333333; --blue2:#eeeeee; --yellow:#f5f5f5; --green:#f0f0f0; --soft:#f5f5f5; --danger:#444444444;
+  --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom,0);
+}
+.topbar{
+  position:sticky;top:0;z-index:30;background:rgba(245,245,245,.95);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)
+}
+.topin{
+  max-width:1180px;margin:auto;padding:12px 16px;display:flex;
+  justify-content:space-between;align-items:center;gap:12px
+}
+.brand{font-size:18px;font-weight:800}
+.sub{font-size:12px;color:var(--muted)}
+.tabs{
+  display:flex;gap:8px;max-width:1180px;margin:auto;padding:0 16px 12px;overflow:auto;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 16px;
+  border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;min-height:42px
+}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+main{max-width:1180px;margin:auto;padding:18px 16px 40px}
+.lab{display:none}
+.lab.active{display:block}
+.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero{padding:18px;margin-bottom:16px}
+.hero h1{margin:0 0 8px;font-size:22px}
+.hero p{margin:0;color:var(--muted)}
+.inputbar{display:grid;grid-template-columns:minmax(200px,300px) 1fr auto;gap:10px;margin-top:15px;align-items:center}
+.task{
+  width:100%;padding:13px 14px;border:2px solid #999999;background:var(--yellow);
+  border-radius:12px;font-weight:800;font-size:17px;min-height:48px
+}
+.status{
+  min-height:48px;display:flex;align-items:center;background:var(--green);
+  padding:10px 14px;border-radius:12px;font-weight:650
+}
+.bad{background:#eeeeee;color:var(--danger)}
+.btn{
+  border:0;background:var(--blue);color:#fff;padding:12px 16px;border-radius:12px;
+  font-weight:750;cursor:pointer;min-height:48px
+}
+.btn.secondary{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.card{padding:16px;margin-bottom:16px}
+.card h2{margin:0 0 12px;font-size:17px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pane{border:1px solid var(--line);border-radius:12px;padding:12px}
+.pane-title{font-weight:800;background:var(--soft);padding:7px 9px;border-radius:8px;margin-bottom:8px}
+.section-title{background:var(--blue2);padding:9px 11px;border-radius:10px;font-weight:800;margin:16px 0 8px}
+.calc-line{padding:6px 2px;border-bottom:1px dashed #dddddd;overflow-wrap:anywhere}
+.calc-line:last-child{border-bottom:0}
+.answer{background:var(--green);padding:8px 10px;border-radius:9px;font-weight:800;margin-top:8px}
+.note{background:var(--yellow);padding:10px 12px;border-radius:10px;color:#444444}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:800}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi b{display:block;font-size:18px;margin-top:3px}
+.scheme{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px}
+.scheme svg{display:block;width:100%;height:auto}
+.scheme9-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;align-items:center}
+.scheme9-panel{background:transparent;border:0;padding:0}
+.scheme-placeholder{
+  height:260px;border:2px dashed #aaaaaa;border-radius:12px;display:flex;
+  align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:20px
+}
+.scheme-caption{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.35}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+
+/* Телефон / планшет */
+@media (max-width:900px){
+  body{font-size:16px}
+  .topin{flex-direction:column;align-items:stretch}
+  .topin .btn.secondary{width:100%}
+  .hero h1{font-size:20px}
+  .inputbar,.grid2,.grid3,.pair,.scheme9-wrap{grid-template-columns:1fr}
+  .inputbar .btn{width:100%}
+  main{padding:12px 10px 32px}
+  .hero,.card{padding:12px}
+  .scheme{padding:8px}
+  .task{font-size:18px}
+  table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  th,td{font-size:14px}
+  .kpi b{font-size:17px}
+}
+@media (max-width:520px){
+  .brand{font-size:17px}
+  .sub{font-size:11px}
+  .tab{padding:9px 14px}
+  .status{font-size:14px}
+  .section-title{font-size:15px}
+}
+/* Рукописный шрифт документа: Neucha поддерживает кириллицу и стилизован под аккуратный почерк. */
+.lab.active,
+.lab.active h1,
+.lab.active h2,
+.lab.active p,
+.lab.active .section-title,
+.lab.active .calc-line,
+.lab.active .answer,
+.lab.active .note,
+.lab.active .pane,
+.lab.active .pane-title,
+.lab.active .kpi,
+.lab.active th,
+.lab.active td,
+.lab.active .scheme-caption {
+  font-family:'Neucha', 'Segoe Print', 'Comic Sans MS', cursive !important;
+  letter-spacing:.08px;
+}
+.lab.active svg text {
+  font-family:'Times New Roman', Times, serif !important;
+  font-style:normal !important;
+}
+/* φ λ Φ Λ Δ — всегда стандартный математический шрифт, независимо от шрифта документа. */
+.math-greek{
+  font-family:'MATH_STANDARD','Times New Roman',Times,serif !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+}
+.lab.active svg .math-greek,
+.pdf-export svg .math-greek{
+  font-family:'MATH_STANDARD','Times New Roman',Times,serif !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+}
+.pdf-export,
+.pdf-export h1,
+.pdf-export h2,
+.pdf-export p,
+.pdf-export .section-title,
+.pdf-export .calc-line,
+.pdf-export .answer,
+.pdf-export .note,
+.pdf-export .pane,
+.pdf-export .pane-title,
+.pdf-export .kpi,
+.pdf-export th,
+.pdf-export td,
+.pdf-export .scheme-caption {
+  font-family:'Neucha', 'Segoe Print', 'Comic Sans MS', cursive !important;
+  letter-spacing:.08px;
+}
+.pdf-export svg text {
+  font-family:'Times New Roman', Times, serif !important;
+  font-style:normal !important;
+}
+
+/* Экспорт PDF: один длинный лист, независимый от мобильной ширины */
+.pdf-export-host{
+  position:fixed;left:-100000px;top:0;width:210mm;background:#fff;z-index:-1;
+}
+.pdf-export{
+  width:190mm!important;max-width:none!important;margin:0!important;padding:0!important;
+  background:#fff!important;color:#222222!important;box-sizing:border-box!important;
+}
+.pdf-export *{box-sizing:border-box!important}
+.pdf-export .hero,.pdf-export .card{
+  box-shadow:none!important;
+}
+.pdf-export .hero{margin-bottom:8mm!important}
+.pdf-export .card{margin-bottom:7mm!important}
+.pdf-export .inputbar{display:block!important;margin-top:4mm!important}
+.pdf-export .inputbar input{width:100%!important}
+.pdf-export .inputbar .status{margin-top:3mm!important}
+.pdf-export .inputbar .btn{display:none!important}
+.pdf-export table{
+  display:table!important;width:100%!important;max-width:100%!important;
+  overflow:visible!important;white-space:normal!important;table-layout:fixed!important;
+}
+.pdf-export th,.pdf-export td{white-space:normal!important;overflow-wrap:anywhere!important}
+.pdf-export .grid2{display:grid!important;grid-template-columns:1fr 1fr!important}
+.pdf-export .grid3{display:grid!important;grid-template-columns:repeat(3,1fr)!important}
+.pdf-export .pair{display:grid!important;grid-template-columns:1fr 1fr!important}
+.pdf-export .scheme9-wrap{display:grid!important;grid-template-columns:1fr 1.15fr!important}
+.pdf-export .scheme{width:100%!important;overflow:visible!important}
+.pdf-export svg{display:block!important;width:100%!important;height:auto!important;max-width:100%!important}
+.pdf-export .section-title{break-after:avoid!important;page-break-after:avoid!important}
+.pdf-export .scheme,.pdf-export .answer,.pdf-export .note,.pdf-export .pane,.pdf-export tr{
+  break-inside:avoid!important;page-break-inside:avoid!important;
+}
+.pdf-export .pdf-break-before{break-before:page!important;page-break-before:always!important}
+.pdf-export .pdf-break-after{break-after:page!important;page-break-after:always!important}
+
+@media print{
+  .topbar,.btn,.footer{display:none!important}
+  body{background:#fff}
+  .lab{display:none!important}
+  .lab.active{display:block!important}
+  main{max-width:none;padding:0}
+  .hero,.card{box-shadow:none;break-inside:avoid}
+}
+/* Тетрадное оформление: только визуальная тема, расчёты и структура не меняются */
+:root{
+  --bg:#e6e6e6;
+  --card:#fbfbfb;
+  --ink:#222222;
+  --muted:#666666;
+  --line:#cccccc;
+  --blue:#333333;
+  --blue2:transparent;
+  --yellow:#fbfbfb;
+  --green:#f0f0f0;
+  --soft:transparent;
+  --danger:#444444;
+  --radius:0;
+  --shadow:0 5px 18px rgba(0,0,0,.08);
+}
+body{
+  background:#e6e6e6;
+  color:var(--ink);
+  font-family:"Times New Roman",Times,serif;
+  font-size:16px;
+  line-height:1.5;
+}
+.topbar{
+  background:rgba(245,245,245,.97);
+  border-bottom:1px solid #b5b5b5;
+}
+.brand{font-family:"Times New Roman",Times,serif;font-size:21px;letter-spacing:.1px}
+.sub{font-family:Arial,sans-serif;color:#666666}
+.tab{font-family:Arial,sans-serif;border-radius:3px;background:#fff;color:#333333;border-color:#aaaaaa}
+.tab.active{background:#333333;border-color:#333333}
+main{max-width:980px;padding:22px 18px 44px}
+.lab.active{
+  position:relative;
+  overflow:hidden;
+  background-color:#fbfbfb;
+  background-image:repeating-linear-gradient(to bottom, transparent 0, transparent 30px, rgba(120,120,120,.18) 31px, transparent 32px);
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  padding:34px 48px 60px 92px;
+  min-height:100vh;
+}
+.lab.active::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:66px;
+  width:1.5px;
+  background:rgba(90,90,90,.45);
+  pointer-events:none;
+}
+.hero,.card{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+.hero{padding:0 0 18px;margin-bottom:24px;border-bottom:2px solid #333333}
+.hero h1{font-size:24px;color:#222222;margin:0 0 7px}
+.hero p{color:#555555}
+.inputbar{margin-top:15px}
+.task{
+  background:#f5f5f5;
+  border:1.5px solid #999999;
+  border-radius:3px;
+  font-family:"Courier New",monospace;
+  color:#222222;
+}
+.status{
+  background:rgba(235,235,235,.80);
+  border-left:3px solid #777777;
+  border-radius:0;
+  color:#333333;
+}
+.btn{border-radius:3px;font-family:Arial,sans-serif}
+.card{padding:0;margin-bottom:30px}
+.card h2{
+  font-size:20px;
+  color:#222222;
+  padding:0 0 5px;
+  margin:0 0 12px;
+  border-bottom:1px solid #888888;
+}
+.pane{border:1px solid #aaaaaa;border-radius:0;padding:10px;background:rgba(255,255,255,.45)}
+.pane-title{background:transparent;border-bottom:1px dashed #999999;border-radius:0;padding:3px 0;margin-bottom:8px}
+.section-title{
+  background:transparent;
+  padding:5px 0 3px;
+  border-radius:0;
+  border-bottom:2px solid #888888;
+  font-size:18px;
+  color:#222222;
+  margin:18px 0 8px;
+}
+.calc-line{padding:6px 4px;border-bottom:1px dashed rgba(100,100,100,.30)}
+.answer{
+  background:rgba(238,238,238,.70);
+  border-radius:0;
+  border-left:3px solid #777777;
+  padding:7px 10px;
+  color:#333333;
+}
+.note{
+  background:rgba(245,245,245,.75);
+  border-radius:0;
+  border-left:3px solid #888888;
+  padding:8px 10px;
+  color:#444444444;
+}
+table{background:rgba(255,255,255,.38)}
+th,td{border:1px solid #999999;padding:7px 8px}
+th{background:rgba(232,232,232,.75)}
+.kpi{background:rgba(255,255,255,.4);border:1px solid #aaaaaa;border-radius:0}
+.scheme{border:1px solid #aaaaaa;border-radius:0;background:rgba(255,255,255,.58);padding:10px}
+.scheme-caption{font-family:Arial,sans-serif;color:#666666}
+.footer{font-family:Arial,sans-serif}
+/* В PDF сохраняем ту же тетрадную страницу, но делаем лист фиксированной ширины. */
+.pdf-export-host{background:#e6e6e6}
+.pdf-export{
+  width:190mm!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:12mm 10mm 16mm 25mm!important;
+  background-color:#fbfbfb!important;
+  background-image:repeating-linear-gradient(to bottom, transparent 0, transparent 7.7mm, rgba(120,120,120,.18) 7.9mm, transparent 8.15mm)!important;
+  color:#222222!important;
+  position:relative!important;
+}
+.pdf-export::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:17mm;
+  width:.4mm;
+  background:rgba(90,90,90,.45);
+}
+.pdf-export .hero,.pdf-export .card{background:transparent!important;box-shadow:none!important;border:0!important;border-radius:0!important}
+.pdf-export .card{margin-bottom:8mm!important}
+.pdf-export .hero{margin-bottom:8mm!important;border-bottom:.6mm solid #333333!important}
+.pdf-export .section-title{background:transparent!important;border-bottom:.4mm solid #888888!important}
+.pdf-export .note{background:rgba(245,245,245,.75)!important;border-radius:0!important}
+.pdf-export .answer{background:rgba(238,238,238,.70)!important;border-radius:0!important}
+.pdf-export .scheme{border:0.35mm solid #aaaaaa!important;border-radius:0!important;background:rgba(255,255,255,.58)!important}
+.pdf-export th{background:rgba(232,232,232,.75)!important}
+@media(max-width:900px){
+  main{padding:10px 7px 28px}
+  .lab.active{padding:24px 18px 45px 54px}
+  .lab.active::before{left:38px}
+  .hero h1{font-size:21px}
+  .section-title{font-size:17px}
+}
+@media(max-width:520px){
+  .lab.active{padding-left:48px;padding-right:12px}
+  .lab.active::before{left:33px}
+  .card h2{font-size:18px}
+  .section-title{font-size:16px}
+}
+
+/* Чёрно-белая печать: текст документа только чёрный, тетрадные линии сохраняются. */
+.lab.active,
+.lab.active h1,
+.lab.active h2,
+.lab.active p,
+.lab.active .section-title,
+.lab.active .calc-line,
+.lab.active .answer,
+.lab.active .note,
+.lab.active .task,
+.lab.active .status,
+.lab.active .pane,
+.lab.active .pane-title,
+.lab.active .kpi,
+.lab.active .scheme-caption,
+.lab.active th,
+.lab.active td {
+  color:#000 !important;
+}
+.lab.active svg text {
+  fill:#000 !important;
+}
+.pdf-export,
+.pdf-export * {
+  color:#000 !important;
+}
+.pdf-export svg text {
+  fill:#000 !important;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+<div class="topbar">
+  <div class="topin">
+    <a class="back-hub" href="./index.html">← Все расчёты</a>
+    <div>
+      <div class="brand">МОС — офлайн калькулятор</div>
+      <div class="sub">ЛР2, ЛР3, ЛР4. Работает без Excel и без интернета. Подходит для телефона.</div>
+    </div>
+    <button class="btn secondary" onclick="sharePDF()">Печать / отправить</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-lab="lr2">ЛР2</button>
+    <button class="tab" data-lab="lr3">ЛР3</button>
+    <button class="tab" data-lab="lr4">ЛР4</button>
+  </div>
+</div>
+
+<main>
+  <section id="lr2" class="lab active">
+    <div class="hero">
+      <h1>ЛР2 — Расчёт элементов земного сфероида</h1>
+      <p>Введите 3-значный номер задачи: первая цифра — вариант, следующие две — строки таблицы.</p>
+      <div class="inputbar">
+        <input id="lr2code" class="task" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="например 235">
+        <div id="lr2status" class="status">Введите номер задачи</div>
+        <button class="btn" onclick="renderLR2()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr2out"></div>
+  </section>
+
+  <section id="lr3" class="lab">
+    <div class="hero">
+      <h1>ЛР3 — Решение сферических треугольников</h1>
+      <p>Введите 4-значный номер задачи: первая цифра — вариант 1–8, далее три строки 1–9.</p>
+      <div class="inputbar">
+        <input id="lr3code" class="task" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="например 5921">
+        <div id="lr3status" class="status">Введите номер задачи</div>
+        <button class="btn" onclick="renderLR3()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr3out"></div>
+  </section>
+
+  <section id="lr4" class="lab">
+    <div class="hero">
+      <h1>ЛР4 — Ортодромия и локсодромия</h1>
+      <p>Введите 6-значный номер: вариант, направление и четыре строки исходной таблицы.</p>
+      <div class="inputbar">
+        <input id="lr4code" class="task" inputmode="numeric" pattern="[0-9 ]*" autocomplete="off" placeholder="например 21 3415">
+        <div id="lr4status" class="status">Введите номер задачи</div>
+        <button class="btn" onclick="renderLR4()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr4out"></div>
+  </section>
+
+  <div class="footer">Версия 9: схема 9 строится по истинным курсам и фактическим координатам; сетка — 10° на клетку для правого рисунка.</div>
+</main>
+
+<script>
+const DB = {"lr2":{"1":{"1":{"x":[48,16.3],"y":[17,0.7],"p1":[32,7.3,"S"],"p2":[42,33,"N"]},"2":{"x":[-28,18],"y":[69,19.9],"p1":[47,33.9,"N"],"p2":[36,25.3,"S"]},"3":{"x":[102,32.5],"y":[-44,48.7],"p1":[31,15.2,"S"],"p2":[13,13.9,"S"]},"4":{"x":[66,8.3],"y":[-14,43.1],"p1":[1,45.1,"N"],"p2":[66,0.3,"N"]},"5":{"x":[-55,0.6],"y":[126,24.3],"p1":[6,25.2,"N"],"p2":[55,14.6,"N"]},"6":{"x":[38,14.4],"y":[33,33.5],"p1":[62,0.2,"N"],"p2":[26,28.5,"S"]},"7":{"x":[76,12.3],"y":[-28,28.4],"p1":[28,23.3,"S"],"p2":[48,33.1,"S"]},"8":{"x":[136,34.3],"y":[43,50.2],"p1":[54,44.1,"S"],"p2":[13,11.4,"N"]},"9":{"x":[-43,14.4],"y":[-67,48],"p1":[15,17.2,"N"],"p2":[3,39.2,"S"]}},"2":{"1":{"x":[-67,3.2],"y":[83,52.3],"p1":[27,2.8,"N"],"p2":[15,11.4,"N"]},"2":{"x":[-25,25.3],"y":[-3,12.8],"p1":[42,33.7,"S"],"p2":[34,41,"N"]},"3":{"x":[142,44],"y":[74,0.3],"p1":[11,32.5,"S"],"p2":[43,4.2,"S"]},"4":{"x":[46,12.2],"y":[39,14.8],"p1":[54,11.3,"N"],"p2":[51,22.4,"S"]},"5":{"x":[-78,4.3],"y":[-52,42.9],"p1":[27,0.2,"N"],"p2":[44,51.9,"N"]},"6":{"x":[-33,55.3],"y":[-40,17.7],"p1":[53,51.1,"S"],"p2":[24,55.2,"N"]},"7":{"x":[152,30.3],"y":[132,34.7],"p1":[43,16.6,"N"],"p2":[27,47.2,"S"]},"8":{"x":[63,37.9],"y":[55,16.3],"p1":[23,30.2,"S"],"p2":[6,11.5,"S"]},"9":{"x":[-45,22.1],"y":[38,5.3],"p1":[6,11.3,"N"],"p2":[52,6.2,"N"]}},"3":{"1":{"x":[182,22.6],"y":[-23,34.5],"p1":[45,55.8,"N"],"p2":[24,30.8,"S"]},"2":{"x":[56,18],"y":[146,2.4],"p1":[23,29.3,"S"],"p2":[35,5.3,"S"]},"3":{"x":[-94,5.4],"y":[-33,50.2],"p1":[8,13.9,"S"],"p2":[26,44.4,"N"]},"4":{"x":[-152,36.9],"y":[-125,11.7],"p1":[64,2.2,"N"],"p2":[52,1.9,"N"]},"5":{"x":[72,19.3],"y":[62,31.1],"p1":[66,15.2,"N"],"p2":[61,0.8,"N"]},"6":{"x":[29,47.2],"y":[22,5.8],"p1":[52,59.6,"S"],"p2":[56,52.1,"S"]},"7":{"x":[30,1.6],"y":[7,35.8],"p1":[38,0.2,"N"],"p2":[48,26.1,"S"]},"8":{"x":[-66,0.4],"y":[-74,12.5],"p1":[4,22.3,"N"],"p2":[16,52.8,"N"]},"9":{"x":[142,24.9],"y":[131,45.2],"p1":[39,40.1,"N"],"p2":[9,18.9,"N"]}}},"lr3":{"1":{"a":[64,16.2],"b":[115,43.5],"c":[87,44.1],"A":[60,4.4],"B":[109,30.3],"C":[74,0.4]},"2":{"a":[77,13.4],"b":[148,28.6],"c":[113,21.3],"A":[92,2.7],"B":[98,17.7],"C":[102,16.7]},"3":{"a":[68,48.6],"b":[120,43.6],"c":[107,41.2],"A":[72,10.3],"B":[117,44.2],"C":[90,0]},"4":{"a":[66,0.6],"b":[118,14.8],"c":[90,0],"A":[61,21.6],"B":[123,2.8],"C":[76,1.2]},"5":{"a":[69,38.3],"b":[116,37.3],"c":[103,14.3],"A":[72,18.2],"B":[114,43.8],"C":[95,39.7]},"6":{"a":[60,19.8],"b":[123,43.6],"c":[94,3.8],"A":[84,33.2],"B":[122,41.7],"C":[87,16.6]},"7":{"a":[73,20],"b":[121,56.6],"c":[100,19.3],"A":[68,18.1],"B":[118,17.3],"C":[80,59.4]},"8":{"a":[63,33.4],"b":[119,0.8],"c":[96,0.8],"A":[82,55],"B":[132,9.9],"C":[86,15.3]},"9":{"a":[114,34.4],"b":[96,22.2],"c":[109,43.8],"A":[92,20.3],"B":[89,7.7],"C":[113,45.1]}},"lr4":{"1":{"1":{"pA":[21,18.4,"N"],"lA":[140,39.6,"E"],"pB":[37,20.4,"N"],"lB":[131,53.4,"W"]},"2":{"pA":[32,0.6,"N"],"lA":[133,44.6,"E"],"pB":[58,8.2,"N"],"lB":[121,11.3,"W"]},"3":{"pA":[15,55.3,"N"],"lA":[125,14.6,"E"],"pB":[47,59.2,"N"],"lB":[130,33.4,"W"]},"4":{"pA":[52,22.6,"N"],"lA":[119,22.2,"E"],"pB":[34,40.1,"N"],"lB":[128,22.9,"W"]},"5":{"pA":[28,20.4,"N"],"lA":[130,29.9,"E"],"pB":[41,11.2,"N"],"lB":[134,24.4,"W"]},"6":{"pA":[33,13.6,"N"],"lA":[128,8.8,"E"],"pB":[52,55.3,"N"],"lB":[118,18.3,"W"]},"7":{"pA":[44,28.7,"N"],"lA":[117,15.1,"E"],"pB":[24,12.8,"N"],"lB":[117,35.2,"W"]},"8":{"pA":[41,8.5,"N"],"lA":[131,20.2,"E"],"pB":[39,38.3,"N"],"lB":[132,42.1,"W"]},"9":{"pA":[36,33.5,"N"],"lA":[142,19.1,"E"],"pB":[30,54.6,"N"],"lB":[128,13.4,"W"]}},"2":{"1":{"pA":[41,14.1,"N"],"lA":[3,3.4,"E"],"pB":[43,38.4,"N"],"lB":[65,15.5,"W"]},"2":{"pA":[33,48.8,"N"],"lA":[2,2.2,"W"],"pB":[23,13.6,"N"],"lB":[71,17.3,"W"]},"3":{"pA":[50,3.2,"N"],"lA":[3,40.2,"E"],"pB":[39,19.9,"N"],"lB":[75,14.4,"W"]},"4":{"pA":[48,18.6,"N"],"lA":[11,43.9,"W"],"pB":[28,55.3,"N"],"lB":[69,50.2,"W"]},"5":{"pA":[39,29.9,"N"],"lA":[1,12.2,"E"],"pB":[36,16.1,"N"],"lB":[76,0.1,"W"]},"6":{"pA":[38,22.2,"N"],"lA":[7,3.4,"E"],"pB":[29,39.3,"N"],"lB":[74,44.2,"W"]},"7":{"pA":[29,54.4,"N"],"lA":[4,15.5,"W"],"pB":[17,2.3,"N"],"lB":[81,25.1,"W"]},"8":{"pA":[45,5.3,"N"],"lA":[12,33.6,"E"],"pB":[41,14.4,"N"],"lB":[67,36.3,"W"]},"9":{"pA":[35,22,"N"],"lA":[5,23.8,"E"],"pB":[25,33.5,"N"],"lB":[82,44.4,"W"]}},"3":{"1":{"pA":[39,56,"S"],"lA":[82,36.1,"W"],"pB":[28,6.8,"S"],"lB":[154,59.1,"E"]},"2":{"pA":[22,3.6,"S"],"lA":[71,18.2,"W"],"pB":[22,42.2,"S"],"lB":[152,8,"E"]},"3":{"pA":[38,20.1,"S"],"lA":[83,24.4,"W"],"pB":[36,26.8,"S"],"lB":[160,6.2,"E"]},"4":{"pA":[29,16.8,"S"],"lA":[69,23.8,"W"],"pB":[41,41.3,"S"],"lB":[153,43.3,"E"]},"5":{"pA":[43,16.1,"S"],"lA":[76,26.1,"W"],"pB":[38,55.1,"S"],"lB":[149,19.1,"E"]},"6":{"pA":[48,38.2,"S"],"lA":[60,24.8,"W"],"pB":[22,1.1,"S"],"lB":[155,40.8,"E"]},"7":{"pA":[19,55.1,"S"],"lA":[81,11.5,"W"],"pB":[33,32.2,"S"],"lB":[161,40.7,"E"]},"8":{"pA":[52,55.2,"S"],"lA":[63,13.8,"W"],"pB":[27,27.9,"S"],"lB":[146,26.6,"E"]},"9":{"pA":[33,16.2,"S"],"lA":[66,40.1,"W"],"pB":[30,42.2,"S"],"lB":[162,39.5,"E"]}},"4":{"1":{"pA":[3,28.1,"N"],"lA":[127,12.6,"E"],"pB":[33,28.9,"S"],"lB":[90,57.2,"W"]},"2":{"pA":[1,12.6,"N"],"lA":[119,19.4,"E"],"pB":[32,7.7,"S"],"lB":[74,17.4,"W"]},"3":{"pA":[6,3.5,"N"],"lA":[121,21,"E"],"pB":[41,16.6,"S"],"lB":[80,26.9,"W"]},"4":{"pA":[2,48.1,"N"],"lA":[122,2.6,"E"],"pB":[38,28.9,"S"],"lB":[77,37.4,"W"]},"5":{"pA":[5,5.5,"N"],"lA":[140,14.1,"E"],"pB":[27,17.7,"S"],"lB":[90,19.3,"W"]},"6":{"pA":[9,22.5,"N"],"lA":[128,32.1,"E"],"pB":[34,34.4,"S"],"lB":[92,37.2,"W"]},"7":{"pA":[11,11,"N"],"lA":[135,10.2,"E"],"pB":[30,2.4,"S"],"lB":[82,52,"W"]},"8":{"pA":[7,30.6,"N"],"lA":[131,31.3,"E"],"pB":[44,24.1,"S"],"lB":[79,9.6,"W"]},"9":{"pA":[8,8.8,"N"],"lA":[132,42.6,"E"],"pB":[40,20.9,"S"],"lB":[88,37.3,"W"]}}}};
+
+const $ = s => document.querySelector(s);
+const rad = d => d * Math.PI / 180;
+const deg = r => r * 180 / Math.PI;
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const mod = (a,n) => ((a % n) + n) % n;
+const cleanCode = s => String(s || "").replace(/\s+/g, "");
+const fix = (x,n=8) => Number(x).toFixed(n).replace(".", ",");
+const r8 = x => Math.round((x + Math.sign(x || 1) * Number.EPSILON) * 1e8) / 1e8;
+
+function setStatus(id, txt, bad=false){
+  const e = $(id);
+  e.textContent = txt;
+  e.classList.toggle("bad", bad);
+}
+function line(t){ return `<div class="calc-line">${t}</div>`; }
+function card(title, body){ return `<div class="card"><h2>${title}</h2>${body}</div>`; }
+
+/*
+ * Единое отображение греческих символов φ, λ, Φ, Λ, Δ во всех лабораторных.
+ * Основной текст документа остаётся рукописным, но сами математические
+ * символы всегда набираются стандартным шрифтом. Для SVG используем tspan,
+ * чтобы браузер не наследовал рукописный шрифт от внешнего текста.
+ */
+function normalizeGreekSymbols(root){
+  if(!root) return;
+  const greek=/[φϕΦλΛΔ]/g;
+  const isSkip = el => el && el.closest && el.closest('script,style');
+  const walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes=[];
+  let node;
+  while((node=walker.nextNode())){
+    if(isSkip(node.parentElement)) continue;
+    if(!greek.test(node.nodeValue || '')) { greek.lastIndex=0; continue; }
+    greek.lastIndex=0;
+    nodes.push(node);
+  }
+
+  nodes.forEach(textNode=>{
+    const text=textNode.nodeValue || '';
+    const parent=textNode.parentNode;
+    if(!parent || (parent.nodeType===1 && parent.classList.contains('math-greek'))) return;
+    const isSvg=parent.namespaceURI==='http://www.w3.org/2000/svg';
+    const frag=document.createDocumentFragment();
+    let last=0;
+    text.replace(greek,(ch,offset)=>{
+      if(offset>last) frag.appendChild(document.createTextNode(text.slice(last,offset)));
+      if(isSvg){
+        const t=document.createElementNS('http://www.w3.org/2000/svg','tspan');
+        t.setAttribute('class','math-greek');
+        t.textContent=ch;
+        frag.appendChild(t);
+      }else{
+        const span=document.createElement('span');
+        span.className='math-greek';
+        span.textContent=ch;
+        frag.appendChild(span);
+      }
+      last=offset+ch.length;
+      return ch;
+    });
+    if(last<text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    parent.replaceChild(frag,textNode);
+  });
+}
+
+function dm(v, minuteDecimals=1){
+  const neg = v < 0;
+  const a = Math.abs(v);
+  let d = Math.floor(a + 1e-12);
+  let m = (a - d) * 60;
+  const f = 10 ** minuteDecimals;
+  m = Math.round(m * f) / f;
+  if(m >= 60){ d += 1; m = 0; }
+  let ms = m.toFixed(minuteDecimals).replace(/\.0+$/,"").replace(/(\.\d*?)0+$/,"$1").replace(".", ",");
+  if(m < 10) ms = "0" + ms;
+  return `${neg ? "−" : ""}${d}°${ms}′`;
+}
+function dmHem(v, minuteDecimals=1){
+  return `${dm(Math.abs(v), minuteDecimals)} ${v>=0?"N":"S"}`;
+}
+function coord(d,m,h){
+  let ms = Number(m).toFixed(1).replace(/\.0$/,"").replace(".",",");
+  if(Number(m) < 10) ms = "0" + ms;
+  return `${d}°${ms}′ ${h}`;
+}
+function signedAngle(d,m){ return (Number(d) < 0 ? -1 : 1) * (Math.abs(Number(d)) + Number(m)/60); }
+function signedCoord(d,m,h){ return (h==="S" || h==="W" ? -1 : 1) * (Number(d) + Number(m)/60); }
+function trig(v){
+  const s = r8(Math.sin(rad(v)));
+  const c = r8(Math.cos(rad(v)));
+  return {s, c, ct:r8(c/s)};
+}
+function trigExact(v){
+  const s = Math.sin(rad(v));
+  const c = Math.cos(rad(v));
+  return {s, c, ct:c/s};
+}
+
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+  document.querySelectorAll(".lab").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  $("#" + b.dataset.lab).classList.add("active");
+}));
+["lr2code","lr3code","lr4code"].forEach(id => $( "#" + id).addEventListener("keydown", e => {
+  if(e.key === "Enter") window["render" + id.slice(0,3).toUpperCase()]();
+}));
+
+/* ---------------- LR2 ---------------- */
+function solveLR2(code){
+  const c = cleanCode(code);
+  if(!/^[1-3][1-9][1-9]$/.test(c)) throw new Error("Нужны 3 цифры: вариант 1–3 и две строки 1–9");
+  const v = c[0], r1 = c[1], r2 = c[2];
+  const a = DB.lr2[v][r1], b = DB.lr2[v][r2];
+  const x = signedAngle(...a.x), y = signedAngle(...b.y);
+  const p1 = signedCoord(...a.p1), p2 = signedCoord(...b.p2);
+  const E2=.0066934,A=6378245,ONE=.9933066,K1=3437.7468,KMP=3437.75,MILE=1852.25,COSK=9.31;
+  function onePhi(p){
+    const s=Math.sin(rad(p)), s2=s*s, es=E2*s2, base=1-es, W=Math.sqrt(base), W3=W**3;
+    const M=A*ONE/W3, d1=M/K1, two=2*p, cterm=COSK*Math.cos(rad(two)), d2=MILE-cterm;
+    const alpha=45+Math.abs(p)/2, tg=Math.tan(rad(alpha)), ln=Math.log(tg), mp=Math.sign(p||1)*KMP*ln;
+    return {p,s,s2,es,base,W,W3,M,Mkm:M/1000,d1,two,cterm,d2,alpha,tg,ln,mp};
+  }
+  const q1 = onePhi(p1), q2 = onePhi(p2);
+  return {code:c,v:+v,r1:+r1,r2:+r2,a,b,x,y,p1,p2,q1,q2,sum:x+y,avg:(x+y)/2,diff:y-x,halfdiff:(y-x)/2,rmp:q2.mp-q1.mp,psum:p1+p2,pavg:(p1+p2)/2,pdiff:p2-p1};
+}
+function lr2PhiPane(q,n){
+  const arr = [
+    `φ${n} = ${fix(q.p,8)}°`,
+    `sin φ${n} = sin(${fix(q.p,8)}°) = ${fix(q.s,8)}`,
+    `sin² φ${n} = (sin φ${n})² = (${fix(q.s,8)})² = ${fix(q.s2,8)}`,
+    `e² sin² φ${n} = 0,0066934 × ${fix(q.s2,8)} = ${fix(q.es,8)}`,
+    `1 − e² sin² φ${n} = 1 − ${fix(q.es,8)} = ${fix(q.base,8)}`,
+    `W${n} = √(${fix(q.base,8)}) = ${fix(q.W,8)}`,
+    `W${n}³ = (${fix(q.W,8)})³ = ${fix(q.W3,8)}`,
+    `M${n} = 6378245 × 0,99330660 / ${fix(q.W3,8)} = ${fix(q.M,0)} м = ${fix(q.Mkm,1)} км`,
+    `Δ1${n} = ${fix(q.M,0)} / 3437,7468 = ${fix(q.d1,2)} м`,
+    `2φ${n} = 2 × ${fix(q.p,8)}° = ${fix(q.two,8)}°`,
+    `9,31 cos(2φ${n}) = 9,31 × cos(${fix(q.two,8)}°) = ${fix(q.cterm,8)}`,
+    `Δ2${n} = 1852,25 − ${fix(q.cterm,8)} = ${fix(q.d2,2)} м`,
+    `45° + |φ${n}| / 2 = ${fix(q.alpha,8)}°`,
+    `tg = tg(${fix(q.alpha,8)}°) = ${fix(q.tg,8)}`,
+    `ln = ln(${fix(q.tg,8)}) = ${fix(q.ln,8)}`,
+    `МЧ${n} = ${q.p<0?"−":""}3437,75 × ${fix(q.ln,8)} = ${fix(q.mp,1)}`
+  ];
+  return arr.map(x => line(x)).join("");
+}
+function renderLR2(){
+  try {
+    const o = solveLR2($("#lr2code").value);
+    setStatus("#lr2status", `Вариант ${o.v} • строки ${o.r1} / ${o.r2}`);
+    const inp = `<table><tr><th>Параметр</th><th>Исходное значение</th><th>В градусах</th></tr>
+      <tr><td>x</td><td>${dm(o.x,1)}</td><td class="num">${fix(o.x,8)}°</td></tr>
+      <tr><td>y</td><td>${dm(o.y,1)}</td><td class="num">${fix(o.y,8)}°</td></tr>
+      <tr><td>φ1</td><td>${coord(...o.a.p1)}</td><td class="num">${fix(o.p1,8)}°</td></tr>
+      <tr><td>φ2</td><td>${coord(...o.b.p2)}</td><td class="num">${fix(o.p2,8)}°</td></tr></table>`;
+    const summary = `<div class="grid3">
+      <div class="kpi">РМЧ<b>${fix(o.rmp,1)} экв. мили</b></div>
+      <div class="kpi">φср<b>${dmHem(o.pavg,2)}</b></div>
+      <div class="kpi">Δφ<b>${dm(o.pdiff,1)}</b></div></div>`;
+    const detail = `
+      <div class="section-title">Угловая арифметика x и y</div>
+      ${line(`x + y = ${dm(o.x,1)} + (${dm(o.y,1)}) = ${dm(o.sum,1)}`)}
+      ${line(`(x + y) / 2 = (${dm(o.x,1)} + (${dm(o.y,1)})) / 2 = ${dm(o.avg,2)}`)}
+      ${line(`Δ = y − x = ${dm(o.y,1)} − (${dm(o.x,1)}) = ${dm(o.diff,1)}`)}
+      ${line(`Δ / 2 = (${dm(o.y,1)} − (${dm(o.x,1)})) / 2 = ${dm(o.halfdiff,2)}`)}
+      <div class="section-title">Расчёт для φ1 и φ2</div>
+      <div class="pair">
+        <div class="pane"><div class="pane-title">φ1</div>${lr2PhiPane(o.q1,1)}</div>
+        <div class="pane"><div class="pane-title">φ2</div>${lr2PhiPane(o.q2,2)}</div>
+      </div>
+      <div class="section-title">Итоговые операции</div>
+      ${line(`РМЧ = МЧ2 − МЧ1 = ${fix(o.q2.mp,1)} − (${fix(o.q1.mp,1)}) = ${fix(o.rmp,1)}`)}
+      ${line(`φср = (${fix(o.p1,8)}° + (${fix(o.p2,8)}°)) / 2 = ${dmHem(o.pavg,2)}`)}
+      ${line(`Δφ = ${fix(o.p2,8)}° − (${fix(o.p1,8)}°) = ${dm(o.pdiff,1)}`)}`;
+    const lr2Graph = svgGammaScaleScheme({
+      pA:o.p1,
+      pB:o.p2,
+      pavg:o.pavg,
+      dphi:o.pdiff,
+      dir:o.pdiff>=0?1:-1,
+      labelA:'φ1',
+      labelB:'φ2'
+    });
+    $("#lr2out").innerHTML = card("Исходные данные", inp)
+      + card("Подробное решение", detail)
+      + card("График проверки средней широты и разности широт", lr2Graph)
+      + card("Итоговые значения", summary);
+    normalizeGreekSymbols($("#lr2out"));
+  } catch(e) {
+    setStatus("#lr2status", e.message, true);
+    $("#lr2out").innerHTML = "";
+  }
+}
+
+/* ---------------- LR3 ---------------- */
+const V3 = {
+  1:{given:["A","b","c"],unk:["B","C","a"]},
+  2:{given:["A","B","c"],unk:["a","b","C"]},
+  3:{given:["a","B","c"],unk:["A","C","b"]},
+  4:{given:["a","B","C"],unk:["b","c","A"]},
+  5:{given:["a","b","C"],unk:["A","B","c"]},
+  6:{given:["A","b","C"],unk:["a","c","B"]},
+  7:{given:["a","b","c"],unk:["A","B","C"]},
+  8:{given:["A","B","C"],unk:["a","b","c"]}
+};
+function atanCot(q){ return Math.abs(q)<1e-12 ? 90 : mod(deg(Math.atan(1/q))+180,180); }
+function solveLR3(code){
+  const c = cleanCode(code);
+  if(!/^[1-8][1-9][1-9][1-9]$/.test(c)) throw new Error("Нужны 4 цифры: вариант 1–8 и три строки 1–9");
+  const v = +c[0], rows=[c[1],c[2],c[3]], cfg=V3[v], vals={}, orig={};
+  cfg.given.forEach((el,i)=>{
+    const d=DB.lr3[rows[i]][el]; orig[el]=d; vals[el]=Number(d[0])+Number(d[1])/60;
+  });
+
+  const T = el => trig(vals[el]);
+  const set = (el,x) => vals[el]=x;
+  const fmtFactor = x => x < 0 ? `(${fix(x,8)})` : fix(x,8);
+  const numericSub = label => {
+    let expr = label.includes('=') ? label.split('=').slice(1).join('=').trim() : label;
+    expr = expr.replace(/(ctg|sin|cos)\s*([abcABC])/g, (_,fn,el)=>{
+      const t=T(el); const val = fn==='ctg' ? t.ct : (fn==='sin' ? t.s : t.c);
+      return fmtFactor(val);
+    });
+    return expr;
+  };
+  const makeLine = (label,val) => ({label, sub:numericSub(label), val:r8(val)});
+
+  const mkCot = (title,formula,Ilabel,I,IIlabel,II,IIIlabel,III,sign,el) => {
+    I=r8(I); II=r8(II); III=r8(III);
+    const q=r8((I+sign*II)/III), tg=r8(1/q), raw=deg(Math.atan(tg)), res=atanCot(q); set(el,res);
+    return {title,formula,el,sign,method:'cot',lines:[makeLine(Ilabel,I),makeLine(IIlabel,II),makeLine(IIIlabel,III)],func:`ctg ${el}`,q,tg,raw,res};
+  };
+  const mkCos = (title,formula,Ilabel,I,IIlabel,II,IIIlabel,III,sign,el) => {
+    I=r8(I); II=r8(II); III=r8(III);
+    const q=r8((I+sign*II)/III), res=deg(Math.acos(clamp(q,-1,1))); set(el,res);
+    return {title,formula,el,sign,method:'cos-ratio',lines:[makeLine(Ilabel,I),makeLine(IIlabel,II),makeLine(IIIlabel,III)],func:`cos ${el}`,q,res};
+  };
+
+  let s1,s2,s3;
+  if(v===1) s1=mkCot("Вычисление угла B","ctg B = (ctg b · sin c − cos c · cos A) / sin A","I = ctg b · sin c",T("b").ct*T("c").s,"II = cos c · cos A",T("c").c*T("A").c,"III = sin A",T("A").s,-1,"B");
+  if(v===2) s1=mkCot("Вычисление стороны a","ctg a = (ctg A · sin B + cos c · cos B) / sin c","I = ctg A · sin B",T("A").ct*T("B").s,"II = cos c · cos B",T("c").c*T("B").c,"III = sin c",T("c").s,1,"a");
+  if(v===3) s1=mkCot("Вычисление угла A","ctg A = (ctg a · sin c − cos c · cos B) / sin B","I = ctg a · sin c",T("a").ct*T("c").s,"II = cos c · cos B",T("c").c*T("B").c,"III = sin B",T("B").s,-1,"A");
+  if(v===4) s1=mkCot("Вычисление стороны b","ctg b = (ctg B · sin C + cos a · cos C) / sin a","I = ctg B · sin C",T("B").ct*T("C").s,"II = cos a · cos C",T("a").c*T("C").c,"III = sin a",T("a").s,1,"b");
+  if(v===5) s1=mkCot("Вычисление угла A","ctg A = (ctg a · sin b − cos b · cos C) / sin C","I = ctg a · sin b",T("a").ct*T("b").s,"II = cos b · cos C",T("b").c*T("C").c,"III = sin C",T("C").s,-1,"A");
+  if(v===6) s1=mkCot("Вычисление стороны a","ctg a = (ctg A · sin C + cos b · cos C) / sin b","I = ctg A · sin C",T("A").ct*T("C").s,"II = cos b · cos C",T("b").c*T("C").c,"III = sin b",T("b").s,1,"a");
+  if(v===7) s1=mkCos("Вычисление угла A","cos A = (cos a − cos b · cos c) / (sin b · sin c)","I = cos a",T("a").c,"II = cos b · cos c",T("b").c*T("c").c,"III = sin b · sin c",T("b").s*T("c").s,-1,"A");
+  if(v===8) s1=mkCos("Вычисление стороны a","cos a = (cos A + cos B · cos C) / (sin B · sin C)","I = cos A",T("A").c,"II = cos B · cos C",T("B").c*T("C").c,"III = sin B · sin C",T("B").s*T("C").s,1,"a");
+
+  if(v===1) s2=mkCot("Вычисление угла C","ctg C = (ctg c · sin b − cos b · cos A) / sin A","I = ctg c · sin b",T("c").ct*T("b").s,"II = cos b · cos A",T("b").c*T("A").c,"III = sin A",T("A").s,-1,"C");
+  if(v===2) s2=mkCot("Вычисление стороны b","ctg b = (ctg B · sin A + cos c · cos A) / sin c","I = ctg B · sin A",T("B").ct*T("A").s,"II = cos c · cos A",T("c").c*T("A").c,"III = sin c",T("c").s,1,"b");
+  if(v===3) s2=mkCot("Вычисление угла C","ctg C = (ctg c · sin a − cos a · cos B) / sin B","I = ctg c · sin a",T("c").ct*T("a").s,"II = cos a · cos B",T("a").c*T("B").c,"III = sin B",T("B").s,-1,"C");
+  if(v===4) s2=mkCot("Вычисление стороны c","ctg c = (ctg C · sin B + cos a · cos B) / sin a","I = ctg C · sin B",T("C").ct*T("B").s,"II = cos a · cos B",T("a").c*T("B").c,"III = sin a",T("a").s,1,"c");
+  if(v===5) s2=mkCot("Вычисление угла B","ctg B = (ctg b · sin a − cos a · cos C) / sin C","I = ctg b · sin a",T("b").ct*T("a").s,"II = cos a · cos C",T("a").c*T("C").c,"III = sin C",T("C").s,-1,"B");
+  if(v===6) s2=mkCot("Вычисление стороны c","ctg c = (ctg C · sin A + cos b · cos A) / sin b","I = ctg C · sin A",T("C").ct*T("A").s,"II = cos b · cos A",T("b").c*T("A").c,"III = sin b",T("b").s,1,"c");
+  if(v===7) s2=mkCos("Вычисление угла B","cos B = (cos b − cos a · cos c) / (sin a · sin c)","I = cos b",T("b").c,"II = cos a · cos c",T("a").c*T("c").c,"III = sin a · sin c",T("a").s*T("c").s,-1,"B");
+  if(v===8) s2=mkCos("Вычисление стороны b","cos b = (cos B + cos A · cos C) / (sin A · sin C)","I = cos B",T("B").c,"II = cos A · cos C",T("A").c*T("C").c,"III = sin A · sin C",T("A").s*T("C").s,1,"b");
+
+  const mkThird=(title,formula,Ilabel,I,IIlabel,II,IIIlabel,III,mode,el) => {
+    I=r8(I); II=r8(II); III=III==null?null:r8(III);
+    let q;
+    if(mode==="plus") q=r8(I+II);
+    if(mode==="minusplus") q=r8(-I+II);
+    if(mode==="ratioMinus") q=r8((I-II)/III);
+    if(mode==="ratioPlus") q=r8((I+II)/III);
+    const res=deg(Math.acos(clamp(q,-1,1))); set(el,res);
+    return {title,formula,el,mode,method:'cos-third',lines:[makeLine(Ilabel,I),makeLine(IIlabel,II),...(IIIlabel?[makeLine(IIIlabel,III)]:[])],func:`cos ${el}`,q,res};
+  };
+  if(v===1) s3=mkThird("Вычисление стороны a","cos a = cos b · cos c + sin b · sin c · cos A","I = cos b · cos c",T("b").c*T("c").c,"II = sin b · sin c · cos A",T("b").s*T("c").s*T("A").c,null,null,"plus","a");
+  if(v===2) s3=mkThird("Вычисление угла C","cos C = − cos A · cos B + sin A · sin B · cos c","I = cos A · cos B",T("A").c*T("B").c,"II = sin A · sin B · cos c",T("A").s*T("B").s*T("c").c,null,null,"minusplus","C");
+  if(v===3) s3=mkThird("Вычисление стороны b","cos b = cos a · cos c + sin a · sin c · cos B","I = cos a · cos c",T("a").c*T("c").c,"II = sin a · sin c · cos B",T("a").s*T("c").s*T("B").c,null,null,"plus","b");
+  if(v===4) s3=mkThird("Вычисление угла A","cos A = − cos B · cos C + sin B · sin C · cos a","I = cos B · cos C",T("B").c*T("C").c,"II = sin B · sin C · cos a",T("B").s*T("C").s*T("a").c,null,null,"minusplus","A");
+  if(v===5) s3=mkThird("Вычисление стороны c","cos c = cos a · cos b + sin a · sin b · cos C","I = cos a · cos b",T("a").c*T("b").c,"II = sin a · sin b · cos C",T("a").s*T("b").s*T("C").c,null,null,"plus","c");
+  if(v===6) s3=mkThird("Вычисление угла B","cos B = − cos A · cos C + sin A · sin C · cos b","I = cos A · cos C",T("A").c*T("C").c,"II = sin A · sin C · cos b",T("A").s*T("C").s*T("b").c,null,null,"minusplus","B");
+  if(v===7) s3=mkThird("Вычисление угла C","cos C = (cos c − cos a · cos b) / (sin a · sin b)","I = cos c",T("c").c,"II = cos a · cos b",T("a").c*T("b").c,"III = sin a · sin b",T("a").s*T("b").s,"ratioMinus","C");
+  if(v===8) s3=mkThird("Вычисление стороны c","cos c = (cos C + cos A · cos B) / (sin A · sin B)","I = cos C",T("C").c,"II = cos A · cos B",T("A").c*T("B").c,"III = sin A · sin B",T("A").s*T("B").s,"ratioPlus","c");
+
+  // Контроль существования сферического треугольника.
+  // Некоторые формально возможные комбинации строк исходной таблицы математически
+  // несовместимы; в таком случае нельзя превращать acos-аргумент в ±1 и выдавать 0°/180°.
+  {
+    const a=rad(vals.a), b=rad(vals.b), c3=rad(vals.c);
+    const A3=rad(vals.A), B3=rad(vals.B), C3=rad(vals.C);
+    const rr=[
+      Math.cos(a) - (Math.cos(b)*Math.cos(c3) + Math.sin(b)*Math.sin(c3)*Math.cos(A3)),
+      Math.cos(b) - (Math.cos(a)*Math.cos(c3) + Math.sin(a)*Math.sin(c3)*Math.cos(B3)),
+      Math.cos(c3) - (Math.cos(a)*Math.cos(b) + Math.sin(a)*Math.sin(b)*Math.cos(C3)),
+      Math.cos(A3) - (-Math.cos(B3)*Math.cos(C3) + Math.sin(B3)*Math.sin(C3)*Math.cos(a)),
+      Math.cos(B3) - (-Math.cos(A3)*Math.cos(C3) + Math.sin(A3)*Math.sin(C3)*Math.cos(b)),
+      Math.cos(C3) - (-Math.cos(A3)*Math.cos(B3) + Math.sin(A3)*Math.sin(B3)*Math.cos(c3))
+    ];
+    const okRange=["a","b","c","A","B","C"].every(k=>Number.isFinite(vals[k]) && vals[k]>0 && vals[k]<180);
+    const maxErr=Math.max(...rr.map(Math.abs));
+    if(!okRange || maxErr>1e-5) {
+      throw new Error("Исходные данные не образуют сферический треугольник");
+    }
+  }
+
+  const cotChains={
+    1:[["B","c","A","b"],["C","b","A","c"]],
+    2:[["A","c","B","a"],["B","c","A","b"]],
+    3:[["A","c","B","a"],["C","a","B","c"]],
+    4:[["B","a","C","b"],["C","a","B","c"]],
+    5:[["A","b","C","a"],["B","a","C","b"]],
+    6:[["A","b","C","a"],["C","b","A","c"]]
+  };
+  if(v<=6){
+    [s1,s2].forEach((s,i)=>{
+      const ch=cotChains[v][i]; s.chain=ch;
+      s.baseFormula=`ctg ${ch[0]} · sin ${ch[2]} = ctg ${ch[3]} · sin ${ch[1]} − cos ${ch[1]} · cos ${ch[2]}`;
+    });
+  }
+
+  const sinv = el => r8(Math.sin(rad(vals[el])));
+  const rAB1=r8(sinv('a')/sinv('b')), rAB2=r8(sinv('A')/sinv('B'));
+  const rAC1=r8(sinv('a')/sinv('c')), rAC2=r8(sinv('A')/sinv('C'));
+
+  const givenSides=cfg.given.filter(x=>/[abc]/.test(x));
+  const unknownSides=cfg.unk.filter(x=>/[abc]/.test(x));
+  let extraCheck=null;
+  const whole = el => Math.floor(vals[el]);
+  if(givenSides.length===2 && unknownSides.length===1){
+    const [g1,g2]=givenSides, u=unknownSides[0];
+    extraCheck={type:'two-sides-angle',g1,g2,u,sum:whole(g1)+whole(g2),diff:Math.abs(whole(g2)-whole(g1)),target:whole(u)};
+  } else if(givenSides.length===1 && unknownSides.length===2){
+    const g=givenSides[0], [u1,u2]=unknownSides;
+    extraCheck={type:'two-angles-side',g,u1,u2,sum:whole(u1)+whole(u2),diff:Math.abs(whole(u2)-whole(u1)),target:whole(g)};
+  }
+
+  return {code:c,v,rows,cfg,vals,orig,steps:[s1,s2,s3],checks:{sine:[
+    {left:`sin a / sin b`,a:sinv('a'),b:sinv('b'),r1:rAB1,right:`sin A / sin B`,c:sinv('A'),d:sinv('B'),r2:rAB2},
+    {left:`sin a / sin c`,a:sinv('a'),b:sinv('c'),r1:rAC1,right:`sin A / sin C`,c:sinv('A'),d:sinv('C'),r2:rAC2}
+  ],extra:extraCheck}};
+}
+
+function lr3TrigTable(o){
+  const rows=o.cfg.given.map(el=>{
+    const t=trig(o.vals[el]);
+    return `<tr><td><b>${el}</b> = ${fix(o.vals[el],8)}°</td><td class="num">${fix(t.s,8)}</td><td class="num">${fix(t.c,8)}</td><td class="num">${fix(t.ct,8)}</td></tr>`;
+  }).join('');
+  return `<table><tr><th>Элемент</th><th>sin</th><th>cos</th><th>ctg</th></tr>${rows}</table>`;
+}
+
+function lr3DiagramSvg(o){
+  return lr3StepDiagramSvg(null, null, o);
+}
+
+/*
+ * LR3 triangle renderer — rebuilt from scratch.
+ *
+ * Geometry / notation:
+ *   A, B, C — angles at vertices A, B, C.
+ *   a = BC, b = CA, c = AB — opposite sides.
+ *
+ * Marker rules for EVERY step:
+ *   - every element from o.cfg.given gets a visible gray circle;
+ *   - only step.el gets a black square;
+ *   - all other elements are plain labels;
+ *   - no leader/connector lines are drawn;
+ *   - labels never sit on the triangle lines;
+ *   - all six symbols use Times New Roman, normal (non-italic) style.
+ */
+function lr3StepDiagramSvg(step, stepNo, o){
+  const W=560, H=340;
+  const P={
+    A:{x:125,y:235},
+    B:{x:280,y:55},
+    C:{x:435,y:235}
+  };
+
+  // Stable positions outside the triangle. These are positions of the
+  // symbol marker itself, so no connector/leader line is necessary.
+  const M={
+    A:{x:88,y:267},
+    B:{x:280,y:25},
+    C:{x:472,y:267},
+    a:{x:414,y:142},
+    b:{x:280,y:286},
+    c:{x:146,y:142}
+  };
+
+  const given = new Set((o && o.cfg && Array.isArray(o.cfg.given)) ? o.cfg.given : []);
+  const target = (step && step.el) ? step.el : null;
+  const font = 'Times New Roman, Times, serif';
+
+  // Explicit marker rendering. The circle has a light-gray fill rather than
+  // white-on-white, so it remains clearly visible in both browser and PDF.
+  function marker(el){
+    const p=M[el];
+    const isGiven=given.has(el);
+    const isTarget=(target===el);
+    const fs=20;
+
+    let shape='';
+    let textFill='#000';
+
+    if(isTarget){
+      shape=`<rect x="${p.x-21}" y="${p.y-21}" width="42" height="42" rx="1.5" fill="#e6e6e6" stroke="#111" stroke-width="2.2"/>`;
+      textFill='#000';
+    } else if(isGiven){
+      shape=`<circle cx="${p.x}" cy="${p.y}" r="21" fill="#e6e6e6" stroke="#111" stroke-width="2.2"/>`;
+      textFill='#000';
+    }
+
+    return `<g class="lr3-marker">${shape}`+
+      `<text x="${p.x}" y="${p.y+7}" text-anchor="middle" `+
+      `font-family="${font}" font-size="${fs}" font-style="normal" font-weight="400" `+
+      `letter-spacing="0" fill="${textFill}" style="font-family:'Times New Roman',Times,serif!important;font-style:normal!important;font-weight:400!important;">${el}</text>`+
+      `</g>`;
+  }
+
+  return `<div class="scheme"><svg viewBox="0 0 ${W} ${H}" width="100%" height="300" `+
+    `xmlns="http://www.w3.org/2000/svg" aria-label="Схема сферического треугольника${stepNo ? ` для этапа 3.${stepNo}` : ''}">`+
+    `<style>`+
+      `.lr3-marker text,.lr3-legend-text{font-family:'Times New Roman',Times,serif!important;font-style:normal!important;font-weight:400!important;}`+
+    `</style>`+
+    `<rect x="0" y="0" width="${W}" height="${H}" fill="#fff"/>`+
+
+    // Triangle is always drawn first; markers are drawn afterwards so they
+    // remain visually separate from the triangle and cannot be hidden by it.
+    `<path d="M ${P.A.x} ${P.A.y} L ${P.B.x} ${P.B.y} L ${P.C.x} ${P.C.y} Z" `+
+      `fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`+
+
+    // Fixed semantic order makes the output deterministic for all 8 variants.
+    marker('A')+marker('B')+marker('C')+marker('a')+marker('b')+marker('c')+
+
+    // Legend uses the same visual language as the actual markers.
+    `<circle cx="95" cy="327" r="8" fill="#e6e6e6" stroke="#111" stroke-width="1.8"/>`+
+    `<text class="lr3-legend-text" x="110" y="331" font-size="12.5" fill="#000">исходные элементы</text>`+
+    `<rect x="320" y="319" width="16" height="16" fill="#e6e6e6" stroke="#111" stroke-width="1.8"/>`+
+    `<text class="lr3-legend-text" x="345" y="331" font-size="12.5" fill="#000">искомый элемент</text>`+
+  `</svg></div>`;
+}
+
+function lr3CalcExpr(s){
+  const L=s.lines.map(x=>x.val);
+  if(s.method==='cot' || s.method==='cos-ratio') return `(${fix(L[0],8)} ${s.sign<0?'−':'+'} ${fix(L[1],8)}) / ${fix(L[2],8)}`;
+  if(s.mode==='plus') return `${fix(L[0],8)} + ${fix(L[1],8)}`;
+  if(s.mode==='minusplus') return `−${fix(L[0],8)} + ${fix(L[1],8)}`;
+  if(s.mode==='ratioMinus') return `(${fix(L[0],8)} − ${fix(L[1],8)}) / ${fix(L[2],8)}`;
+  if(s.mode==='ratioPlus') return `(${fix(L[0],8)} + ${fix(L[1],8)}) / ${fix(L[2],8)}`;
+  return '';
+}
+
+function stepHtml(s,i,o){
+  let h=`<div class="section-title">3.${i}. ${s.title}</div>`;
+  h+=lr3StepDiagramSvg(s,i,o);
+  if(s.chain){
+    h+=line(`Цепочка: « ${s.chain.join(' – ')} »`);
+    h+=line(`Формула котангенсов: ${s.baseFormula}`);
+    h+=line(`Рабочая формула: ${s.formula}`);
+  } else h+=line(`Рабочая формула: ${s.formula}`);
+  s.lines.forEach(x=> h+=line(`${x.label} = ${x.sub} = ${fix(x.val,8)}`));
+  h+=line(`${s.func} = ${lr3CalcExpr(s)} = ${fix(s.q,8)}`);
+  if(s.method==='cot'){
+    h+=line(`tg ${s.el} = 1 / ${fix(s.q,8)} = ${fix(s.tg,8)}`);
+    if(s.raw<0) h+=line(`${s.el} = arctg(${fix(s.tg,8)}) = ${fix(s.raw,8)}° + 180° = ${fix(s.res,8)}° = ${dm(s.res,1)}`);
+    else h+=line(`${s.el} = arctg(${fix(s.tg,8)}) = ${fix(s.res,8)}° = ${dm(s.res,1)}`);
+  } else h+=line(`${s.el} = arccos(${fix(s.q,8)}) = ${fix(s.res,8)}° = ${dm(s.res,1)}`);
+  h+=`<div class="answer">${s.el} = ${dm(s.res,1)}</div>`;
+  return h;
+}
+
+function lr3CheckHtml(o){
+  let h=`<div class="section-title">4. Проверка правильности вычислений по формуле синусов</div>`;
+  o.checks.sine.forEach(ch=>{
+    h+=line(`${ch.left} = ${fix(ch.a,8)} / ${fix(ch.b,8)} = ${fix(ch.r1,8)}`);
+    h+=line(`${ch.right} = ${fix(ch.c,8)} / ${fix(ch.d,8)} = ${fix(ch.r2,8)}`);
+    h+=line(`Проверка: ${fix(ch.r1,8)} ≈ ${fix(ch.r2,8)} ✓`);
+  });
+  h+=`<div class="section-title">Дополнительная проверка (целые градусы)</div>`;
+  const e=o.checks.extra;
+  if(!e) h+=line(`Для варианта ${o.v} методичка не задаёт дополнительную проверку через сумму/разность сторон; достаточно двух проверок по формуле синусов.`);
+  else if(e.type==='two-sides-angle'){
+    h+=line(`${e.g1} + ${e.g2} = ${Math.floor(o.vals[e.g1])}° + ${Math.floor(o.vals[e.g2])}° = ${e.sum}° > ${e.u} = ${e.target}° ✓`);
+    h+=line(`|${e.g2} − ${e.g1}| = |${Math.floor(o.vals[e.g2])}° − ${Math.floor(o.vals[e.g1])}°| = ${e.diff}° < ${e.u} = ${e.target}° ✓`);
+  } else {
+    h+=line(`${e.u1} + ${e.u2} = ${Math.floor(o.vals[e.u1])}° + ${Math.floor(o.vals[e.u2])}° = ${e.sum}° > ${e.g} = ${e.target}° ✓`);
+    h+=line(`|${e.u2} − ${e.u1}| = |${Math.floor(o.vals[e.u2])}° − ${Math.floor(o.vals[e.u1])}°| = ${e.diff}° < ${e.g} = ${e.target}° ✓`);
+  }
+  return h;
+}
+
+function renderLR3(){
+  try {
+    const o=solveLR3($("#lr3code").value), cfg=o.cfg;
+    setStatus("#lr3status", `Вариант ${o.v} • строки ${o.rows.join(", ")}`);
+    const givens=cfg.given.map(el=>`${el} = ${o.orig[el][0]}°${Number(o.orig[el][1]).toFixed(1).replace(".0","").replace(".",",")}′`).join("; ");
+    const final=["a","b","c","A","B","C"].map(el=>`<tr><td><b>${el}</b></td><td class="num">${fix(o.vals[el],8)}°</td><td>${dm(o.vals[el],1)}</td></tr>`).join("");
+    const body=`
+      <div class="section-title">1. Исходные данные</div>
+      <div class="note">Дано: ${givens}<br>Найти: ${cfg.unk.join(", ")}</div>
+      <div class="note">Для каждого этапа расчёта ниже приведён отдельный треугольник: кружки — исходные элементы, квадрат — искомый элемент.</div>
+      <div class="section-title">2. Перевод в градусы и вычисление тригонометрических функций</div>
+      ${lr3TrigTable(o)}
+      <div class="section-title">3. Решение искомых элементов</div>
+      ${stepHtml(o.steps[0],1,o)}${stepHtml(o.steps[1],2,o)}${stepHtml(o.steps[2],3,o)}
+      ${lr3CheckHtml(o)}
+      <div class="section-title">Итог</div>
+      <table><tr><th>Элемент</th><th>В градусах</th><th>Градусы и минуты</th></tr>${final}</table>`;
+    $("#lr3out").innerHTML=card("Решение",body);
+    normalizeGreekSymbols($("#lr3out"));
+  } catch(e){ setStatus("#lr3status",e.message,true); $("#lr3out").innerHTML=""; }
+}
+
+/* ---------------- LR4 ---------------- */
+function angleFromCot(q){ return Math.abs(q)<1e-12 ? 90 : mod(deg(Math.atan(1/q))+180,180); }
+function mp(phi){ return Math.sign(phi||1) * 3437.75 * Math.log(Math.tan(rad(45+Math.abs(phi)/2))); }
+function solveLR4(code){
+  const c = cleanCode(code);
+  if(!/^[1-4][12][1-9][1-9][1-9][1-9]$/.test(c)) throw new Error("Нужны 6 цифр: вариант 1–4, направление 1/2 и четыре строки 1–9");
+  const v=c[0], dir=+c[1], rs=[c[2],c[3],c[4],c[5]];
+  const pA0=DB.lr4[v][rs[0]].pA, lA0=DB.lr4[v][rs[1]].lA, pB0=DB.lr4[v][rs[2]].pB, lB0=DB.lr4[v][rs[3]].lB;
+  const pA=signedCoord(...pA0), lA=signedCoord(...lA0), pB=signedCoord(...pB0), lB=signedCoord(...lB0);
+  const raw=dir===1 ? lB-lA : lA-lB, dl=mod(raw+180,360)-180, adl=Math.abs(dl);
+  // ЛР4 считаем с полной внутренней точностью; округление применяется только при выводе.
+  const dA=90-pA, dB=90-pB, tA=trigExact(dA), tB=trigExact(dB), tL=trigExact(adl);
+  const cosS=tA.c*tB.c+tA.s*tB.s*tL.c, Sdeg=deg(Math.acos(clamp(cosS,-1,1))), Sort=Sdeg*60;
+  const cotA=(tB.ct*tA.s-tA.c*tL.c)/tL.s, cotB=(tA.ct*tB.s-tB.c*tL.c)/tL.s;
+  const AngA=angleFromCot(cotA), AngB=angleFromCot(cotB);
+  const east=dl>0;
+  const Kn=dir===1 ? (east?AngA:360-AngA) : (east?AngB:360-AngB);
+  const Kk=dir===1 ? (east?180-AngB:180+AngB) : (east?180-AngA:180+AngA);
+  const dK=mod(Kk-Kn+180,360)-180;
+  const pavg=(pA+pB)/2, dphi=dir===1 ? pB-pA : pA-pB, hdl=dl/2;
+  const tgHalf=Math.sin(rad(pavg))/Math.cos(rad(dphi/2))*Math.tan(rad(hdl));
+  const gamma=2*deg(Math.atan(tgHalf));
+  const mA=mp(pA), mB=mp(pB), rmp=dir===1?mB-mA:mA-mB, rd=dl*60, rsh=dphi*60;
+  const Kloc=mod(deg(Math.atan2(rd,rmp)),360);
+  const qang=deg(Math.atan(Math.abs(rd/rmp)));
+  const Sloc=Math.abs(rsh/Math.cos(rad(Kloc))), dS=Sloc-Sort;
+  return {code:c,v:+v,dir,rs,pA0,lA0,pB0,lB0,pA,lA,pB,lB,dl,raw,adl,dA,dB,tA,tB,tL,cosS,Sdeg,Sort,cotA,cotB,AngA,AngB,Kn,Kk,dK,pavg,dphi,hdl,tgHalf,gamma,mA,mB,rmp,rd,rsh,Kloc,qang,Sloc,dS};
+}
+
+function ptCourse(cx,cy,r,k){ const a=rad(k); return {x:cx+r*Math.sin(a), y:cy-r*Math.cos(a)}; }
+function arcPath(cx,cy,r,a1,a2){
+  const p1=ptCourse(cx,cy,r,a1), p2=ptCourse(cx,cy,r,a2);
+  let d=((a2-a1)%360+360)%360; if(d>180) d-=360;
+  const large=Math.abs(d)>180?1:0, sweep=d>=0?1:0;
+  return {d:`M ${p1.x.toFixed(2)} ${p1.y.toFixed(2)} A ${r} ${r} 0 ${large} ${sweep} ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`, mid:mod(a1+d/2,360), delta:d};
+}
+function labelBox(x,y,text,anchor){
+  anchor = anchor || "start";
+  return `<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="${anchor}" dominant-baseline="middle" font-size="13" font-weight="700">${text}</text>`;
+}
+
+
+
+
+
+function svgSphereScheme(o){
+  // Пункт 2 ЛР4: объёмный чертёж сферического треугольника.
+  // Принцип взят из MarineAstronomy: реальная 3D-геометрия -> единая учебная проекция -> SVG.
+  const W=520, H=430, R=160, CX=252, CY=212;
+  const DEPTH=0.29;
+  const east=o.dl>0;
+  const mirror=east ? -1 : 1; // при E точка отхода слева, при W справа
+
+  const startLat=o.dir===1 ? o.pA : o.pB;
+  const endLat  =o.dir===1 ? o.pB : o.pA;
+  const startName=o.dir===1 ? 'A' : 'B';
+  const endName  =o.dir===1 ? 'B' : 'A';
+  const primeName=startName+'′';
+  const adl=Math.abs(o.dl);
+
+  const vr=(d)=>rad(d);
+  function v3(latDeg, lonDeg){
+    const p=vr(latDeg), l=vr(lonDeg), cp=Math.cos(p);
+    return [cp*Math.cos(l), cp*Math.sin(l), Math.sin(p)];
+  }
+  function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+  function cross(a,b){return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];}
+  function norm(a){return Math.hypot(a[0],a[1],a[2]);}
+  function unit(a){const n=norm(a)||1; return [a[0]/n,a[1]/n,a[2]/n];}
+  function add(a,b){return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];}
+  function mul(a,s){return [a[0]*s,a[1]*s,a[2]*s];}
+
+  function project(v){
+    let x=mirror*v[0];
+    const depth=v[1], z=v[2];
+    let yy=z - DEPTH*depth*Math.sqrt(Math.max(0,1-z*z));
+    const rr=Math.hypot(x,yy);
+    if(rr>1){x/=rr; yy/=rr;}
+    return {x:CX+R*x, y:CY-R*yy, depth};
+  }
+  function path2(points){
+    return points.map((p,i)=>{const q=project(p); return `${i?'L':'M'} ${q.x.toFixed(2)} ${q.y.toFixed(2)}`}).join(' ');
+  }
+  function sampleLon(lonDeg, n=240){
+    const arr=[]; for(let i=0;i<=n;i++){ const phi=-90+180*i/n; arr.push(v3(phi,lonDeg)); } return arr;
+  }
+  function sampleLatArc(lonDeg, p1, p2, n=90){
+    const arr=[]; for(let i=0;i<=n;i++){ const p=p1+(p2-p1)*i/n; arr.push(v3(p,lonDeg)); } return arr;
+  }
+  function segmentedPaths(points, visibleWhen=true){
+    const segs=[]; let curr=[];
+    for(const p of points){
+      const vis=(p[1]>=-1e-9)===visibleWhen;
+      if(vis) curr.push(p); else if(curr.length){segs.push(curr);curr=[];}
+    }
+    if(curr.length) segs.push(curr);
+    return segs.map(path2);
+  }
+  function pathFromPts(arr){
+    return arr.map((q,i)=>`${i?'L':'M'} ${q.x.toFixed(2)} ${q.y.toFixed(2)}`).join(' ');
+  }
+
+  const S=v3(startLat,0);
+  const E=v3(endLat,adl);
+  const PN=[0,0,1], PS=[0,0,-1];
+  const AP=mul(S,-1);
+  let c=clamp(dot(S,E),-1,1);
+  const sigma=Math.acos(c);
+  let T;
+  if(Math.sin(sigma)<1e-10) T=unit(cross([0,0,1],S));
+  else T=unit([E[0]-c*S[0],E[1]-c*S[1],E[2]-c*S[2]]);
+  function gcPoint(theta){return add(mul(S,Math.cos(theta)),mul(T,Math.sin(theta)));}
+  const fullGC=[], travel=[];
+  for(let i=0;i<=720;i++) fullGC.push(gcPoint(2*Math.PI*i/720));
+  for(let i=0;i<=220;i++) travel.push(gcPoint(sigma*i/220));
+
+  // Серый рабочий сферический треугольник
+  const tri=[];
+  tri.push(...sampleLatArc(0,startLat,90,70));
+  tri.push(...sampleLatArc(adl,90,endLat,90));
+  for(let i=travel.length-1;i>=0;i--) tri.push(travel[i]);
+  const triPath=path2(tri)+' Z';
+
+  // Полный большой круг ортодромии
+  const gcFront=segmentedPaths(fullGC,true), gcBack=segmentedPaths(fullGC,false);
+  const endMer=sampleLon(adl);
+
+  const pS=project(S), pE=project(E), pPN=project(PN), pPS=project(PS), pAP=project(AP);
+  const leftEdge={x:CX-R,y:CY}, rightEdge={x:CX+R,y:CY};
+
+  // Экватор теперь строится из той же 3D-геометрии, что и меридианы.
+  // Поэтому меридиан точки прихода гарантированно пересекает экватор
+  // в той же точке, где заканчивается дуга Δλ.
+  const eqFront3D=[];
+  for(let i=0;i<=180;i++) eqFront3D.push(v3(0,i));   // видимая передняя половина
+  const eqFrontPath = path2(eqFront3D);
+
+  const dl3D=[];
+  for(let i=0;i<=120;i++) dl3D.push(v3(0, adl*i/120));
+  const dlPath = path2(dl3D);
+  const dlMid = project(v3(0, adl*0.52));
+
+  // Контрольная общая точка: пересечение меридиана B и экватора.
+  const pEqB = project(v3(0, adl));
+
+  // Стрелка на рабочей ортодромии по касательной.
+  const i1=Math.max(2,Math.floor(travel.length*0.47)), i2=Math.min(travel.length-2,Math.floor(travel.length*0.57));
+  const ar1=project(travel[i1]), ar2=project(travel[i2]);
+
+  function angleArc(center, v1, v2, r, label, labelDx=0, labelDy=0){
+    let a1=Math.atan2(v1.y,v1.x), a2=Math.atan2(v2.y,v2.x);
+    let d=a2-a1; while(d>Math.PI)d-=2*Math.PI; while(d<-Math.PI)d+=2*Math.PI;
+    const steps=30, pts=[];
+    for(let i=0;i<=steps;i++){
+      const a=a1+d*i/steps; pts.push({x:center.x+r*Math.cos(a),y:center.y+r*Math.sin(a)});
+    }
+    const dstr=pts.map((p,i)=>`${i?'L':'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+    const am=a1+d/2, lx=center.x+(r+15)*Math.cos(am)+labelDx, ly=center.y+(r+15)*Math.sin(am)+labelDy;
+    return `<path d="${dstr}" fill="none" stroke="#111" stroke-width="1.45"/><text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="16" font-family="Times New Roman, serif" font-style="normal">${label}</text>`;
+  }
+
+  const eps=0.6;
+  const sNorth=project(v3(Math.min(89.5,startLat+eps),0));
+  const sCourse=project(gcPoint(Math.min(sigma,vr(eps))));
+  const startArc=angleArc(pS,{x:sNorth.x-pS.x,y:sNorth.y-pS.y},{x:sCourse.x-pS.x,y:sCourse.y-pS.y},23,'Kн',2,-2);
+
+  const eNorth=project(v3(Math.min(89.5,endLat+eps),adl));
+  // Конечный курс должен задаваться направлением ДАЛЬНЕЙШЕГО движения
+  // по касательной к большому кругу после точки прихода.
+  const eForward=project(gcPoint(sigma+vr(eps)));
+  const endArc=angleArc(
+    pE,
+    {x:eNorth.x-pE.x,y:eNorth.y-pE.y},
+    {x:eForward.x-pE.x,y:eForward.y-pE.y},
+    21,'Kк', east?10:-10, 6
+  );
+
+  const midStart=project(v3(startLat/2,0));
+  const midEnd=project(v3(endLat/2,adl));
+  const phiStartLabel=`φ${startName}`;
+  const phiEndLabel=`φ${endName}`;
+  const startSideLeft=east;
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" aria-label="Пункт 2 — объёмный чертёж сферического треугольника">
+      <defs>
+        <marker id="arrSphere" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+        </marker>
+      </defs>
+      <rect width="${W}" height="${H}" fill="#fff"/>
+
+      <path d="${triPath}" fill="#d9d9d9" fill-opacity="0.80" stroke="none"/>
+      <circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="#111" stroke-width="2.3"/>
+      <line x1="${CX}" y1="${CY-R-24}" x2="${CX}" y2="${CY+R+24}" stroke="#111" stroke-width="1.8" stroke-dasharray="8 7"/>
+
+      <line x1="${(CX-R).toFixed(1)}" y1="${CY.toFixed(1)}" x2="${(CX+R).toFixed(1)}" y2="${CY.toFixed(1)}" stroke="#111" stroke-width="1.55" stroke-dasharray="8 7" opacity="0.82"/>
+      <path d="${eqFrontPath}" fill="none" stroke="#111" stroke-width="1.8"/>
+
+      <path d="${path2(endMer)}" fill="none" stroke="#111" stroke-width="1.75"/>
+      <circle cx="${pEqB.x.toFixed(1)}" cy="${pEqB.y.toFixed(1)}" r="1.9" fill="#111"/>
+
+      ${gcBack.map(d=>`<path d="${d}" fill="none" stroke="#555" stroke-width="1.0" stroke-dasharray="6 6" opacity="0.64"/>`).join('')}
+      ${gcFront.map(d=>`<path d="${d}" fill="none" stroke="#444444" stroke-width="1.2" opacity="0.86"/>`).join('')}
+
+      <path d="${path2(travel)}" fill="none" stroke="#111" stroke-width="2.25" stroke-linecap="round"/>
+      <line x1="${ar1.x.toFixed(1)}" y1="${ar1.y.toFixed(1)}" x2="${ar2.x.toFixed(1)}" y2="${ar2.y.toFixed(1)}" stroke="#111" stroke-width="2.15" marker-end="url(#arrSphere)"/>
+
+      <path d="${dlPath}" fill="none" stroke="#111" stroke-width="1.7" marker-end="url(#arrSphere)"/>
+      <text x="${(dlMid.x-4).toFixed(1)}" y="${(dlMid.y+22).toFixed(1)}" font-size="16" font-family="Times New Roman, serif" font-style="normal">Δλ</text>
+
+      <circle cx="${pS.x.toFixed(1)}" cy="${pS.y.toFixed(1)}" r="3.0" fill="#111"/>
+      <circle cx="${pE.x.toFixed(1)}" cy="${pE.y.toFixed(1)}" r="3.0" fill="#111"/>
+      <circle cx="${pAP.x.toFixed(1)}" cy="${pAP.y.toFixed(1)}" r="2.3" fill="#111"/>
+
+      <!-- Красные опорные точки: помогают понять, где именно ставятся
+           A, B, A′, PN, PS, e, q и вершины рабочего сферического треугольника. -->
+      <g id="helper-red-points">
+        <circle cx="${pPN.x.toFixed(1)}" cy="${pPN.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${pPS.x.toFixed(1)}" cy="${pPS.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${pS.x.toFixed(1)}" cy="${pS.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${pE.x.toFixed(1)}" cy="${pE.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${pAP.x.toFixed(1)}" cy="${pAP.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${leftEdge.x.toFixed(1)}" cy="${leftEdge.y.toFixed(1)}" r="3.2" fill="#666666"/>
+        <circle cx="${rightEdge.x.toFixed(1)}" cy="${rightEdge.y.toFixed(1)}" r="3.2" fill="#666666"/>
+
+        <!-- Дополнительные опорные точки для подписей широт -->
+        <circle cx="${midStart.x.toFixed(1)}" cy="${midStart.y.toFixed(1)}" r="2.6" fill="#666666" opacity="0.95"/>
+        <circle cx="${midEnd.x.toFixed(1)}" cy="${midEnd.y.toFixed(1)}" r="2.6" fill="#666666" opacity="0.95"/>
+      </g>
+
+      ${startArc}
+      ${endArc}
+
+      <text x="${(pPN.x+10).toFixed(1)}" y="${(pPN.y-8).toFixed(1)}" font-size="18" font-family="Times New Roman, serif">P<tspan baseline-shift="sub" font-size="12">N</tspan></text>
+      <text x="${(pPS.x+10).toFixed(1)}" y="${(pPS.y+18).toFixed(1)}" font-size="18" font-family="Times New Roman, serif">P<tspan baseline-shift="sub" font-size="12">S</tspan></text>
+      <text x="${(pS.x+(startSideLeft?-22:10)).toFixed(1)}" y="${(pS.y-10).toFixed(1)}" font-size="19" font-family="Times New Roman, serif" font-style="normal">${startName}</text>
+      <text x="${(pE.x+(east?12:-24)).toFixed(1)}" y="${(pE.y+18).toFixed(1)}" font-size="19" font-family="Times New Roman, serif" font-style="normal">${endName}</text>
+      <text x="${(pAP.x+(pAP.x<CX?-28:10)).toFixed(1)}" y="${(pAP.y+18).toFixed(1)}" font-size="18" font-family="Times New Roman, serif" font-style="normal">${primeName}</text>
+      <text x="${(midStart.x+(startSideLeft?-28:12)).toFixed(1)}" y="${(midStart.y+1).toFixed(1)}" font-size="17" font-family="Times New Roman, serif" font-style="normal">${phiStartLabel}</text>
+      <text x="${(midEnd.x+(east?12:-30)).toFixed(1)}" y="${(midEnd.y+6).toFixed(1)}" font-size="17" font-family="Times New Roman, serif" font-style="normal">${phiEndLabel}</text>
+      <text x="${leftEdge.x-18}" y="${leftEdge.y+6}" font-size="17" font-family="Times New Roman, serif" font-style="normal">e</text>
+      <text x="${rightEdge.x+8}" y="${rightEdge.y+6}" font-size="17" font-family="Times New Roman, serif" font-style="normal">q</text>
+      <text x="${(CX-20).toFixed(1)}" y="${(CY-R+28).toFixed(1)}" font-size="16" font-family="Times New Roman, serif" font-style="normal">Δλ</text>
+
+      <circle cx="18" cy="${(H-16).toFixed(1)}" r="3.2" fill="#666666"/>
+      <text x="28" y="${(H-12).toFixed(1)}" font-size="12.5" fill="#555555" font-family="Arial, sans-serif">
+        серые точки — опорные точки для постановки букв и вершин сферического треугольника
+      </text>
+    </svg>`;
+}
+
+function svgVectorScheme(o){
+  const cell = 20;
+  const fmt1 = v => Number(v).toFixed(1).replace('.', ',');
+
+  // ============================================================
+  // СХЕМА 9А. ВЕКТОРЫ Кн, Кк, Клок — ИСТИННЫЕ УГЛЫ КУРСОВ
+  // ============================================================
+  // Левая схема сделана шире, чтобы длинные подписи курсов не обрезались.
+  const LW = 430, LH = 340;
+  const cx = 215, cy = LH/2;
+  const R = 5.9*cell;
+  const lengths = {Kn:R, Kk:R*0.93, Kloc:R*0.86};
+
+  function coursePoint(K, L){
+    const a = rad(K);
+    return {x: cx + L*Math.sin(a), y: cy - L*Math.cos(a)};
+  }
+  function labelForPoint(p, K, text){
+    const a = rad(K);
+    const fontSize = 17;
+    const margin = 14;
+    const estWidth = Math.max(68, text.length * fontSize * 0.57);
+
+    let x = p.x + 15*Math.sin(a);
+    let y = p.y - 15*Math.cos(a) + 5;
+    let anchor = Math.sin(a) < -0.12 ? 'end' : 'start';
+
+    // Если подпись выходит за правую/левую границу, разворачиваем её внутрь SVG.
+    if(anchor === 'start' && x + estWidth > LW - margin){
+      x = LW - margin;
+      anchor = 'end';
+    }
+    if(anchor === 'end' && x - estWidth < margin){
+      x = margin;
+      anchor = 'start';
+    }
+
+    y = Math.max(20, Math.min(LH - 12, y));
+    return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anchor}" font-size="${fontSize}" font-family="Times New Roman, serif">${text}</text>`;
+  }
+
+  const pKn = coursePoint(o.Kn, lengths.Kn);
+  const pKk = coursePoint(o.Kk, lengths.Kk);
+  const pKl = coursePoint(o.Kloc, lengths.Kloc);
+
+  const leftSVG = `
+  <svg viewBox="0 0 ${LW} ${LH}" xmlns="http://www.w3.org/2000/svg" aria-label="Схема 9а — истинные направления Кн Кк Клок">
+    <defs>
+      <pattern id="grid9trueL" width="${cell}" height="${cell}" patternUnits="userSpaceOnUse">
+        <path d="M ${cell} 0 L 0 0 0 ${cell}" fill="none" stroke="#dddddd" stroke-width="0.85"/>
+      </pattern>
+      <marker id="arr9true" viewBox="0 0 10 10" refX="8.4" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect width="${LW}" height="${LH}" fill="url(#grid9trueL)"/>
+    <line x1="${cx}" y1="28" x2="${cx}" y2="${LH-28}" stroke="#aaaaaa" stroke-width="1" stroke-dasharray="4 5"/>
+    <line x1="28" y1="${cy}" x2="${LW-28}" y2="${cy}" stroke="#aaaaaa" stroke-width="1" stroke-dasharray="4 5"/>
+    <text x="${cx}" y="20" text-anchor="middle" font-size="13" fill="#666">0°</text>
+    <text x="${LW-14}" y="${cy-5}" text-anchor="end" font-size="13" fill="#666">90°</text>
+    <text x="${cx}" y="${LH-8}" text-anchor="middle" font-size="13" fill="#666">180°</text>
+    <text x="14" y="${cy-5}" font-size="13" fill="#666">270°</text>
+    <circle cx="${cx}" cy="${cy}" r="3" fill="#111"/>
+    <line x1="${cx}" y1="${cy}" x2="${pKn.x.toFixed(1)}" y2="${pKn.y.toFixed(1)}" stroke="#111" stroke-width="2.2" marker-end="url(#arr9true)"/>
+    <line x1="${cx}" y1="${cy}" x2="${pKk.x.toFixed(1)}" y2="${pKk.y.toFixed(1)}" stroke="#111" stroke-width="2.2" marker-end="url(#arr9true)"/>
+    <line x1="${cx}" y1="${cy}" x2="${pKl.x.toFixed(1)}" y2="${pKl.y.toFixed(1)}" stroke="#111" stroke-width="2.2" stroke-dasharray="10 8" marker-end="url(#arr9true)"/>
+    ${labelForPoint(pKn,o.Kn,`Кн ${fmt1(o.Kn)}°`)}
+    ${labelForPoint(pKk,o.Kk,`Кк ${fmt1(o.Kk)}°`)}
+    ${labelForPoint(pKl,o.Kloc,`Клок ${fmt1(o.Kloc)}°`)}
+  </svg>`;
+
+  // ============================================================
+  // СХЕМА 9Б. ОРТОДРОМИЯ И ЛОКСОДРОМИЯ
+  // Принцип: сначала рассчитываем реальную геометрию,
+  // потом проецируем её на плоскость λ-φ и только затем рисуем SVG.
+  // ============================================================
+  const startLat = o.dir===1 ? o.pA : o.pB;
+  const startLon = o.dir===1 ? o.lA : o.lB;
+  const endLat   = o.dir===1 ? o.pB : o.pA;
+  const endLon   = o.dir===1 ? o.lB : o.lA;
+  // o.dl уже рассчитана для фактического направления движения
+  // (A→B или B→A), поэтому повторно менять знак для dir=2 нельзя.
+  const dLonDeg  = o.dl;
+  
+  function wrap180(x){ return mod(x+180,360)-180; }
+  function unwrapNear(lon, target){
+    let x = lon;
+    while(x-target>180) x -= 360;
+    while(x-target<-180) x += 360;
+    return x;
+  }
+  function mercPsi(phiDeg){
+    const p = rad(Math.max(-89.999999, Math.min(89.999999, phiDeg)));
+    return Math.log(Math.tan(Math.PI/4 + p/2));
+  }
+  function latFromPsi(psi){
+    return deg(2*Math.atan(Math.exp(psi)) - Math.PI/2);
+  }
+  function vecFromLL(phiDeg, lamDeg){
+    const p = rad(phiDeg), l = rad(lamDeg), cp = Math.cos(p);
+    return [cp*Math.cos(l), cp*Math.sin(l), Math.sin(p)];
+  }
+  function llFromVec(v){
+    const n = Math.hypot(v[0],v[1],v[2]) || 1;
+    const x=v[0]/n, y=v[1]/n, z=v[2]/n;
+    return {lat:deg(Math.asin(clamp(z,-1,1))), lon:deg(Math.atan2(y,x))};
+  }
+
+  function greatCirclePoints(steps=120){
+    const a = vecFromLL(startLat, startLon);
+    const b = vecFromLL(endLat, endLon);
+    let dot = a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+    dot = clamp(dot,-1,1);
+    const omg = Math.acos(dot), so = Math.sin(omg);
+    const out = [];
+    for(let i=0;i<=steps;i++){
+      const t = i/steps;
+      let v;
+      if(Math.abs(so) < 1e-12){
+        v = [(1-t)*a[0]+t*b[0], (1-t)*a[1]+t*b[1], (1-t)*a[2]+t*b[2]];
+      }else{
+        const A = Math.sin((1-t)*omg)/so, B = Math.sin(t*omg)/so;
+        v = [A*a[0]+B*b[0], A*a[1]+B*b[1], A*a[2]+B*b[2]];
+      }
+      let ll = llFromVec(v);
+      const expected = startLon + t*dLonDeg;
+      ll.lon = unwrapNear(ll.lon, expected);
+      out.push({lon:ll.lon, lat:ll.lat, dlon:ll.lon-startLon});
+    }
+    return out;
+  }
+
+  function rhumbPoints(steps=120){
+    const psi1 = mercPsi(startLat), psi2 = mercPsi(endLat);
+    const out = [];
+    for(let i=0;i<=steps;i++){
+      const t = i/steps;
+      const psi = psi1 + t*(psi2-psi1);
+      out.push({lon:startLon + t*dLonDeg, lat:latFromPsi(psi), dlon:t*dLonDeg});
+    }
+    return out;
+  }
+
+  const gcPts = greatCirclePoints();
+  const rhPts = rhumbPoints();
+  const allPts = gcPts.concat(rhPts).concat([{dlon:0, lat:0}, {dlon:dLonDeg, lat:0}]);
+
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for(const p of allPts){
+    minX = Math.min(minX, p.dlon);
+    maxX = Math.max(maxX, p.dlon);
+    minY = Math.min(minY, p.lat);
+    maxY = Math.max(maxY, p.lat);
+  }
+  // Equator must always remain visible
+  minY = Math.min(minY, 0);
+  maxY = Math.max(maxY, 0);
+
+  const padDegX = 10, padDegY = 10;
+  minX -= padDegX; maxX += padDegX; minY -= padDegY; maxY += padDegY;
+  const spanX = Math.max(20, maxX-minX), spanY = Math.max(20, maxY-minY);
+
+  const RW = 460, RH = 290, pad = 22;
+  const scale = Math.min((RW-2*pad)/spanX, (RH-2*pad)/spanY);
+  const plotW = spanX*scale, plotH = spanY*scale;
+  const offX = (RW-plotW)/2, offY = (RH-plotH)/2;
+
+  function sx(dlon){ return offX + (dlon-minX)*scale; }
+  function sy(lat){ return RH - (offY + (lat-minY)*scale); }
+  function gridLines(minV, maxV){
+    const first = Math.ceil(minV/10)*10;
+    const arr=[];
+    for(let v=first; v<=maxV+1e-9; v+=10) arr.push(v);
+    return arr;
+  }
+  function svgPath(pts){
+    return pts.map((p,i)=>`${i?'L':'M'} ${sx(p.dlon).toFixed(2)} ${sy(p.lat).toFixed(2)}`).join(' ');
+  }
+
+  const vGrid = gridLines(minX, maxX).map(v=>`<line x1="${sx(v).toFixed(2)}" y1="0" x2="${sx(v).toFixed(2)}" y2="${RH}" stroke="#dddddd" stroke-width="0.85"/>`).join('');
+  const hGrid = gridLines(minY, maxY).map(v=>`<line x1="0" y1="${sy(v).toFixed(2)}" x2="${RW}" y2="${sy(v).toFixed(2)}" stroke="#dddddd" stroke-width="0.85"/>`).join('');
+
+  const gcPath = svgPath(gcPts);
+  const rhPath = svgPath(rhPts);
+  const ax = o.dir===1 ? sx(0) : sx(dLonDeg), ay = sy(o.pA);
+  const bx = o.dir===1 ? sx(dLonDeg) : sx(0), by = sy(o.pB);
+  const eqY = sy(0);
+
+  const rightSVG = `
+  <svg viewBox="0 0 ${RW} ${RH}" xmlns="http://www.w3.org/2000/svg" aria-label="Схема 9б — ортодромия и локсодромия">
+    <defs>
+      <marker id="arrOrth9" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+      </marker>
+      <marker id="arrRh9" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect width="${RW}" height="${RH}" fill="#fff"/>
+    ${vGrid}
+    ${hGrid}
+    <line x1="0" y1="${eqY.toFixed(2)}" x2="${RW}" y2="${eqY.toFixed(2)}" stroke="#111" stroke-width="3.6"/>
+    <text x="${(RW/2).toFixed(1)}" y="${(eqY-7).toFixed(1)}" text-anchor="middle" font-size="18" font-family="Times New Roman, serif">экватор</text>
+    <path d="${gcPath}" fill="none" stroke="#888888" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrOrth9)"/>
+    <path d="${rhPath}" fill="none" stroke="#111" stroke-width="2.2" stroke-dasharray="10 8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrRh9)"/>
+    <circle cx="${ax.toFixed(2)}" cy="${ay.toFixed(2)}" r="2.8" fill="#111"/>
+    <circle cx="${bx.toFixed(2)}" cy="${by.toFixed(2)}" r="2.8" fill="#111"/>
+    <text x="${(ax + (ax<RW/2?-18:8)).toFixed(1)}" y="${(ay-12).toFixed(1)}" font-size="21" font-family="Times New Roman, serif">A</text>
+    <text x="${(bx + (bx<RW/2?-18:8)).toFixed(1)}" y="${(by+22).toFixed(1)}" font-size="21" font-family="Times New Roman, serif">B</text>
+  </svg>`;
+
+  const crosses = o.pA * o.pB < 0;
+  return `
+    <div class="scheme9-wrap">
+      <div class="scheme9-panel">
+        ${leftSVG}
+        <div class="scheme-caption">Верх = 0°, вправо = 90°, вниз = 180°, влево = 270°. Лучи построены по истинным значениям курсов.</div>
+      </div>
+      <div class="scheme9-panel">
+        ${rightSVG}
+        <div class="scheme-caption">Правая схема построена по принципу «геометрия → проекция → SVG»: ортодромия рассчитана как большой круг, локсодромия — как rhumb line. ${crosses ? 'Точки A и B лежат в разных полушариях, поэтому обе линии пересекают экватор.' : 'Точки A и B лежат в одном полушарии, поэтому экватор не пересекается.'}</div>
+      </div>
+    </div>`;
+}
+
+
+
+function lr4Signed(v,n=6){
+  return `${v<0?'−':''}${fix(Math.abs(v),n)}`;
+}
+function lr4LatName(v,n=6){
+  if(Math.abs(v)<1e-12) return `0,000000°`;
+  return `${fix(Math.abs(v),n)}° ${v>0?'N':'S'}`;
+}
+function lr4LonName(v,n=6){
+  if(Math.abs(v)<1e-12) return `0,000000°`;
+  return `${fix(Math.abs(v),n)}° ${v>0?'E':'W'}`;
+}
+function lr4AngleFromCotHtml(name,cotv,res){
+  const tgv=1/cotv;
+  const raw=deg(Math.atan(tgv));
+  let h=line(`tg ${name} = 1 / ${fix(cotv,6)} = ${fix(tgv,6)}`);
+  if(raw<0) h+=line(`${name} = arctg(${fix(tgv,6)}) = ${fix(raw,6)}° + 180° = ${fix(res,6)}° ≈ ${fix(res,1)}°`);
+  else h+=line(`${name} = arctg(${fix(tgv,6)}) = ${fix(res,6)}° ≈ ${fix(res,1)}°`);
+  return h;
+}
+
+function svgTopViewScheme(o){
+  // Пункт 1: вид с северного полюса.
+  // Делаем схему не "математически красивой", а учебно-понятной:
+  // круг долгот, меридиан Гринвича, меридианы A/B,
+  // отдельные дуги λA, λB и отдельная кратчайшая дуга Δλ.
+  const W=620, H=500, CX=310, CY=240, R=170;
+
+  function pt(lonDeg, r=R){
+    const a=rad(lonDeg);
+    return {x:CX + r*Math.sin(a), y:CY + r*Math.cos(a)};
+  }
+  function arcPts(startLon, deltaLon, r, n=100){
+    const arr=[];
+    for(let i=0;i<=n;i++) arr.push(pt(startLon + deltaLon*i/n, r));
+    return arr.map((p,i)=>`${i?'L':'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+  }
+  function arcLabelPos(startLon, deltaLon, r, push=16){
+    const m = startLon + deltaLon/2;
+    const p = pt(m, r);
+    const vx = p.x - CX, vy = p.y - CY;
+    const len = Math.hypot(vx,vy) || 1;
+    return {x:p.x + vx/len*push, y:p.y + vy/len*push};
+  }
+
+  const pA=pt(o.lA), pB=pt(o.lB);
+  const p0=pt(0), p90E=pt(90), p180=pt(180), p90W=pt(-90);
+
+  // Отдельные радиусы для дуг, чтобы они не накладывались.
+  const rA = R*0.44;
+  const rB = R*0.64;
+  const rDL = R*0.92;
+
+  const lambdaAPath = arcPts(0, o.lA, rA, 80);
+  const lambdaBPath = arcPts(0, o.lB, rB, 90);
+
+  // Δλ берём от точки отхода до точки прихода по кратчайшему пути.
+  const depLon = o.dir===1 ? o.lA : o.lB;
+  const depName = o.dir===1 ? 'A' : 'B';
+  const arrName = o.dir===1 ? 'B' : 'A';
+  const deltaPath = arcPts(depLon, o.dl, rDL, 100);
+  const dirWord = o.dl>=0 ? 'E' : 'W';
+
+  const labA = arcLabelPos(0, o.lA, rA, 14);
+  const labB = arcLabelPos(0, o.lB, rB, 16);
+  const labD = arcLabelPos(depLon, o.dl, rDL, 20);
+
+  const aTextX = pA.x + (pA.x>=CX ? 16 : -16);
+  const bTextX = pB.x + (pB.x>=CX ? 16 : -16);
+  const aAnchor = pA.x>=CX ? 'start' : 'end';
+  const bAnchor = pB.x>=CX ? 'start' : 'end';
+
+  return `
+  <svg viewBox="0 0 ${W} ${H}" width="100%" height="470"
+       aria-label="Пункт 1 — разность долгот и направление движения">
+    <defs>
+      <marker id="lr4p1arrBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#333333"/>
+      </marker>
+      <marker id="lr4p1arrDark" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#444444"/>
+      </marker>
+      <style>
+        .p1txt{font-family:'Times New Roman',serif; fill:#111}
+        .p1label{paint-order:stroke; stroke:#fff; stroke-width:5px; stroke-linejoin:round}
+      </style>
+    </defs>
+
+    <rect width="${W}" height="${H}" fill="#fff"/>
+
+    <!-- Внешний круг долгот -->
+    <circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="#111" stroke-width="2.4"/>
+
+    <!-- Минимальная круговая разметка: 0 / 90 / 180 / 270 -->
+    <line x1="${CX}" y1="${CY}" x2="${CX}" y2="${(p0.y+10).toFixed(1)}" stroke="#111" stroke-width="2"/>
+    <line x1="${CX}" y1="${CY}" x2="${p180.x.toFixed(1)}" y2="${p180.y.toFixed(1)}" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="5 5"/>
+    <line x1="${CX}" y1="${CY}" x2="${p90E.x.toFixed(1)}" y2="${p90E.y.toFixed(1)}" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="5 5"/>
+    <line x1="${CX}" y1="${CY}" x2="${p90W.x.toFixed(1)}" y2="${p90W.y.toFixed(1)}" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="5 5"/>
+
+    <text class="p1txt p1label" x="${CX}" y="${(p0.y+23).toFixed(1)}" text-anchor="middle" font-size="15">0°</text>
+    <text class="p1txt p1label" x="${(p90E.x+18).toFixed(1)}" y="${(p90E.y+5).toFixed(1)}" text-anchor="start" font-size="15">90°</text>
+    <text class="p1txt p1label" x="${CX}" y="${(p180.y-14).toFixed(1)}" text-anchor="middle" font-size="15">180°</text>
+    <text class="p1txt p1label" x="${(p90W.x-18).toFixed(1)}" y="${(p90W.y+5).toFixed(1)}" text-anchor="end" font-size="15">270°</text>
+    <text class="p1txt" x="${CX}" y="${(p0.y+43).toFixed(1)}" text-anchor="middle" font-size="14">Гринвич</text>
+
+    <!-- Радиусы к меридианам A и B -->
+    <line x1="${CX}" y1="${CY}" x2="${pA.x.toFixed(1)}" y2="${pA.y.toFixed(1)}" stroke="#111" stroke-width="2"/>
+    <line x1="${CX}" y1="${CY}" x2="${pB.x.toFixed(1)}" y2="${pB.y.toFixed(1)}" stroke="#111" stroke-width="2"/>
+
+    <!-- Точки A и B -->
+    <circle cx="${pA.x.toFixed(1)}" cy="${pA.y.toFixed(1)}" r="4.5" fill="#111"/>
+    <circle cx="${pB.x.toFixed(1)}" cy="${pB.y.toFixed(1)}" r="4.5" fill="#111"/>
+    <text class="p1txt p1label" x="${aTextX.toFixed(1)}" y="${(pA.y-10).toFixed(1)}" text-anchor="${aAnchor}" font-size="22" font-style="italic">A</text>
+    <text class="p1txt p1label" x="${bTextX.toFixed(1)}" y="${(pB.y-10).toFixed(1)}" text-anchor="${bAnchor}" font-size="22" font-style="italic">B</text>
+
+    <!-- λA -->
+    <path d="${lambdaAPath}" fill="none" stroke="#777777" stroke-width="2" marker-end="url(#lr4p1arrDark)"/>
+    <text class="p1txt p1label" x="${labA.x.toFixed(1)}" y="${labA.y.toFixed(1)}" text-anchor="middle" font-size="18" font-style="normal">λA</text>
+
+    <!-- λB -->
+    <path d="${lambdaBPath}" fill="none" stroke="#555" stroke-width="2" marker-end="url(#lr4p1arrDark)"/>
+    <text class="p1txt p1label" x="${labB.x.toFixed(1)}" y="${labB.y.toFixed(1)}" text-anchor="middle" font-size="18" font-style="normal">λB</text>
+
+    <!-- Кратчайшая дуга Δλ -->
+    <path d="${deltaPath}" fill="none" stroke="#333333" stroke-width="3"
+          marker-end="url(#lr4p1arrBlue)"/>
+    <text class="p1txt p1label" x="${labD.x.toFixed(1)}" y="${labD.y.toFixed(1)}" text-anchor="middle" font-size="20" font-style="normal">Δλ</text>
+
+    <!-- Центр / северный полюс -->
+    <circle cx="${CX}" cy="${CY}" r="36" fill="none" stroke="#777" stroke-width="1.2"/>
+    <text class="p1txt" x="${CX}" y="${(CY+7).toFixed(1)}" text-anchor="middle" font-size="20" font-style="italic">P<tspan baseline-shift="sub" font-size="12">N</tspan></text>
+    <!-- Короткая подпись без числовых значений -->
+    <text x="${CX}" y="${H-24}" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#333333">
+      λA и λB отсчитываются от Гринвича; синяя дуга — кратчайшая Δλ.
+    </text>
+  </svg>`;
+}
+
+
+function svgGammaScaleScheme(o){
+  // Пункт 7: масштаб строится вокруг φср и зависит от |Δφ|.
+  // По виду близко к шкале из образца: слева Δφ, в центре деления,
+  // справа отдельная линия с отметкой φср.
+  const W=500, H=360;
+  const scaleX=245, leftX=120, rightX=360;
+  const top=42, bottom=310;
+
+  const depLat=o.dir===1?o.pA:o.pB;
+  const arrLat=o.dir===1?o.pB:o.pA;
+  const absD=Math.abs(o.dphi);
+  const half=Math.max(absD/2,1);
+
+  let step;
+  if(absD>60) step=10;
+  else if(absD>30) step=5;
+  else if(absD>12) step=2;
+  else step=1;
+
+  // Диапазон определяем от средней широты ± половина Δφ,
+  // затем даём небольшой запас и округляем до шага.
+  const margin=Math.max(step,absD*0.08);
+  let lo=Math.floor((o.pavg-half-margin)/step)*step;
+  let hi=Math.ceil((o.pavg+half+margin)/step)*step;
+  lo=Math.max(-90,lo);
+  hi=Math.min(90,hi);
+
+  // Чтобы картинка не была слишком "пустой" при близких широтах.
+  if(hi-lo < step*6){
+    const need=(step*6-(hi-lo))/2;
+    lo=Math.max(-90,Math.floor((lo-need)/step)*step);
+    hi=Math.min(90,Math.ceil((hi+need)/step)*step);
+  }
+
+  function y(phi){
+    return top+(hi-phi)/(hi-lo)*(bottom-top);
+  }
+  function tickLabel(v){
+    if(Math.abs(v)<1e-9) return 'φ = 0°';
+    const a=Math.abs(v);
+    const n=Math.abs(a-Math.round(a))<1e-9?a.toFixed(0):a.toFixed(1);
+    return `${n}°${v>0?'N':'S'}`;
+  }
+
+  const yA=y(o.pA), yB=y(o.pB), yAvg=y(o.pavg);
+  const yDep=y(depLat), yArr=y(arrLat);
+  const labelA = o.labelA || 'φA';
+  const labelB = o.labelB || 'φB';
+
+  const ticks=[];
+  for(let v=Math.floor(hi/step)*step;v>=lo-1e-9;v-=step){
+    ticks.push(+v.toFixed(6));
+  }
+
+  // Подписи A/B разводим, если точки почти совпали по экрану.
+  let labelYA=yA, labelYB=yB;
+  if(Math.abs(labelYA-labelYB)<22){
+    if(labelYA<=labelYB){ labelYA-=11; labelYB+=11; }
+    else { labelYA+=11; labelYB-=11; }
+  }
+
+  const dphiName=o.dphi>=0?'N':'S';
+
+  return `
+  <svg viewBox="0 0 ${W} ${H}" width="100%" height="335"
+       aria-label="Пункт 7 — проверка средней широты и разности широт">
+    <defs>
+      <marker id="lr4p7arr" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect width="${W}" height="${H}" fill="#fff"/>
+
+    <!-- Центральная шкала -->
+    ${ticks.map(v=>{
+      const yy=y(v);
+      const strong=Math.abs(v)<1e-9;
+      return `
+        <line x1="${scaleX-16}" y1="${yy.toFixed(1)}" x2="${scaleX+16}" y2="${yy.toFixed(1)}"
+              stroke="#111" stroke-width="${strong?2:1.4}"/>
+        <text x="${scaleX+28}" y="${(yy+5).toFixed(1)}" font-family="Times New Roman, serif"
+              font-size="${strong?15:14}" ${strong?'font-weight="700"':''}>${tickLabel(v)}</text>`;
+    }).join('')}
+
+    <!-- Левая линия: φA, φB и Δφ -->
+    <line x1="${leftX}" y1="${Math.min(yA,yB).toFixed(1)}"
+          x2="${leftX}" y2="${Math.max(yA,yB).toFixed(1)}"
+          stroke="#111" stroke-width="2"/>
+
+    <line x1="${leftX}" y1="${yDep.toFixed(1)}" x2="${leftX}" y2="${yArr.toFixed(1)}"
+          stroke="#111" stroke-width="2.2" marker-end="url(#lr4p7arr)"/>
+
+    <circle cx="${leftX}" cy="${yA.toFixed(1)}" r="4" fill="#111"/>
+    <circle cx="${leftX}" cy="${yB.toFixed(1)}" r="4" fill="#111"/>
+
+    <line x1="${leftX+5}" y1="${yA.toFixed(1)}" x2="${scaleX-24}" y2="${yA.toFixed(1)}"
+          stroke="#777" stroke-width="1" stroke-dasharray="4 4"/>
+    <line x1="${leftX+5}" y1="${yB.toFixed(1)}" x2="${scaleX-24}" y2="${yB.toFixed(1)}"
+          stroke="#777" stroke-width="1" stroke-dasharray="4 4"/>
+
+    <text x="${leftX-18}" y="${(labelYA+5).toFixed(1)}" text-anchor="end"
+          font-family="Times New Roman, serif" font-size="16" font-style="normal">${labelA}</text>
+    <text x="${leftX-18}" y="${(labelYB+5).toFixed(1)}" text-anchor="end"
+          font-family="Times New Roman, serif" font-size="16" font-style="normal">${labelB}</text>
+
+    <text x="${leftX-28}" y="${((yA+yB)/2-7).toFixed(1)}" text-anchor="end"
+          font-family="Times New Roman, serif" font-size="17" font-style="normal">Δφ</text>
+    <text x="${leftX-28}" y="${((yA+yB)/2+13).toFixed(1)}" text-anchor="end"
+          font-family="Times New Roman, serif" font-size="14">≈ ${dm(Math.abs(o.dphi),1)} ${dphiName}</text>
+
+    <!-- Правая линия и указатель средней широты -->
+    <line x1="${rightX}" y1="${Math.min(yA,yB).toFixed(1)}"
+          x2="${rightX}" y2="${Math.max(yA,yB).toFixed(1)}"
+          stroke="#111" stroke-width="2"/>
+    <circle cx="${rightX}" cy="${yA.toFixed(1)}" r="4" fill="#111"/>
+    <circle cx="${rightX}" cy="${yB.toFixed(1)}" r="4" fill="#111"/>
+
+    <polygon points="${rightX},${yAvg.toFixed(1)} ${rightX+28},${(yAvg-7).toFixed(1)} ${rightX+28},${(yAvg+7).toFixed(1)}"
+             fill="#111"/>
+    <text x="${rightX+38}" y="${(yAvg-5).toFixed(1)}"
+          font-family="Times New Roman, serif" font-size="17" font-style="normal">φ<tspan baseline-shift="sub" font-size="12">ср</tspan></text>
+    <text x="${rightX+38}" y="${(yAvg+15).toFixed(1)}"
+          font-family="Times New Roman, serif" font-size="14">≈ ${dmHem(o.pavg,1)}</text>
+
+    <text x="20" y="${H-18}" font-family="Arial,sans-serif" font-size="12.5" fill="#555555">
+      Автомасштаб: φср = ${dmHem(o.pavg,1)}, |Δφ| = ${dm(Math.abs(o.dphi),1)}, шаг шкалы = ${step}°
+    </text>
+  </svg>`;
+}
+
+function lr4DetailedHtml(o){
+  const depName=o.dir===1?'A':'B';
+  const arrName=o.dir===1?'B':'A';
+  const depLon=o.dir===1?o.lA:o.lB;
+  const arrLon=o.dir===1?o.lB:o.lA;
+  const raw=o.raw;
+  const east=o.dl>0;
+  const dirName=east?'E':'W';
+  const rawName=raw>=0?'E':'W';
+
+  const IA=o.tB.ct*o.tA.s;
+  const IIA=o.tA.c*o.tL.c;
+  const III=o.tL.s;
+  const IB=o.tA.ct*o.tB.s;
+  const IIB=o.tB.c*o.tL.c;
+
+  const SI=o.tA.c*o.tB.c;
+  const SII=o.tA.s*o.tB.s*o.tL.c;
+
+  const gammaHalf=deg(Math.atan(o.tgHalf));
+  const sinPavg=Math.sin(rad(o.pavg));
+  const cosDphi2=Math.cos(rad(o.dphi/2));
+  const tanDl2=Math.tan(rad(o.hdl));
+  const gammaOk=Math.abs(o.gamma-o.dK)<0.15;
+
+  const argA=45+Math.abs(o.pA)/2;
+  const argB=45+Math.abs(o.pB)/2;
+  const tanMpA=Math.tan(rad(argA));
+  const tanMpB=Math.tan(rad(argB));
+  const lnA=Math.log(tanMpA), lnB=Math.log(tanMpB);
+  const qtg=Math.abs(o.rd/o.rmp);
+  const ns=o.dphi>=0?'N':'S';
+  const ew=o.dl>=0?'E':'W';
+  const quadrant=ns+ew;
+  const cosQ=Math.cos(rad(o.qang));
+  let qConv='';
+  if(quadrant==='NE') qConv=`Kлок = K = ${fix(o.qang,1)}°`;
+  else if(quadrant==='SE') qConv=`Kлок = 180° − ${fix(o.qang,1)}° = ${fix(o.Kloc,1)}°`;
+  else if(quadrant==='SW') qConv=`Kлок = 180° + ${fix(o.qang,1)}° = ${fix(o.Kloc,1)}°`;
+  else qConv=`Kлок = 360° − ${fix(o.qang,1)}° = ${fix(o.Kloc,1)}°`;
+
+  let h='';
+  h+=`<div class="section-title">1. Расчёт разности долгот, направления движения и полярных расстояний</div>`;
+  h+=line(`Направление задания: ${depName} → ${arrName}`);
+  h+=line(`λ${depName} = ${lr4Signed(depLon,6)}°; λ${arrName} = ${lr4Signed(arrLon,6)}°`);
+  h+=line(`Δλ = λ${arrName} − λ${depName} = ${lr4Signed(arrLon,6)}° − (${lr4Signed(depLon,6)}°) = ${lr4Signed(raw,6)}° (${rawName})`);
+  if(Math.abs(raw)>180){
+    h+=line(`|Δλ| = ${fix(Math.abs(raw),6)}° > 180° → берём кратчайшую дугу: 360° − ${fix(Math.abs(raw),6)}° = ${fix(o.adl,6)}° ${dirName}`);
+  } else {
+    h+=line(`|Δλ| = ${fix(o.adl,6)}°; направление кратчайшего движения — ${dirName}`);
+  }
+  h+=line(`ΔA = 90° − φA = 90° − (${lr4Signed(o.pA,6)}°) = ${fix(o.dA,6)}°`);
+  h+=line(`ΔB = 90° − φB = 90° − (${lr4Signed(o.pB,6)}°) = ${fix(o.dB,6)}°`);
+  h+=`<div class="scheme">${svgTopViewScheme(o)}</div>`;
+
+  h+=`<div class="section-title">2. Объёмный чертёж сферического треугольника</div>`;
+  h+=`<div class="scheme">${svgSphereScheme(o)}</div>`;
+
+  h+=`<div class="section-title">3. Вычисление повторяющихся тригонометрических функций</div>`;
+  h+=`<table><tr><th>Элемент</th><th>sin</th><th>cos</th><th>ctg</th></tr>
+    <tr><td>ΔA = ${fix(o.dA,6)}°</td><td class="num">${fix(o.tA.s,6)}</td><td class="num">${fix(o.tA.c,6)}</td><td class="num">${fix(o.tA.ct,6)}</td></tr>
+    <tr><td>ΔB = ${fix(o.dB,6)}°</td><td class="num">${fix(o.tB.s,6)}</td><td class="num">${fix(o.tB.c,6)}</td><td class="num">${fix(o.tB.ct,6)}</td></tr>
+    <tr><td>|Δλ| = ${fix(o.adl,6)}°</td><td class="num">${fix(o.tL.s,6)}</td><td class="num">${fix(o.tL.c,6)}</td><td class="num">${fix(o.tL.ct,6)}</td></tr></table>`;
+
+  h+=`<div class="section-title">4. Расчёт длины ортодромии Sорт</div>`;
+  h+=line(`cos Sорт = cos ΔA · cos ΔB + sin ΔA · sin ΔB · cos |Δλ|`);
+  h+=line(`I = cos ΔA · cos ΔB = ${fix(o.tA.c,6)} · ${fix(o.tB.c,6)} = ${fix(SI,6)}`);
+  h+=line(`II = sin ΔA · sin ΔB · cos |Δλ| = ${fix(o.tA.s,6)} · ${fix(o.tB.s,6)} · ${fix(o.tL.c,6)} = ${fix(SII,6)}`);
+  h+=line(`cos Sорт = I + II = ${fix(SI,6)} + (${fix(SII,6)}) = ${fix(o.cosS,6)}`);
+  h+=line(`Sорт = arccos(${fix(o.cosS,6)}) = ${fix(o.Sdeg,6)}°`);
+  h+=line(`Sорт = ${fix(o.Sdeg,6)}° · 60 = ${fix(o.Sort,6)}′ = ${fix(o.Sort,1)} мили`);
+  h+=`<div class="answer">Sорт = ${fix(o.Sort,1)} мили</div>`;
+
+  h+=`<div class="section-title">5. Расчёт внутренних углов сферического треугольника A и B</div>`;
+  h+=line(`Для угла A используется цепочка « A − ΔA − |Δλ| − ΔB »`);
+  h+=line(`ctg A = (ctg ΔB · sin ΔA − cos ΔA · cos |Δλ|) / sin |Δλ|`);
+  h+=line(`I = ctg ΔB · sin ΔA = ${fix(o.tB.ct,6)} · ${fix(o.tA.s,6)} = ${fix(IA,6)}`);
+  h+=line(`II = cos ΔA · cos |Δλ| = ${fix(o.tA.c,6)} · ${fix(o.tL.c,6)} = ${fix(IIA,6)}`);
+  h+=line(`III = sin |Δλ| = ${fix(o.tL.s,6)}`);
+  h+=line(`ctg A = (I − II) / III = (${fix(IA,6)} − (${fix(IIA,6)})) / ${fix(III,6)} = ${fix(o.cotA,6)}`);
+  h+=lr4AngleFromCotHtml('A',o.cotA,o.AngA);
+  h+=`<div class="answer">A = ${fix(o.AngA,1)}°</div>`;
+
+  h+=line(`Для угла B используется цепочка « B − ΔB − |Δλ| − ΔA »`);
+  h+=line(`ctg B = (ctg ΔA · sin ΔB − cos ΔB · cos |Δλ|) / sin |Δλ|`);
+  h+=line(`I = ctg ΔA · sin ΔB = ${fix(o.tA.ct,6)} · ${fix(o.tB.s,6)} = ${fix(IB,6)}`);
+  h+=line(`II = cos ΔB · cos |Δλ| = ${fix(o.tB.c,6)} · ${fix(o.tL.c,6)} = ${fix(IIB,6)}`);
+  h+=line(`III = sin |Δλ| = ${fix(o.tL.s,6)}`);
+  h+=line(`ctg B = (I − II) / III = (${fix(IB,6)} − (${fix(IIB,6)})) / ${fix(III,6)} = ${fix(o.cotB,6)}`);
+  h+=lr4AngleFromCotHtml('B',o.cotB,o.AngB);
+  h+=`<div class="answer">B = ${fix(o.AngB,1)}°</div>`;
+
+  h+=`<div class="section-title">6. Переход от углов A и B к начальной и конечной курсам ортодромии</div>`;
+  if(o.dir===1 && east){
+    h+=line(`Движение A → B на E: Kн = A = ${fix(o.AngA,1)}°`);
+    h+=line(`Kк = 180° − B = 180° − ${fix(o.AngB,1)}° = ${fix(o.Kk,1)}°`);
+  } else if(o.dir===1 && !east){
+    h+=line(`Движение A → B на W: Kн = 360° − A = 360° − ${fix(o.AngA,1)}° = ${fix(o.Kn,1)}°`);
+    h+=line(`Kк = 180° + B = 180° + ${fix(o.AngB,1)}° = ${fix(o.Kk,1)}°`);
+  } else if(o.dir===2 && east){
+    h+=line(`Движение B → A на E: Kн = B = ${fix(o.AngB,1)}°`);
+    h+=line(`Kк = 180° − A = 180° − ${fix(o.AngA,1)}° = ${fix(o.Kk,1)}°`);
+  } else {
+    h+=line(`Движение B → A на W: Kн = 360° − B = 360° − ${fix(o.AngB,1)}° = ${fix(o.Kn,1)}°`);
+    h+=line(`Kк = 180° + A = 180° + ${fix(o.AngA,1)}° = ${fix(o.Kk,1)}°`);
+  }
+  h+=line(`ΔK = Kк − Kн = ${fix(o.Kk,1)}° − ${fix(o.Kn,1)}° = ${fix(o.dK,1)}°`);
+  h+=`<div class="answer">Kн = ${fix(o.Kn,1)}°; Kк = ${fix(o.Kk,1)}°; ΔK = ${fix(o.dK,1)}°</div>`;
+
+  h+=`<div class="section-title">7. Проверка ΔK по углу сферического сближения меридианов γ</div>`;
+  h+=line(`φср = (φA + φB) / 2 = (${lr4Signed(o.pA,6)}° + ${lr4Signed(o.pB,6)}°) / 2 = ${lr4Signed(o.pavg,6)}° (${o.pavg>=0?'N':'S'})`);
+  h+=line(`Δφ = φ${arrName} − φ${depName} = ${lr4Signed(o.dphi,6)}° (${o.dphi>=0?'N':'S'})`);
+  h+=line(`Δλ / 2 = ${lr4Signed(o.dl,6)}° / 2 = ${lr4Signed(o.hdl,6)}°`);
+  h+=line(`sin φср = sin(${lr4Signed(o.pavg,6)}°) = ${fix(sinPavg,6)}`);
+  h+=line(`cos(Δφ/2) = cos(${lr4Signed(o.dphi/2,6)}°) = ${fix(cosDphi2,6)}`);
+  h+=line(`tg(Δλ/2) = tg(${lr4Signed(o.hdl,6)}°) = ${fix(tanDl2,6)}`);
+  h+=line(`tg(γ/2) = [sin φср / cos(Δφ/2)] · tg(Δλ/2)`);
+  h+=line(`tg(γ/2) = [${fix(sinPavg,6)} / ${fix(cosDphi2,6)}] · ${fix(tanDl2,6)} = ${fix(o.tgHalf,6)}`);
+  h+=line(`γ/2 = arctg(${fix(o.tgHalf,6)}) = ${fix(gammaHalf,6)}°`);
+  h+=line(`γ = 2 · ${fix(gammaHalf,6)}° = ${fix(o.gamma,6)}° ≈ ${fix(o.gamma,1)}°`);
+  h+=line(`Проверка: γ = ${fix(o.gamma,1)}°; ΔK = ${fix(o.dK,1)}° ${gammaOk?'✓':''}`);
+  h+=`<div class="scheme">${svgGammaScaleScheme(o)}</div>`;
+
+  h+=`<div class="section-title">8. Расчёт элементов локсодромии</div>`;
+  h+=line(`Меридиональные части: МЧ = ±3437,75 · ln[tg(45° + |φ|/2)]`);
+  h+=line(`МЧA = ${o.pA>=0?'+':'−'}3437,75 · ln[tg(45° + ${fix(Math.abs(o.pA),6)}° / 2)]`);
+  h+=line(`МЧA = ${o.pA>=0?'+':'−'}3437,75 · ln[tg(${fix(argA,6)}°)] = ${o.pA>=0?'+':'−'}3437,75 · ln(${fix(tanMpA,6)}) = ${fix(o.mA,1)}`);
+  h+=line(`МЧB = ${o.pB>=0?'+':'−'}3437,75 · ln[tg(45° + ${fix(Math.abs(o.pB),6)}° / 2)]`);
+  h+=line(`МЧB = ${o.pB>=0?'+':'−'}3437,75 · ln[tg(${fix(argB,6)}°)] = ${o.pB>=0?'+':'−'}3437,75 · ln(${fix(tanMpB,6)}) = ${fix(o.mB,1)}`);
+  h+=line(`РМЧ = МЧ${arrName} − МЧ${depName} = ${o.dir===1?`${fix(o.mB,1)} − (${fix(o.mA,1)})`:`${fix(o.mA,1)} − (${fix(o.mB,1)})`} = ${fix(o.rmp,1)}′`);
+  h+=line(`РД = Δλ · 60 = ${lr4Signed(o.dl,6)}° · 60 = ${fix(o.rd,1)}′`);
+  h+=line(`РШ = Δφ · 60 = ${lr4Signed(o.dphi,6)}° · 60 = ${fix(o.rsh,1)}′`);
+  h+=line(`tg K = |РД / РМЧ| = |${fix(o.rd,1)} / ${fix(o.rmp,1)}| = ${fix(qtg,6)}`);
+  h+=line(`K = arctg(${fix(qtg,6)}) = ${fix(o.qang,6)}° ${quadrant}`);
+  h+=line(qConv);
+  h+=line(`cos K = cos(${fix(o.qang,6)}°) = ${fix(cosQ,6)}`);
+  h+=line(`Sлок = |РШ / cos K| = |${fix(o.rsh,1)} / ${fix(cosQ,6)}| = ${fix(o.Sloc,1)} мили`);
+  h+=line(`ΔS = Sлок − Sорт = ${fix(o.Sloc,1)} − ${fix(o.Sort,1)} = ${fix(o.dS,1)} мили`);
+  h+=`<div class="answer">Kлок = ${fix(o.Kloc,1)}°; Sлок = ${fix(o.Sloc,1)} мили; ΔS = ${fix(o.dS,1)} мили</div>`;
+
+  h+=`<div class="section-title">9. Схематическое изображение Kн, Kк, Kлок и ортодромии/локсодромии</div>`;
+  h+=`<div class="scheme">${svgVectorScheme(o)}</div>`;
+  return h;
+}
+
+function renderLR4(){
+  try {
+    const o = solveLR4($("#lr4code").value);
+    setStatus("#lr4status", `Вариант ${o.v}-${o.dir} • строки ${o.rs.join(", ")}`);
+    const inp = `<table><tr><th>Координата</th><th>Исходное значение</th><th>В градусах</th></tr>
+      <tr><td>φA</td><td>${coord(...o.pA0)}</td><td class="num">${fix(o.pA,6)}°</td></tr>
+      <tr><td>λA</td><td>${coord(...o.lA0)}</td><td class="num">${fix(o.lA,6)}°</td></tr>
+      <tr><td>φB</td><td>${coord(...o.pB0)}</td><td class="num">${fix(o.pB,6)}°</td></tr>
+      <tr><td>λB</td><td>${coord(...o.lB0)}</td><td class="num">${fix(o.lB,6)}°</td></tr></table>`;
+    const summary = `<div class="section-title">Основные результаты</div>
+      <div class="grid3">
+        <div class="kpi">Sорт<b>${fix(o.Sort,1)} мили</b></div>
+        <div class="kpi">Kн / Kк<b>${fix(o.Kn,1)}° / ${fix(o.Kk,1)}°</b></div>
+        <div class="kpi">Kлок<b>${fix(o.Kloc,1)}°</b></div>
+      </div>`;
+    const body = lr4DetailedHtml(o) + summary;
+    $("#lr4out").innerHTML = card("Исходные данные", inp) + card("Подробное решение по образцу", body);
+    normalizeGreekSymbols($("#lr4out"));
+  } catch(e) {
+    setStatus("#lr4status", e.message, true);
+    $("#lr4out").innerHTML = "";
+  }
+}
+
+$("#lr2code").value = "235"; renderLR2();
+$("#lr3code").value = "5921"; renderLR3();
+$("#lr4code").value = "21 3415"; renderLR4();
+
+// --- Удобство для телефона: Enter = рассчитать, запоминание кодов и активной вкладки ---
+(function(){
+  const labInputs = [
+    ["lr2code", renderLR2],
+    ["lr3code", renderLR3],
+    ["lr4code", renderLR4],
+  ];
+
+  labInputs.forEach(([id, fn])=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    try{
+      const saved = localStorage.getItem("mos_"+id);
+      if(saved) el.value = saved;
+    }catch(e){}
+
+    el.addEventListener("input", ()=>{
+      try{ localStorage.setItem("mos_"+id, el.value); }catch(e){}
+    });
+
+    el.addEventListener("keydown", (ev)=>{
+      if(ev.key === "Enter"){
+        ev.preventDefault();
+        fn();
+      }
+    });
+  });
+
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  tabs.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      try{ localStorage.setItem("mos_active_lab", btn.dataset.lab); }catch(e){}
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  });
+
+  try{
+    const savedLab = localStorage.getItem("mos_active_lab");
+    if(savedLab){
+      const btn = document.querySelector('.tab[data-lab="'+savedLab+'"]');
+      if(btn) btn.click();
+    }
+  }catch(e){}
+})();
+</script>
+
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+
+
+<script>
+async function sharePDF(){
+  const active = document.querySelector('.lab.active');
+  if(!active){ alert('Не выбрана лабораторная работа'); return; }
+
+  const host=document.createElement('div');
+  host.className='pdf-export-host';
+  const clone=active.cloneNode(true);
+  clone.classList.add('pdf-export');
+  clone.removeAttribute('id');
+
+  // В PDF оставляем только саму лабораторную работу.
+  // Поля ввода, подсказки, статус и кнопка «Рассчитать» относятся к интерфейсу
+  // калькулятора и в готовом документе не нужны.
+  clone.querySelectorAll('button,.tabs,.topbar,.footer,.inputbar,.hero p').forEach(el=>el.remove());
+  clone.querySelectorAll('input').forEach(input=>input.remove());
+  clone.querySelectorAll('.status').forEach(el=>el.remove());
+
+  // Каждая крупная часть может начинаться с новой страницы A4.
+  // Для ЛР3 отдельно фиксируем три рисунка: 3.1, 3.2 и 3.3.
+  const titles=[...clone.querySelectorAll('.section-title')];
+  if(active.id==='lr3'){
+    titles.forEach(t=>{
+      const txt=t.textContent.trim();
+      if(/^3\.1\./.test(txt) || /^3\.2\./.test(txt) || /^3\.3\./.test(txt)) t.classList.add('pdf-break-before');
+    });
+  }
+
+  normalizeGreekSymbols(clone);
+  host.appendChild(clone);
+  document.body.appendChild(host);
+
+  try{
+    // Дожидаемся загрузки рукописного шрифта, чтобы он гарантированно попал в PDF.
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+      try { await document.fonts.load('16px "Neucha"'); } catch(e) {}
+    }
+    // Даём браузеру два кадра на перерасчёт размеров перед rasterization.
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+
+    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : 'ЛР4';
+    const codeEl=active.querySelector('.task');
+    const code=codeEl ? cleanCode(codeEl.value) : '';
+    const filename = `${labName}${code ? '_'+code : ''}.pdf`;
+
+    // Один длинный лист: PDF получает высоту по фактической высоте отчёта.
+    // Это намеренно НЕ A4: весь выбранный отчёт находится на одной странице без разрывов.
+    const pxPerMm = 96 / 25.4;
+    const contentHeightPx = Math.ceil(clone.scrollHeight || clone.offsetHeight || clone.getBoundingClientRect().height);
+    const marginMm = 8;
+    const pageWidthMm = 210;
+    const pageHeightMm = Math.max(100, contentHeightPx / pxPerMm + marginMm * 2);
+
+    const worker=html2pdf().set({
+      margin:[marginMm,marginMm,marginMm,marginMm],
+      filename,
+      image:{type:'jpeg',quality:0.96},
+      html2canvas:{
+        scale:2,
+        useCORS:true,
+        backgroundColor:'#ffffff',
+        logging:false,
+        windowWidth:794,
+        height:contentHeightPx,
+        scrollY:0
+      },
+      pagebreak:{mode:[]},
+      jsPDF:{unit:'mm',format:[pageWidthMm,pageHeightMm],orientation:'portrait',compress:true}
+    }).from(clone);
+
+    const blob=await worker.outputPdf('blob');
+    const file=new File([blob],filename,{type:'application/pdf'});
+
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:filename,text:`${labName} — отчёт`});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
+    }
+  }catch(e){
+    console.error(e);
+    alert('Не удалось создать PDF. Попробуйте ещё раз.');
+  }finally{
+    host.remove();
+  }
+}
+</script>
+</body>
+</html>
