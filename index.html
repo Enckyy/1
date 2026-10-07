@@ -28,33 +28,68 @@ a.btn{display:flex;align-items:center;justify-content:center;min-height:50px;bor
 a.btn.secondary{background:#fff;color:var(--accent2);border:1px solid var(--accent2)}
 .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:22px}
 @media(max-width:700px){.wrap{padding:12px 10px 32px}.hero,.card{padding:18px;border-radius:18px}.grid{grid-template-columns:1fr;gap:12px}.card{min-height:0}.hero h1{font-size:31px}}
+
+/* ===== Обновлённый дизайн главной страницы ===== */
+:root{--bg:#edf3f8;--card:#fff;--text:#17283a;--muted:#68798a;--line:#d8e2eb;--accent:#1976b9;--accent2:#125b8e;--shadow:0 18px 50px rgba(26,52,76,.10);--radius:24px}
+body{background:radial-gradient(circle at 50% -10%,#ffffff 0,#edf3f8 48%,#e8eef4 100%);}
+.wrap{max-width:1120px;padding:42px 22px 54px}
+.hero{position:relative;overflow:hidden;padding:30px 34px;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);background:rgba(255,255,255,.94);margin-bottom:22px}
+.hero:after{content:"";position:absolute;right:-90px;top:-110px;width:300px;height:300px;border:1px solid rgba(25,118,185,.12);border-radius:50%;box-shadow:0 0 0 34px rgba(25,118,185,.035),0 0 0 68px rgba(25,118,185,.025)}
+.hero-row{display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;z-index:1}
+.hero h1{margin:6px 0 15px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px}
+.hero-tags span{padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:#f7fafc;color:var(--muted);font-weight:750;font-size:12px}
+.hero-mark{display:grid;place-items:center;width:76px;height:76px;border-radius:22px;background:#edf6fc;border:1px solid #cfe1ee;font-size:36px;box-shadow:inset 0 0 0 6px rgba(255,255,255,.6)}
+.grid{gap:22px}
+.card{position:relative;min-height:310px;padding:26px;border-radius:24px;box-shadow:var(--shadow);border-color:var(--line);overflow:hidden;transition:transform .16s,box-shadow .16s,border-color .16s}
+.card:before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),#65a9d1)}
+.card:hover{transform:translateY(-3px);box-shadow:0 22px 55px rgba(26,52,76,.14);border-color:#c4d7e5}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.icon{display:grid;place-items:center;width:58px;height:58px;margin:0;border-radius:18px;background:#f0f6fa;border:1px solid var(--line);font-size:30px}
+.card-number{font-size:12px;font-weight:850;color:#9aabba;letter-spacing:.12em}
+.card h2{font-size:26px;margin:0 0 14px}
+.meta{margin:0 0 22px;gap:8px}
+.pill{background:#f7fafc;border-color:var(--line);border-radius:10px;padding:7px 10px;color:#3c5265}
+a.btn{border-radius:14px;min-height:54px;background:linear-gradient(135deg,var(--accent),#2d86c1);box-shadow:0 9px 20px rgba(25,118,185,.18);transition:transform .12s,box-shadow .12s,background .12s}
+a.btn span{margin-left:7px;font-size:18px}
+a.btn:hover{background:linear-gradient(135deg,var(--accent2),var(--accent));box-shadow:0 12px 24px rgba(25,118,185,.24);transform:translateY(-1px)}
+.footer{margin-top:26px;color:#8293a2}
+.footer span{display:inline-block;width:24px;height:1px;background:#b9c8d4;vertical-align:middle;margin-right:8px}
+@media(max-width:700px){
+  .wrap{padding:16px 10px 34px}.hero{padding:22px 18px;border-radius:20px}.hero-row{align-items:flex-start}.hero-mark{width:58px;height:58px;border-radius:17px;font-size:28px}.hero h1{font-size:31px}.card{min-height:0;padding:20px;border-radius:20px}.card h2{font-size:23px}.icon{width:52px;height:52px}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <section class="hero">
-    <div class="kicker">Единый сайт</div>
-    <h1>Мореходные расчёты</h1>
-    <p>Все основные калькуляторы собраны в одном месте: МОС для ЛР2–ЛР4 и мореходная астрономия для ЛР1–ЛР10 с МАЕ-2025.</p>
+    <div class="kicker">ЕДИНЫЙ САЙТ</div>
+    <div class="hero-row">
+      <div>
+        <h1>Мореходные расчёты</h1>
+        <div class="hero-tags"><span>МОС</span><span>МАЕ-2025</span><span>ЛР 1–10</span></div>
+      </div>
+      <div class="hero-mark">⚓</div>
+    </div>
   </section>
+
   <section class="grid">
     <article class="card">
-      <div class="icon">🧭</div>
+      <div class="card-top"><div class="icon">🧭</div><span class="card-number">01</span></div>
       <h2>МОС</h2>
-      <p>Морская общая система. ЛР2 — элементы земного сфероида, ЛР3 — сферические треугольники, ЛР4 — ортодромия и локсодромия.</p>
       <div class="meta"><span class="pill">ЛР2</span><span class="pill">ЛР3</span><span class="pill">ЛР4</span><span class="pill">8 знаков</span><span class="pill">φ λ Φ Λ Δφ Δλ</span></div>
-      <a class="btn" href="./mos.html">Открыть МОС</a>
+      <a class="btn" href="./mos.html">Открыть МОС <span>→</span></a>
     </article>
+
     <article class="card">
-      <div class="icon">🌌</div>
+      <div class="card-top"><div class="icon">🌌</div><span class="card-number">02</span></div>
       <h2>Мореходная астрономия</h2>
-      <p>Расчётные ЛР1–ЛР10, таблицы, графики и расчёты по МАЕ-2025. Архив МАЕ включён в сайт и загружается автоматически.</p>
       <div class="meta"><span class="pill">ЛР1–ЛР10</span><span class="pill">МАЕ-2025</span><span class="pill">Pyodide</span><span class="pill">Графики</span></div>
-      <a class="btn" href="./astronomy.html">Открыть астрономию</a>
+      <a class="btn" href="./astronomy.html">Открыть астрономию <span>→</span></a>
     </article>
   </section>
-  <div class="footer">Один сайт · один набор файлов · расчёты выполняются в браузере</div>
-</div>
-<script>if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost")){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script>
-</body>
+
+  <div class="footer"><span></span> Расчёты выполняются в браузере</div>
+</div></body>
 </html>
