@@ -269,7 +269,203 @@ main.notebook-page svg text{font-family:"Times New Roman",Times,serif!important;
 }
 </style>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/libarchive-wasm@1.2.0/dist/libarchive.js"></script>
+<style id="main-site-style">
+/* ===== HARBOR CALCULATIONS / MAIN SITE STYLE ===== */
+:root{
+  --site-bg:#eef3f8;
+  --site-card:#fff;
+  --site-text:#182635;
+  --site-muted:#617083;
+  --site-line:#d6dee8;
+  --site-accent:#287bb8;
+  --site-accent2:#1e618f;
+  --site-shadow:0 14px 40px rgba(24,40,58,.10);
+  --site-radius:22px;
+}
+html{background:var(--site-bg)}
+body{
+  margin:0;
+  background:linear-gradient(180deg,#eaf2f8 0,#f6f8fb 100%);
+  color:var(--site-text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:16px;line-height:1.5;
+  min-height:100vh;
+}
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid rgba(214,222,232,.9);
+  box-shadow:0 8px 24px rgba(24,40,58,.06);
+  backdrop-filter:blur(14px);
+}
+.topin{
+  max-width:980px;margin:auto;padding:14px 16px 10px;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+}
+.brand{
+  font-family:inherit!important;font-size:21px!important;font-weight:800;
+  color:var(--site-text)!important;letter-spacing:-.02em;
+}
+.sub{font-family:inherit!important;color:var(--site-muted)!important;font-size:12px}
+.top-actions{display:flex;gap:8px;align-items:center}
+.top-actions .btn,.back-hub,.iconbtn{
+  font-family:inherit!important;border-radius:14px!important;
+}
+.top-actions .btn.secondary{
+  background:#fff!important;color:var(--site-accent2)!important;
+  border:1px solid var(--site-line)!important;
+}
+.mae-top-btn{min-width:118px}
+.tabs{
+  max-width:980px;margin:auto;padding:0 16px 12px;
+  display:flex;gap:8px;overflow:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto;font-family:inherit!important;
+  border:1px solid var(--site-line)!important;background:#f7f9fc!important;
+  color:var(--site-accent2)!important;padding:9px 14px!important;
+  border-radius:999px!important;font-weight:750!important;cursor:pointer;white-space:nowrap;min-height:40px!important;
+}
+.tab.active{background:var(--site-accent)!important;color:#fff!important;border-color:var(--site-accent)!important}
+main,main.notebook-page{
+  max-width:980px!important;margin:auto!important;padding:22px 16px 48px!important;
+  min-height:0!important;position:relative;overflow:visible!important;
+  background:transparent!important;background-image:none!important;
+  box-shadow:none!important;
+}
+main.notebook-page::before{display:none!important}
+.card,.hero{
+  background:var(--site-card)!important;
+  border:1px solid var(--site-line)!important;
+  border-radius:var(--site-radius)!important;
+  box-shadow:var(--site-shadow)!important;
+}
+.hero{
+  padding:26px!important;margin:0 0 18px!important;border-bottom:1px solid var(--site-line)!important;
+}
+.hero h1{
+  font-family:inherit!important;font-size:clamp(28px,5vw,42px)!important;
+  line-height:1.08!important;font-weight:800!important;color:var(--site-text)!important;
+  margin:0 0 9px!important;letter-spacing:-.025em;
+}
+.hero p{
+  font-family:inherit!important;color:var(--site-muted)!important;margin:0;max-width:760px;
+}
+.statusline{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--site-line)!important;background:#f7f9fc!important;
+  border-radius:999px!important;padding:7px 11px!important;color:var(--site-muted)!important;
+  font-family:inherit!important;font-size:13px;
+}
+.badge.ok{color:#216a49!important;border-left:0!important;background:#eef8f3!important}
+.badge.warn{color:#8a641e!important;border-left:0!important;background:#fff8e8!important}
+.progress{
+  height:8px!important;background:#edf1f5!important;border:0!important;border-radius:999px!important;margin-top:14px!important;overflow:hidden;
+}
+.progress>span{background:var(--site-accent)!important;border-radius:999px;transition:width .25s}
+.notice{font-family:inherit!important;color:var(--site-muted)!important;font-size:12px;margin-top:9px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field label{
+  display:block;font-family:inherit!important;font-size:14px!important;font-weight:750!important;
+  margin:0 0 6px!important;color:var(--site-text)!important;
+}
+.field input,.field select{
+  width:100%;border:1px solid var(--site-line)!important;background:#f8fafc!important;
+  color:var(--site-text)!important;border-radius:14px!important;padding:11px 12px!important;min-height:48px!important;
+  outline:none;font-family:inherit!important;font-size:15px!important;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--site-accent)!important;box-shadow:0 0 0 3px rgba(40,123,184,.12)!important;
+}
+.starwrap{display:grid;grid-template-columns:1fr auto;gap:8px}
+.greekbtn{
+  border:1px solid var(--site-line)!important;background:#f7f9fc!important;color:var(--site-accent2)!important;
+  border-radius:14px!important;padding:0 12px;min-width:56px;font-family:inherit!important;font-weight:800;cursor:pointer;
+}
+.section-title{
+  background:transparent!important;padding:0 0 9px!important;border-radius:0!important;
+  border-bottom:1px solid var(--site-line)!important;font-family:inherit!important;
+  font-size:20px!important;font-weight:800!important;color:var(--site-text)!important;margin:0 0 14px!important;
+}
+.actionbar{
+  display:flex;gap:10px;padding:0;margin:18px 0 24px!important;position:static;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.actionbar .btn{flex:1}
+.btn{
+  border:0!important;background:var(--site-accent)!important;color:#fff!important;
+  padding:12px 16px!important;border-radius:14px!important;font-family:inherit!important;
+  font-weight:800!important;cursor:pointer;min-height:50px!important;transition:transform .12s,background .12s,box-shadow .12s;
+}
+.btn:hover{background:var(--site-accent2)!important}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.primary{background:var(--site-accent)!important;color:#fff!important;border-color:var(--site-accent)!important}
+.btn.danger{background:#fff!important;color:var(--site-accent2)!important;border:1px solid var(--site-line)!important}
+.result{
+  white-space:pre-wrap;word-break:break-word;font-family:"Times New Roman",Times,serif!important;
+  font-size:16px;color:#000!important;
+  background:#fbfcfe;border:1px solid var(--site-line);border-radius:14px;padding:16px;min-height:56px;
+}
+.result:empty::before{content:"Здесь появится решение";color:var(--site-muted)}
+.imagegrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.imagecard{background:#fff!important;border:1px solid var(--site-line)!important;border-radius:18px!important;padding:10px!important;box-shadow:0 8px 24px rgba(24,40,58,.06)}
+.imagecard img{display:block;width:100%;height:auto;border-radius:12px;background:#fff}
+.imageactions{display:flex;gap:8px;margin-top:9px}.imageactions .btn{flex:1}
+.modal{
+  width:min(720px,100%);max-height:92vh;overflow:auto;background:#fff!important;
+  border-radius:22px!important;border:1px solid var(--site-line)!important;
+  box-shadow:0 24px 70px rgba(24,40,58,.22)!important;padding:20px!important;
+}
+.modalhead{
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;border-bottom:1px solid var(--site-line)!important;
+  padding-bottom:10px;font-family:inherit!important;font-size:20px!important;font-weight:800;color:var(--site-text);
+}
+.greekgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.greekgrid button{aspect-ratio:1;border:1px solid var(--site-line)!important;background:#f7f9fc!important;color:var(--site-text)!important;border-radius:12px!important;font-size:19px;cursor:pointer}
+.mae-state{background:#f7f9fc!important;border-left:0!important;border:1px solid var(--site-line)!important;border-radius:14px!important;padding:10px 12px;margin:10px 0;font-family:inherit!important;font-size:15px}
+.mae-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:#f8fafc!important;border:1px solid var(--site-line)!important;border-radius:14px!important;padding:12px;font-family:inherit!important}
+.kpi span{display:block;color:var(--site-muted);font-size:13px}.kpi b{display:block;font-size:18px;margin-top:3px;color:var(--site-text)}
+.overlay{background:rgba(15,29,43,.55)!important}
+.toast{background:#182635!important;color:#fff;border-radius:12px!important;font-family:inherit!important}
+main.notebook-page,
+main.notebook-page h1,
+main.notebook-page h2,
+main.notebook-page p,
+main.notebook-page .section-title,
+main.notebook-page .result,
+main.notebook-page .imagecard,
+main.notebook-page .modal,
+main.notebook-page .field label{letter-spacing:normal!important}
+main.notebook-page .field input,
+main.notebook-page .field select,
+main.notebook-page .btn,
+main.notebook-page .greekbtn,
+main.notebook-page .notice,
+main.notebook-page .badge,
+main.notebook-page .back-hub{letter-spacing:normal!important}
+@media(max-width:700px){
+  .topin{padding:11px 10px 8px;align-items:stretch;flex-direction:column}
+  .top-actions{width:100%}.top-actions .btn{flex:1}
+  .tabs{padding:0 10px 10px}
+  main,main.notebook-page{padding:12px 10px 34px!important}
+  .hero,.card{padding:18px!important;border-radius:18px!important}
+  .hero h1{font-size:31px!important}
+  .formgrid,.imagegrid,.mae-info-grid{grid-template-columns:1fr}
+  .actionbar{position:sticky;bottom:8px;z-index:12;padding:8px!important;background:rgba(255,255,255,.92)!important;border:1px solid var(--site-line)!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(24,40,58,.12)!important}
+  .btn{width:100%}
+}
+@media(max-width:520px){
+  .brand{font-size:19px!important}.sub{font-size:11px}
+  .top-actions .btn{font-size:13px;padding:10px!important}
+  .section-title{font-size:18px!important}
+  .greekgrid{grid-template-columns:repeat(5,1fr)}
+}
+
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -353,7 +549,7 @@ const ENGINE_B64="aW1wb3J0IHR5cGVzCmltcG9ydCBtYXRwbG90bGliCm1hdHBsb3RsaWIudXNlKC
 const BRIDGE_B64="CmltcG9ydCBqc29uCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAppbXBvcnQgQXN0cm9OYXZfV2ViX2VuZ2luZSBhcyBjb3JlCgpkZWYgX2Zsb2F0KHYsIG5hbWU9ItC30L3QsNGH0LXQvdC40LUiKToKICAgIHMgPSBzdHIodikuc3RyaXAoKS5yZXBsYWNlKCIgIiwgIiIpLnJlcGxhY2UoIiwiLCAiLiIpCiAgICB0cnk6CiAgICAgICAgcmV0dXJuIGZsb2F0KHMpCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGV4YzoKICAgICAgICByYWlzZSBWYWx1ZUVycm9yKGYi0J/QvtC70LUgwqt7bmFtZX3CuyDQtNC+0LvQttC90L4g0YHQvtC00LXRgNC20LDRgtGMINGH0LjRgdC70L4uIikgZnJvbSBleGMKCmRlZiBfYW5nbGUodiwgbWF4X3ZhbHVlPTM2MC4wKToKICAgIHJldHVybiBjb3JlLnBhcnNlX2FuZ2xlX3ZhbHVlX29ubHkoc3RyKHYpLCBtYXhfdmFsdWUpCgpkZWYgX2RhdGUodik6CiAgICByZXR1cm4gY29yZS5wYXJzZV9sYWIzX2RhdGUoc3RyKHYpKQoKZGVmIF9obSh2KToKICAgIHJldHVybiBjb3JlLnBhcnNlX2xhYjNfc2hpcF90aW1lKHN0cih2KSkKCmRlZiBfaG1zKHYpOgogICAgcmV0dXJuIGNvcmUucGFyc2VfbGFiM19jaHJvbm9tZXRlcihzdHIodikpCgpkZWYgX2NvcnIodik6CiAgICByZXR1cm4gY29yZS5wYXJzZV9sYWIzX2NvcnJlY3Rpb24oc3RyKHYpKQoKZGVmIF9wbGFuZXRfa2V5KG5hbWUpOgogICAgbSA9IHsKICAgICAgICAi0JLQtdC90LXRgNCwIjogInZlbnVzIiwKICAgICAgICAi0JzQsNGA0YEiOiAibWFycyIsCiAgICAgICAgItCu0L/QuNGC0LXRgCI6ICJqdXBpdGVyIiwKICAgICAgICAi0KHQsNGC0YPRgNC9IjogInNhdHVybiIsCiAgICB9CiAgICBpZiBuYW1lIG5vdCBpbiBtOgogICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoItCS0YvQsdC10YDQuNGC0LUg0L/Qu9Cw0L3QtdGC0YMuIikKICAgIHJldHVybiBtW25hbWVdCgpkZWYgX3NhZmVfaW1hZ2UoZm4sICphcmdzLCAqKmt3YXJncyk6CiAgICB0cnk6CiAgICAgICAgcGF0aCA9IGZuKCphcmdzLCAqKmt3YXJncykKICAgICAgICBpZiBwYXRoIGFuZCBQYXRoKHBhdGgpLmV4aXN0cygpOgogICAgICAgICAgICByZXR1cm4gc3RyKHBhdGgpCiAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgIHJldHVybiBOb25lCiAgICByZXR1cm4gTm9uZQoKZGVmIHdlYl9zZXRfbWFlKHBhdGg9Ii9tYWUiKToKICAgIGluZm8gPSBjb3JlLnNldF9tYWVfZGlyZWN0b3J5KHBhdGgpCiAgICByZXR1cm4ganNvbi5kdW1wcyhpbmZvLCBlbnN1cmVfYXNjaWk9RmFsc2UpCgpkZWYgd2ViX3ZhbGlkYXRlX21hZShwYXRoPSIvbWFlIik6CiAgICBpbmZvID0gY29yZS52YWxpZGF0ZV9tYWVfZGlyZWN0b3J5KHBhdGgpCiAgICByZXR1cm4ganNvbi5kdW1wcyhpbmZvLCBlbnN1cmVfYXNjaWk9RmFsc2UpCgpkZWYgd2ViX2NhbGN1bGF0ZShsYWIsIHZhbHVlc19qc29uKToKICAgIHYgPSBqc29uLmxvYWRzKHZhbHVlc19qc29uKQogICAgbGFiID0gaW50KGxhYikKICAgIGltYWdlcyA9IFtdCgogICAgaWYgbGFiID09IDE6CiAgICAgICAgdGFzayA9IGludCh2WyJ0YXNrIl0pCiAgICAgICAgcGhpID0gX2FuZ2xlKHZbInBoaSJdLCA5MCkKICAgICAgICBwcyA9IHZbInBoaV9zaWRlIl0KICAgICAgICBpZiB0YXNrID09IDE6CiAgICAgICAgICAgIHIgPSBjb3JlLmNhbGN1bGF0ZSgKICAgICAgICAgICAgICAgIHBoaSwgcHMsCiAgICAgICAgICAgICAgICBfYW5nbGUodlsiZGVsdGEiXSwgOTApLCB2WyJkZWx0YV9zaWRlIl0sCiAgICAgICAgICAgICAgICBfYW5nbGUodlsidCJdLCAzNjApLCB2WyJ0X3NpZGUiXSwKICAgICAgICAgICAgKQogICAgICAgICAgICBpbWFnZXMuYXBwZW5kKF9zYWZlX2ltYWdlKGNvcmUuZHJhd19jZWxlc3RpYWxfc3BoZXJlLCByLCBzdWJ0aXRsZT0i0JvQoCDihJYxIOKAlCDQt9Cw0LTQsNGH0LAgMSIpKQogICAgICAgICAgICB0ZXh0ID0gY29yZS5mb3JtYXRfcmVzdWx0KHIpCiAgICAgICAgZWxpZiB0YXNrID09IDI6CiAgICAgICAgICAgIHIgPSBjb3JlLmNhbGN1bGF0ZV9sYWIxX3Rhc2syKAogICAgICAgICAgICAgICAgcGhpLCBwcywKICAgICAgICAgICAgICAgIF9hbmdsZSh2WyJBIl0sIDkwKSwgdlsiQXEiXSwKICAgICAgICAgICAgICAgIF9hbmdsZSh2WyJoIl0sIDkwKSwKICAgICAgICAgICAgKQogICAgICAgICAgICBpbWFnZXMuYXBwZW5kKF9zYWZlX2ltYWdlKGNvcmUuZHJhd19jZWxlc3RpYWxfc3BoZXJlX3Rhc2syLCByKSkKICAgICAgICAgICAgdGV4dCA9IGNvcmUuZm9ybWF0X2xhYjFfdGFzazJfcmVzdWx0KHIpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjFfdGFzazMoCiAgICAgICAgICAgICAgICBwaGksIHBzLAogICAgICAgICAgICAgICAgX2FuZ2xlKHZbImRlbHRhIl0sIDkwKSwgdlsiZGVsdGFfc2lkZSJdLAogICAgICAgICAgICAgICAgX2FuZ2xlKHZbInQiXSwgMzYwKSwgdlsidF9zaWRlIl0sCiAgICAgICAgICAgICAgICBfYW5nbGUodlsidGciXSwgMzYwKSwgdlsidGdfc2lkZSJdLAogICAgICAgICAgICApCiAgICAgICAgICAgIGltYWdlcy5hcHBlbmQoX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2NlbGVzdGlhbF9zcGhlcmVfdGFzazMsIHIpKQogICAgICAgICAgICB0ZXh0ID0gY29yZS5mb3JtYXRfbGFiMV90YXNrM19yZXN1bHQocikKCiAgICBlbGlmIGxhYiA9PSAyOgogICAgICAgIHIgPSBjb3JlLmNhbGN1bGF0ZV9sYWIyX3R2YSgKICAgICAgICAgICAgX2FuZ2xlKHZbInBoaSJdLCA5MCksIHZbInBzIl0sCiAgICAgICAgICAgIF9hbmdsZSh2WyJkZWx0YSJdLCA5MCksIHZbImRzIl0sCiAgICAgICAgICAgIF9hbmdsZSh2WyJ0Il0sIDM2MCksIHZbInRzIl0sCiAgICAgICAgKQogICAgICAgIGltYWdlcy5hcHBlbmQoX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2xhYjJfdGFibGVfaW1hZ2UsIHIpKQogICAgICAgIHRleHQgPSBjb3JlLmZvcm1hdF9sYWIyX3Jlc3VsdChyKQoKICAgIGVsaWYgbGFiID09IDM6CiAgICAgICAgYm9keSA9IHZbImJvZHkiXQogICAgICAgIHRhc2sgPSB7ItCX0LLQtdC30LTQsCI6IDEsICLQodC+0LvQvdGG0LUiOiAyLCAi0J/Qu9Cw0L3QtdGC0LAiOiAzLCAi0JvRg9C90LAiOiA0fVtib2R5XQogICAgICAgIGt3ID0ge30KICAgICAgICBpZiBib2R5ID09ICLQl9Cy0LXQt9C00LAiOgogICAgICAgICAgICBrd1sic3Rhcl9xdWVyeSJdID0gdlsic3RhciJdCiAgICAgICAgaWYgYm9keSA9PSAi0J/Qu9Cw0L3QtdGC0LAiOgogICAgICAgICAgICBrd1sicGxhbmV0X2tleSJdID0gX3BsYW5ldF9rZXkodlsicGxhbmV0Il0pCiAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjNfcmVzdWx0KAogICAgICAgICAgICB0YXNrLAogICAgICAgICAgICBfZGF0ZSh2WyJkYXRlIl0pLAogICAgICAgICAgICBfaG0odlsic2hpcCJdKSwKICAgICAgICAgICAgX2FuZ2xlKHZbImxvbiJdLCAxODApLAogICAgICAgICAgICB2WyJscyJdLAogICAgICAgICAgICBfaG1zKHZbImNociJdKSwKICAgICAgICAgICAgX2NvcnIodlsiY29yciJdKSwKICAgICAgICAgICAgKiprdywKICAgICAgICApCiAgICAgICAgaW1hZ2VzLmFwcGVuZChfc2FmZV9pbWFnZShjb3JlLmRyYXdfbGFiM190YWJsZV9pbWFnZSwgcikpCiAgICAgICAgdGV4dCA9IGNvcmUuZm9ybWF0X2xhYjNfcmVzdWx0KHIpCgogICAgZWxpZiBsYWIgPT0gNDoKICAgICAgICBib2R5ID0gdlsiYm9keSJdCiAgICAgICAgdGFzayA9IHsi0KHQvtC70L3RhtC1IjogMSwgItCb0YPQvdCwIjogMiwgItCf0LvQsNC90LXRgtCwIjogMywgItCX0LLQtdC30LTQsCI6IDR9W2JvZHldCiAgICAgICAga3cgPSB7fQogICAgICAgIGlmIGJvZHkgaW4gKCLQodC+0LvQvdGG0LUiLCAi0JvRg9C90LAiKToKICAgICAgICAgICAga3dbImxpbWIiXSA9ICJsb3dlciIgaWYgdlsibGltYiJdID09ICLQvdC40LbQvdC40LkiIGVsc2UgInVwcGVyIgogICAgICAgIGlmIGJvZHkgPT0gItCf0LvQsNC90LXRgtCwIjoKICAgICAgICAgICAga3dbInBsYW5ldF9rZXkiXSA9IF9wbGFuZXRfa2V5KHZbInBsYW5ldCJdKQogICAgICAgIHIgPSBjb3JlLmNhbGN1bGF0ZV9sYWI0X3Jlc3VsdCgKICAgICAgICAgICAgdGFzaywKICAgICAgICAgICAgX2RhdGUodlsiZGF0ZSJdKSwKICAgICAgICAgICAgX2FuZ2xlKHZbIm9zIl0sIDkwKSwKICAgICAgICAgICAgX2Zsb2F0KHZbImlzIl0sICJpK3MiKSwKICAgICAgICAgICAgX2Zsb2F0KHZbImUiXSwgImUiKSwKICAgICAgICAgICAgX2Zsb2F0KHZbInRlbXAiXSwgIlQiKSwKICAgICAgICAgICAgX2Zsb2F0KHZbInByZXNzIl0sICJCIiksCiAgICAgICAgICAgICoqa3csCiAgICAgICAgKQogICAgICAgIGltYWdlcy5hcHBlbmQoX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2xhYjRfdGFibGVfaW1hZ2UsIHIpKQogICAgICAgIHRleHQgPSBjb3JlLmZvcm1hdF9sYWI0X3Jlc3VsdChyKQoKICAgIGVsaWYgbGFiID09IDU6CiAgICAgICAga2V5cyA9IFsic3VucmlzZSIsICJzdW5zZXQiLCAiY3VsbWluYXRpb24iLCAic3RhcnRfdHdpbGlnaHQiLCAiZW5kX3R3aWxpZ2h0Il0KICAgICAgICBlbnRyaWVzID0ge30KICAgICAgICBmb3Iga2V5IGluIGtleXM6CiAgICAgICAgICAgIGVudHJpZXNba2V5XSA9IHsKICAgICAgICAgICAgICAgICJkYXRlIjogX2RhdGUodltmIntrZXl9X2RhdGUiXSksCiAgICAgICAgICAgICAgICAibGF0aXR1ZGUiOiBfYW5nbGUodltmIntrZXl9X3BoaSJdLCA5MCksCiAgICAgICAgICAgICAgICAibGF0aXR1ZGVfc2lkZSI6IHZbZiJ7a2V5fV9wcyJdLAogICAgICAgICAgICAgICAgImxvbmdpdHVkZSI6IF9hbmdsZSh2W2Yie2tleX1fbG9uIl0sIDE4MCksCiAgICAgICAgICAgICAgICAibG9uZ2l0dWRlX3NpZGUiOiB2W2Yie2tleX1fbHMiXSwKICAgICAgICAgICAgfQogICAgICAgIHIgPSBjb3JlLmNhbGN1bGF0ZV9sYWI1X2Z1bGwoZW50cmllcykKICAgICAgICBpbWFnZXMuYXBwZW5kKF9zYWZlX2ltYWdlKGNvcmUuZHJhd19sYWI1X2Z1bGxfdGFibGVfaW1hZ2UsIHIpKQogICAgICAgIHRleHQgPSBjb3JlLmZvcm1hdF9sYWI1X2Z1bGxfcmVzdWx0KHIpCgogICAgZWxpZiBsYWIgPT0gNjoKICAgICAgICByID0gY29yZS5jYWxjdWxhdGVfbGFiNigKICAgICAgICAgICAgX2RhdGUodlsiZGF0ZSJdKSwgX2htKHZbInNoaXAiXSksCiAgICAgICAgICAgIF9hbmdsZSh2WyJwaGkiXSwgOTApLCB2WyJwcyJdLAogICAgICAgICAgICBfYW5nbGUodlsibG9uIl0sIDE4MCksIHZbImxzIl0sCiAgICAgICAgICAgIF9mbG9hdCh2WyJjb3Vyc2UiXSwgItCY0JoiKSwgX2Zsb2F0KHZbInNwZWVkIl0sICJWIiksCiAgICAgICAgICAgIF9mbG9hdCh2WyJlIl0sICJlIiksIF9mbG9hdCh2WyJpcyJdLCAiaStzIiksCiAgICAgICAgICAgIF9jb3JyKHZbImNvcnIiXSksIF9mbG9hdCh2WyJ0ZW1wIl0sICJUIiksIF9mbG9hdCh2WyJwcmVzcyJdLCAiQiIpLAogICAgICAgICAgICB2WyJzMSJdLCBfaG1zKHZbImMxIl0pLCBfYW5nbGUodlsibzEiXSwgOTApLAogICAgICAgICAgICB2WyJzMiJdLCBfaG1zKHZbImMyIl0pLCBfYW5nbGUodlsibzIiXSwgOTApLAogICAgICAgICkKICAgICAgICBpbWFnZXMuZXh0ZW5kKFsKICAgICAgICAgICAgX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2xhYjZfdGFibGVfaW1hZ2UsIHIpLAogICAgICAgICAgICBfc2FmZV9pbWFnZShjb3JlLmRyYXdfbGFiNl9wbG90X2ltYWdlLCByKSwKICAgICAgICBdKQogICAgICAgIHRleHQgPSBjb3JlLmZvcm1hdF9sYWI2X3Jlc3VsdChyKQoKICAgIGVsaWYgbGFiID09IDc6CiAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjcoCiAgICAgICAgICAgIF9kYXRlKHZbImRhdGUiXSksIF9obSh2WyJzaGlwIl0pLAogICAgICAgICAgICBfYW5nbGUodlsicGhpIl0sIDkwKSwgdlsicHMiXSwKICAgICAgICAgICAgX2FuZ2xlKHZbImxvbiJdLCAxODApLCB2WyJscyJdLAogICAgICAgICAgICBfZmxvYXQodlsiY291cnNlIl0sICLQmNCaIiksIF9mbG9hdCh2WyJzcGVlZCJdLCAiViIpLAogICAgICAgICAgICBfZmxvYXQodlsiZSJdLCAiZSIpLCBfZmxvYXQodlsiaXMiXSwgImkrcyIpLAogICAgICAgICAgICBfY29ycih2WyJjb3JyIl0pLCBfZmxvYXQodlsidGVtcCJdLCAiVCIpLCBfZmxvYXQodlsicHJlc3MiXSwgIkIiKSwKICAgICAgICAgICAgX2htcyh2WyJjMSJdKSwgX2FuZ2xlKHZbIm8xIl0sIDkwKSwKICAgICAgICAgICAgX2htcyh2WyJjMiJdKSwgX2FuZ2xlKHZbIm8yIl0sIDkwKSwKICAgICAgICApCiAgICAgICAgaW1hZ2VzLmV4dGVuZChbCiAgICAgICAgICAgIF9zYWZlX2ltYWdlKGNvcmUuZHJhd19sYWI3X3RhYmxlX2ltYWdlLCByKSwKICAgICAgICAgICAgX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2xhYjdfcGxvdF9pbWFnZSwgciksCiAgICAgICAgXSkKICAgICAgICB0ZXh0ID0gY29yZS5mb3JtYXRfbGFiN19yZXN1bHQocikKCiAgICBlbGlmIGxhYiA9PSA4OgogICAgICAgIHQgPSB2WyJ0YXNrIl0KICAgICAgICBpZiB0ID09ICJBIjoKICAgICAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjhfdGFza19hKAogICAgICAgICAgICAgICAgX2RhdGUodlsiZGF0ZSJdKSwgX2htKHZbInNoaXAiXSksCiAgICAgICAgICAgICAgICBfYW5nbGUodlsicGhpIl0sIDkwKSwgdlsicHMiXSwKICAgICAgICAgICAgICAgIF9hbmdsZSh2WyJsb24iXSwgMTgwKSwgdlsibHMiXSwKICAgICAgICAgICAgICAgIHZbInN0YXIiXSwgX2htcyh2WyJjaHIiXSksIF9jb3JyKHZbImNvcnIiXSksCiAgICAgICAgICAgICAgICBfZmxvYXQodlsiZ2twIl0sICLQk9Ca0J8iKSwKICAgICAgICAgICAgKQogICAgICAgICAgICBpbWFnZXMuYXBwZW5kKF9zYWZlX2ltYWdlKGNvcmUuZHJhd19sYWI4X3Rhc2tfYV9pbWFnZSwgcikpCiAgICAgICAgZWxpZiB0ID09ICJCIjoKICAgICAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjhfdGFza19iKAogICAgICAgICAgICAgICAgX2RhdGUodlsiZGF0ZSJdKSwKICAgICAgICAgICAgICAgICJzdW5zZXQiIGlmIHZbImV2ZW50Il0gPT0gItCX0LDRhdC+0LQiIGVsc2UgInN1bnJpc2UiLAogICAgICAgICAgICAgICAgX2FuZ2xlKHZbInBoaSJdLCA5MCksIHZbInBzIl0sCiAgICAgICAgICAgICAgICBfYW5nbGUodlsibG9uIl0sIDE4MCksIHZbImxzIl0sCiAgICAgICAgICAgICAgICBfZmxvYXQodlsiZSJdLCAiZSIpLCBfZmxvYXQodlsidGVtcCJdLCAiVCIpLAogICAgICAgICAgICAgICAgX2Zsb2F0KHZbInByZXNzIl0sICJCIiksIF9mbG9hdCh2WyJna3AiXSwgItCT0JrQnyIpLAogICAgICAgICAgICApCiAgICAgICAgICAgIGltYWdlcy5hcHBlbmQoX3NhZmVfaW1hZ2UoY29yZS5kcmF3X2xhYjhfdGFza19iX2ltYWdlLCByKSkKICAgICAgICBlbHNlOgogICAgICAgICAgICByID0gY29yZS5jYWxjdWxhdGVfbGFiOF90YXNrX2MoCiAgICAgICAgICAgICAgICBfZGF0ZSh2WyJkYXRlIl0pLCBfaG0odlsic2hpcCJdKSwKICAgICAgICAgICAgICAgIF9hbmdsZSh2WyJwaGkiXSwgOTApLCB2WyJwcyJdLAogICAgICAgICAgICAgICAgX2FuZ2xlKHZbImxvbiJdLCAxODApLCB2WyJscyJdLAogICAgICAgICAgICAgICAgX2htcyh2WyJjaHIiXSksIF9jb3JyKHZbImNvcnIiXSksCiAgICAgICAgICAgICAgICBfZmxvYXQodlsiZ2twIl0sICLQk9Ca0J8iKSwKICAgICAgICAgICAgKQogICAgICAgICAgICBpbWFnZXMuYXBwZW5kKF9zYWZlX2ltYWdlKGNvcmUuZHJhd19sYWI4X3Rhc2tfY19pbWFnZSwgcikpCiAgICAgICAgdGV4dCA9IGNvcmUuZm9ybWF0X2xhYjhfcmVzdWx0KHIpCgogICAgZWxpZiBsYWIgPT0gOToKICAgICAgICBkZWYgb25lKHByZWZpeCk6CiAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAiYm9keV9xdWVyeSI6IHZbZiJ7cHJlZml4fV9ib2R5Il0sCiAgICAgICAgICAgICAgICAib2JzX2RhdGUiOiBfZGF0ZSh2W2Yie3ByZWZpeH1fZGF0ZSJdKSwKICAgICAgICAgICAgICAgICJwaGlfdmFsdWUiOiBfYW5nbGUodltmIntwcmVmaXh9X3BoaSJdLCA5MCksCiAgICAgICAgICAgICAgICAicGhpX3NpZGUiOiB2W2Yie3ByZWZpeH1fcHMiXSwKICAgICAgICAgICAgICAgICJsb25naXR1ZGVfdmFsdWUiOiBfYW5nbGUodltmIntwcmVmaXh9X2xvbiJdLCAxODApLAogICAgICAgICAgICAgICAgImxvbmdpdHVkZV9zaWRlIjogdltmIntwcmVmaXh9X2xzIl0sCiAgICAgICAgICAgIH0KICAgICAgICByID0gY29yZS5jYWxjdWxhdGVfbGFiOShvbmUoIm0iKSwgb25lKCJlIikpCiAgICAgICAgaW1hZ2VzLmFwcGVuZChfc2FmZV9pbWFnZShjb3JlLmRyYXdfbGFiOV9jYWxjdWxhdGlvbl9pbWFnZSwgcikpCiAgICAgICAgdGV4dCA9IGNvcmUuZm9ybWF0X2xhYjlfcmVzdWx0KHIpCgogICAgZWxpZiBsYWIgPT0gMTA6CiAgICAgICAgciA9IGNvcmUuY2FsY3VsYXRlX2xhYjEwKAogICAgICAgICAgICBfZGF0ZSh2WyJkYXRlIl0pLAogICAgICAgICAgICBjb3JlLnBhcnNlX2xhYjEwX3NleHRhbnRfcmVhZGluZyh2WyJvczEiXSksCiAgICAgICAgICAgIGNvcmUucGFyc2VfbGFiMTBfc2V4dGFudF9yZWFkaW5nKHZbIm9zMiJdKSwKICAgICAgICAgICAgY29yZS5wYXJzZV9sYWIxMF9zZXh0YW50X3JlYWRpbmcodlsic3RhciJdKSwKICAgICAgICApCiAgICAgICAgaW1hZ2VzLmFwcGVuZChfc2FmZV9pbWFnZShjb3JlLmRyYXdfbGFiMTBfdGFibGVfaW1hZ2UsIHIpKQogICAgICAgIHRleHQgPSBjb3JlLmZvcm1hdF9sYWIxMF9yZXN1bHQocikKCiAgICBlbHNlOgogICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoZiLQm9Cge2xhYn0g0L/QvtC60LAg0L3QtSDQv9C+0LTQtNC10YDQttC40LLQsNC10YLRgdGPLiIpCgogICAgaW1hZ2VzID0gW3AgZm9yIHAgaW4gaW1hZ2VzIGlmIHBdCiAgICByZXR1cm4ganNvbi5kdW1wcyh7InRleHQiOiB0ZXh0LCAiaW1hZ2VzIjogaW1hZ2VzfSwgZW5zdXJlX2FzY2lpPUZhbHNlKQo=";
 const PYODIDE_URL="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/";
 const BUNDLED_MAE_RAR_URL="./mae-2025.rar";
-const LIBARCHIVE_WASM_URL="https://cdn.jsdelivr.net/npm/libarchive-wasm@1.2.0/dist/libarchive.wasm";
+const RARS_MODULE_URL="https://esm.sh/@bitplane/rars@0.10.0";
 
 const GREEK=["α","β","γ","δ","ε","ζ","η","θ","ι","κ","λ","μ","ν","ξ","ο","π","ρ","σ","τ","υ","φ","χ","ψ","ω"];
 let pyodide=null, engineReady=false, maeReady=false, currentLab=1, greekTarget=null, imageUrls=[];
@@ -484,8 +680,8 @@ async function initEngine(){
     setProgress(8,"Загружаю Pyodide…");
     if(typeof loadPyodide!=="function")throw new Error("Pyodide не загрузился. Проверьте интернет.");
     pyodide=await loadPyodide({indexURL:PYODIDE_URL});
-    setProgress(28,"Загружаю numpy / matplotlib…");
-    await pyodide.loadPackage(["numpy","matplotlib"]);
+    setProgress(28,"Загружаю numpy / matplotlib / pillow…");
+    await pyodide.loadPackage(["numpy","matplotlib","pillow"]);
     setProgress(62,"Подключаю расчётный движок ЛР1–ЛР10…");
     ensureDir("/app");
     pyodide.FS.writeFile("/app/AstroNav_Web_engine.py",new TextEncoder().encode(b64ToText(ENGINE_B64)));
@@ -501,7 +697,7 @@ async function initEngine(){
         await loadBundledMaeRar(false);
       }catch(e){
         console.warn("Bundled MAE",e);
-        setProgress(100,"Не удалось автоматически загрузить МАЕ-2025. Нажмите «МАЕ-2025» и повторите загрузку.");
+        setProgress(100,"МАЕ-2025 пока недоступен. Повторите запуск после загрузки движка.");
       }
     }
   }catch(e){
@@ -536,120 +732,60 @@ async function restoreMaeFromDB(show=true){
 }
 async function loadBundledMaeRar(show=true){
   if(!engineReady)throw new Error("Сначала дождитесь запуска движка.");
-  if(typeof window.libarchive!=="function")throw new Error("Модуль распаковки МАЕ не загрузился.");
   setProgress(79,"Загружаю встроенный МАЕ-2025…");
-  const response=await fetch(BUNDLED_MAE_RAR_URL,{cache:"no-store",credentials:"same-origin"});
+  const response=await fetch(BUNDLED_MAE_RAR_URL,{cache:"force-cache"});
   if(!response.ok)throw new Error(`Встроенный МАЕ недоступен: HTTP ${response.status}`);
-  const archiveBytes=new Uint8Array(await response.arrayBuffer());
-  if(archiveBytes.length<8 || archiveBytes[0]!==0x52 || archiveBytes[1]!==0x61 || archiveBytes[2]!==0x72 || archiveBytes[3]!==0x21){
-    throw new Error("Файл МАЕ-2025 имеет неверный формат RAR.");
-  }
-  setProgress(82,"Распаковываю МАЕ-2025…");
-  const Module=await window.libarchive({
-    locateFile:(file)=>file==="libarchive.wasm"?LIBARCHIVE_WASM_URL:file
-  });
-  const openMemory=Module.cwrap("archive_read_new_memory","number",["number","number","string"]);
-  const nextEntry=Module.cwrap("archive_read_next_entry","number",["number"]);
-  const entryPath=Module.cwrap("archive_entry_pathname_utf8","string",["number"]);
-  const entryType=Module.cwrap("archive_entry_filetype","number",["number"]);
-  const entrySize=Module.cwrap("archive_entry_size","number",["number"]);
-  const readData=Module.cwrap("archive_read_data","number",["number","number","number"]);
-  const skipData=Module.cwrap("archive_read_data_skip","number",["number"]);
-  const closeArchive=Module.cwrap("archive_read_free","number",["number"]);
-  const errorString=Module.cwrap("archive_error_string","string",["number"]);
-  let inputPtr=0,archive=0;
+  const blob=await response.blob();
+  setProgress(82,"Распаковываю МАЕ-2025 в браузере…");
+  const {RarArchive}=await import(RARS_MODULE_URL);
+  const archive=await RarArchive.open(blob,{maxHeaderCount:1000,maxMemberOutputBytes:20*1024*1024,maxTotalOutputBytes:100*1024*1024});
   const rows=[];
   try{
-    inputPtr=Module._malloc(archiveBytes.byteLength);
-    if(!inputPtr)throw new Error("Не удалось выделить память для МАЕ-2025.");
-    Module.HEAPU8.set(archiveBytes,inputPtr);
-    archive=openMemory(inputPtr,archiveBytes.byteLength,null);
-    if(!archive)throw new Error("Не удалось открыть RAR МАЕ-2025: "+(errorString(archive)||"неизвестная ошибка"));
-    let scanned=0;
-    for(;;){
-      const entry=nextEntry(archive);
-      if(!entry)break;
-      scanned++;
-      const rawPath=String(entryPath(entry)||"").replaceAll("\\","/");
-      const name=rawPath.split("/").pop()||"";
-      const type=entryType(entry);
-      const size=Math.max(0,Number(entrySize(entry)||0));
-      const regular=(type & 0xF000)===0x8000;
-      if(!regular || !/^.+\.html?$/i.test(name)){
-        const skipped=skipData(archive);
-        if(skipped<0)throw new Error("Ошибка чтения RAR: "+(errorString(archive)||"неизвестная ошибка"));
-        continue;
-      }
-      const chunks=[];
-      let total=0;
-      const chunkSize=1024*1024;
-      while(total<size){
-        const want=Math.min(chunkSize,size-total);
-        const ptr=Module._malloc(want);
-        if(!ptr)throw new Error(`Недостаточно памяти при распаковке ${name}.`);
-        try{
-          const got=readData(archive,ptr,want);
-          if(got<0)throw new Error(`Ошибка чтения ${name}: ${errorString(archive)||"неизвестная ошибка"}`);
-          if(got===0)break;
-          chunks.push(Module.HEAPU8.slice(ptr,ptr+got));
-          total+=got;
-        }finally{Module._free(ptr)}
-      }
-      if(total!==size)throw new Error(`Файл ${name} распакован не полностью (${total}/${size} байт).`);
-      const data=new Uint8Array(total);
-      let offset=0;
-      for(const chunk of chunks){data.set(chunk,offset);offset+=chunk.length}
-      rows.push({name,data:data.buffer});
-      setProgress(82+Math.min(10,Math.round(rows.length/32*10)),`Распаковываю МАЕ: ${rows.length}/32`);
+    for(const entry of archive.entries){
+      const path=String(entry.name||"").replaceAll("\\","/");
+      if(!/\.html?$/i.test(path))continue;
+      const bytes=await entry.bytes();
+      const name=path.split("/").pop();
+      rows.push({name,data:bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)});
+      setProgress(82+Math.min(10,Math.round(rows.length/32*10)),`Распаковываю МАЕ: ${rows.length}`);
     }
-    if(!rows.length)throw new Error(`Встроенный RAR обработан (${scanned} записей), но HTML-файлы МАЕ не найдены.`);
   }finally{
-    if(archive){try{closeArchive(archive)}catch(e){}}
-    if(inputPtr){try{Module._free(inputPtr)}catch(e){}}
+    try{archive.close()}catch(e){}
   }
+  if(!rows.length)throw new Error("Встроенный RAR не содержит HTML МАЕ-2025.");
   await saveMaeToDB(rows);
   await mountMae(rows);
   document.getElementById("maeModal").classList.remove("open");
   if(show)toast(`МАЕ загружен: ${rows.length} файлов`);
   return true;
 }
+
 async function handleRarFile(file){
-  if(!file)return;
+  if(!file) return;
   if(!engineReady){toast("Дождитесь запуска движка");return}
-  if(typeof window.libarchive!=="function"){toast("Модуль распаковки МАЕ ещё загружается");return}
   try{
-    const bytes=new Uint8Array(await file.arrayBuffer());
-    const Module=await window.libarchive({locateFile:(path)=>path==="libarchive.wasm"?LIBARCHIVE_WASM_URL:path});
-    const openMemory=Module.cwrap("archive_read_new_memory","number",["number","number","string"]);
-    const nextEntry=Module.cwrap("archive_read_next_entry","number",["number"]);
-    const entryPath=Module.cwrap("archive_entry_pathname_utf8","string",["number"]);
-    const entryType=Module.cwrap("archive_entry_filetype","number",["number"]);
-    const entrySize=Module.cwrap("archive_entry_size","number",["number"]);
-    const readData=Module.cwrap("archive_read_data","number",["number","number","number"]);
-    const skipData=Module.cwrap("archive_read_data_skip","number",["number"]);
-    const closeArchive=Module.cwrap("archive_read_free","number",["number"]);
-    const errorString=Module.cwrap("archive_error_string","string",["number"]);
-    let inputPtr=0,archive=0;const rows=[];
+    setProgress(79,"Читаю выбранный RAR…");
+    const {RarArchive}=await import(RARS_MODULE_URL);
+    const blob=await file.arrayBuffer();
+    const archive=await RarArchive.open(blob,{maxHeaderCount:1000,maxMemberOutputBytes:20*1024*1024,maxTotalOutputBytes:100*1024*1024});
+    const rows=[];
     try{
-      inputPtr=Module._malloc(bytes.byteLength);if(!inputPtr)throw new Error("Недостаточно памяти.");
-      Module.HEAPU8.set(bytes,inputPtr);archive=openMemory(inputPtr,bytes.byteLength,null);
-      if(!archive)throw new Error(errorString(archive)||"Не удалось открыть RAR.");
-      for(;;){
-        const entry=nextEntry(archive);if(!entry)break;
-        const name=(String(entryPath(entry)||"").replaceAll("\\","/").split("/").pop()||"");
-        const type=entryType(entry),size=Math.max(0,Number(entrySize(entry)||0));
-        if((type&0xF000)!==0x8000 || !/^.+\.html?$/i.test(name)){skipData(archive);continue}
-        const ptr=Module._malloc(size||1);if(!ptr)throw new Error(`Недостаточно памяти для ${name}.`);
-        try{
-          const got=readData(archive,ptr,size||1);if(got<0)throw new Error(errorString(archive)||`Ошибка чтения ${name}`);
-          rows.push({name,data:Module.HEAPU8.slice(ptr,ptr+got).buffer});
-        }finally{Module._free(ptr)}
+      for(const entry of archive.entries){
+        const path=String(entry.name||"").replaceAll("\\","/");
+        if(!/\.html?$/i.test(path))continue;
+        const bytes=await entry.bytes();
+        const name=path.split("/").pop();
+        rows.push({name,data:bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)});
       }
-    }finally{if(archive){try{closeArchive(archive)}catch(e){}}if(inputPtr){try{Module._free(inputPtr)}catch(e){}}}
+    }finally{try{archive.close()}catch(e){}}
     if(!rows.length)throw new Error("В RAR не найдено HTML-файлов МАЕ.");
-    await saveMaeToDB(rows);await mountMae(rows);document.getElementById("maeModal").classList.remove("open");toast(`МАЕ загружен: ${rows.length} файлов`);
+    await saveMaeToDB(rows);
+    await mountMae(rows);
+    document.getElementById("maeModal").classList.remove("open");
+    toast(`МАЕ загружен: ${rows.length} файлов`);
   }catch(e){console.error(e);toast("Не удалось распаковать RAR МАЕ")}
 }
+
 async function handleFiles(fileList){
   const files=[...fileList].filter(f=>/\.html?$/i.test(f.name));if(!files.length){toast("HTML-файлы не найдены");return}
   document.getElementById("maeModal").classList.remove("open");
