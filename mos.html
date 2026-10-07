@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- BUILD: 2026-10-07-lr5-method-strict-bearing-branch -->
+<!-- BUILD: 2026-10-07-lr5-all-variants-one-page -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -428,7 +428,7 @@ th{background:rgba(232,232,232,.75)}
     <a class="back-hub" href="./index.html">← Все расчёты</a>
     <div>
       <div class="brand">МОС — офлайн калькулятор</div>
-      <div class="sub">ЛР2, ЛР3, ЛР4. Работает без Excel и без интернета. Подходит для телефона.</div>
+      <div class="sub">ЛР2, ЛР3, ЛР4, ЛР5. Работает без Excel и без интернета. Подходит для телефона.</div>
     </div>
     <button class="btn secondary" onclick="sharePDF()">Печать / отправить</button>
   </div>
@@ -483,13 +483,8 @@ th{background:rgba(232,232,232,.75)}
   <section id="lr5" class="lab">
     <div class="hero">
       <h1>ЛР5 — Обработка прямых равноточных измерений</h1>
-      <p>Выберите вид навигационного параметра и введите 9-значный номер. Каждая цифра задаёт строку соответствующего измерения.</p>
+      <p>Введите 9-значный номер. Один код рассчитывает сразу все три варианта: D, П и h.</p>
       <div class="inputbar">
-        <select id="lr5variant" class="task" aria-label="Вариант ЛР5">
-          <option value="1">Вариант 1 — Дистанция D, мили</option>
-          <option value="2">Вариант 2 — Пеленг П, градусы</option>
-          <option value="3">Вариант 3 — Приведённая высота h</option>
-        </select>
         <input id="lr5code" class="task" inputmode="numeric" pattern="[0-9]*" maxlength="9" autocomplete="off" placeholder="например 693693693">
         <div id="lr5status" class="status">Введите 9-значный номер</div>
         <button class="btn" onclick="renderLR5()">Рассчитать</button>
@@ -498,7 +493,7 @@ th{background:rgba(232,232,232,.75)}
     <div id="lr5out"></div>
   </section>
 
-  <div class="footer">Версия 10: добавлена ЛР5 — обработка прямых равноточных измерений; ЛР2–ЛР4 сохранены.</div>
+  <div class="footer">ЛР5: В1–В3 на одной странице; компактный ИТОГ.</div>
 </main>
 
 <script>
@@ -618,29 +613,45 @@ function lr5DetailedHtml(o){
   h+=line('mₓ̄ = '+fix(o.mx,8)+' / √'+o.n+' = '+fix(o.mx,8)+' / '+fix(Math.sqrt(o.n),8)+' = '+fix(o.mX,8)+' '+m.unit);
   h+='<div class="answer">mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'</div>';
 
-  h+='<div class="section-title">6. Итог</div>';
-  h+=line('Среднее арифметическое: X̄ = '+lr5ResultX(o));
-  h+=line('СКП единичного измерения: mₓ = '+fix(o.mx,8)+' '+m.unit);
-  h+=line('СКП среднего арифметического: mₓ̄ = '+fix(o.mX,8)+' '+m.unit);
-  h+=line('Доверительная вероятность, соответствующая СКП: P = 68,3 %');
-  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'; mₓ = '+fix(o.mx,8)+' '+m.unit+'; mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'</div>';
+  h+='<div class="section-title">6. ИТОГ</div>';
+  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'<br>mₓ = '+fix(o.mx,8)+' '+m.unit+'<br>mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'<br>Σv² = '+fix(o.sumV2,8)+'<br>P = 68,3%</div>';
   return h;
 }
 function renderLR5(){
+  const code=$('#lr5code').value;
   try{
-    const o=lr5Prepare($('#lr5code').value,$('#lr5variant').value);
-    setStatus('#lr5status','Вариант '+o.variant+' • '+o.meta.short+' • '+o.n+' измерений');
-    let inp='<table><tr><th>№</th><th>Строка</th><th>Исходное значение</th></tr>';
-    o.items.forEach(function(r){inp+='<tr><td>'+r.i+'</td><td>'+r.row+'</td><td>'+lr5OriginalX(o,r)+'</td></tr>'});
-    inp+='</table>';
-    const summary='<div class="grid3"><div class="kpi">X̄<b>'+lr5ResultX(o)+'</b></div><div class="kpi">mₓ<b>'+fix(o.mx,8)+' '+o.meta.unit+'</b></div><div class="kpi">mₓ̄<b>'+fix(o.mX,8)+' '+o.meta.unit+'</b></div></div>';
-    $('#lr5out').innerHTML=card('Исходные данные',inp)+card('Подробное решение',lr5DetailedHtml(o))+card('Итоговые значения',summary);
+    const clean=cleanCode(code);
+    if(!/^\d{9}$/.test(clean)) throw new Error('Нужны ровно 9 цифр: каждая цифра — строка во всех трёх вариантах.');
+    const results=[];
+    const errors=[];
+    [1,2,3].forEach(function(v){
+      try{ results.push(lr5Prepare(clean,v)); }
+      catch(e){ errors.push({variant:v,message:e.message}); }
+    });
+    if(!results.length) throw new Error(errors[0] ? errors[0].message : 'Не удалось выполнить расчёт.');
+
+    setStatus('#lr5status','Код '+clean+' • В1–В3');
+    let summary='<div class="grid3">';
+    results.forEach(function(o){
+      summary+='<div class="kpi"><b>В'+o.variant+' · '+o.meta.short+'</b><div>X̄ = '+lr5ResultX(o)+'</div><div>mₓ = '+fix(o.mx,8)+' '+o.meta.unit+'</div><div>mₓ̄ = '+fix(o.mX,8)+' '+o.meta.unit+'</div></div>';
+    });
+    summary+='</div>';
+
+    let details=card('Итоги В1–В3',summary);
+    results.forEach(function(o){
+      details+=card('В'+o.variant+' — '+o.meta.title,lr5DetailedHtml(o));
+    });
+    errors.forEach(function(e){
+      details+=card('В'+e.variant+' — ошибка','<div class="note">'+e.message+'</div>');
+    });
+    $('#lr5out').innerHTML=details;
     normalizeGreekSymbols($('#lr5out'));
   }catch(e){
     setStatus('#lr5status',e.message,true);
     $('#lr5out').innerHTML='';
   }
 }
+
 const rad = d => d * Math.PI / 180;
 const deg = r => r * 180 / Math.PI;
 const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
@@ -2141,17 +2152,6 @@ $("#lr5code").value = "693693693"; renderLR5();
     });
   });
 
-  const lr5variant = document.getElementById("lr5variant");
-  if(lr5variant){
-    try{
-      const savedVariant=localStorage.getItem("mos_lr5variant");
-      if(savedVariant && /^[123]$/.test(savedVariant)) lr5variant.value=savedVariant;
-    }catch(e){}
-    lr5variant.addEventListener("change",()=>{
-      try{localStorage.setItem("mos_lr5variant",lr5variant.value)}catch(e){}
-      renderLR5();
-    });
-  }
 
   const tabs = Array.from(document.querySelectorAll(".tab"));
   tabs.forEach(btn=>{
