@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- BUILD: 2026-10-07-lr2-lr4-mobile-header-spacing -->
+<!-- BUILD: 2026-10-07-lr5-method-strict-bearing-branch -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -66,6 +66,7 @@ main{max-width:1180px;margin:auto;padding:18px 16px 40px}
 .hero h1{margin:0 0 8px;font-size:22px}
 .hero p{margin:0;color:var(--muted)}
 .inputbar{display:grid;grid-template-columns:minmax(200px,300px) 1fr auto;gap:10px;margin-top:15px;align-items:center}
+select.task{appearance:auto;-webkit-appearance:auto;background:#f5f5f5;color:#222;cursor:pointer}
 .task{
   width:100%;padding:13px 14px;border:2px solid #999999;background:var(--yellow);
   border-radius:12px;font-weight:800;font-size:17px;min-height:48px
@@ -435,6 +436,7 @@ th{background:rgba(232,232,232,.75)}
     <button class="tab active" data-lab="lr2">ЛР2</button>
     <button class="tab" data-lab="lr3">ЛР3</button>
     <button class="tab" data-lab="lr4">ЛР4</button>
+    <button class="tab" data-lab="lr5">ЛР5</button>
   </div>
 </div>
 
@@ -478,13 +480,167 @@ th{background:rgba(232,232,232,.75)}
     <div id="lr4out"></div>
   </section>
 
-  <div class="footer">Версия 9: схема 9 строится по истинным курсам и фактическим координатам; сетка — 10° на клетку для правого рисунка.</div>
+  <section id="lr5" class="lab">
+    <div class="hero">
+      <h1>ЛР5 — Обработка прямых равноточных измерений</h1>
+      <p>Выберите вид навигационного параметра и введите 9-значный номер. Каждая цифра задаёт строку соответствующего измерения.</p>
+      <div class="inputbar">
+        <select id="lr5variant" class="task" aria-label="Вариант ЛР5">
+          <option value="1">Вариант 1 — Дистанция D, мили</option>
+          <option value="2">Вариант 2 — Пеленг П, градусы</option>
+          <option value="3">Вариант 3 — Приведённая высота h</option>
+        </select>
+        <input id="lr5code" class="task" inputmode="numeric" pattern="[0-9]*" maxlength="9" autocomplete="off" placeholder="например 693693693">
+        <div id="lr5status" class="status">Введите 9-значный номер</div>
+        <button class="btn" onclick="renderLR5()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr5out"></div>
+  </section>
+
+  <div class="footer">Версия 10: добавлена ЛР5 — обработка прямых равноточных измерений; ЛР2–ЛР4 сохранены.</div>
 </main>
 
 <script>
 const DB = {"lr2":{"1":{"1":{"x":[48,16.3],"y":[17,0.7],"p1":[32,7.3,"S"],"p2":[42,33,"N"]},"2":{"x":[-28,18],"y":[69,19.9],"p1":[47,33.9,"N"],"p2":[36,25.3,"S"]},"3":{"x":[102,32.5],"y":[-44,48.7],"p1":[31,15.2,"S"],"p2":[13,13.9,"S"]},"4":{"x":[66,8.3],"y":[-14,43.1],"p1":[1,45.1,"N"],"p2":[66,0.3,"N"]},"5":{"x":[-55,0.6],"y":[126,24.3],"p1":[6,25.2,"N"],"p2":[55,14.6,"N"]},"6":{"x":[38,14.4],"y":[33,33.5],"p1":[62,0.2,"N"],"p2":[26,28.5,"S"]},"7":{"x":[76,12.3],"y":[-28,28.4],"p1":[28,23.3,"S"],"p2":[48,33.1,"S"]},"8":{"x":[136,34.3],"y":[43,50.2],"p1":[54,44.1,"S"],"p2":[13,11.4,"N"]},"9":{"x":[-43,14.4],"y":[-67,48],"p1":[15,17.2,"N"],"p2":[3,39.2,"S"]}},"2":{"1":{"x":[-67,3.2],"y":[83,52.3],"p1":[27,2.8,"N"],"p2":[15,11.4,"N"]},"2":{"x":[-25,25.3],"y":[-3,12.8],"p1":[42,33.7,"S"],"p2":[34,41,"N"]},"3":{"x":[142,44],"y":[74,0.3],"p1":[11,32.5,"S"],"p2":[43,4.2,"S"]},"4":{"x":[46,12.2],"y":[39,14.8],"p1":[54,11.3,"N"],"p2":[51,22.4,"S"]},"5":{"x":[-78,4.3],"y":[-52,42.9],"p1":[27,0.2,"N"],"p2":[44,51.9,"N"]},"6":{"x":[-33,55.3],"y":[-40,17.7],"p1":[53,51.1,"S"],"p2":[24,55.2,"N"]},"7":{"x":[152,30.3],"y":[132,34.7],"p1":[43,16.6,"N"],"p2":[27,47.2,"S"]},"8":{"x":[63,37.9],"y":[55,16.3],"p1":[23,30.2,"S"],"p2":[6,11.5,"S"]},"9":{"x":[-45,22.1],"y":[38,5.3],"p1":[6,11.3,"N"],"p2":[52,6.2,"N"]}},"3":{"1":{"x":[182,22.6],"y":[-23,34.5],"p1":[45,55.8,"N"],"p2":[24,30.8,"S"]},"2":{"x":[56,18],"y":[146,2.4],"p1":[23,29.3,"S"],"p2":[35,5.3,"S"]},"3":{"x":[-94,5.4],"y":[-33,50.2],"p1":[8,13.9,"S"],"p2":[26,44.4,"N"]},"4":{"x":[-152,36.9],"y":[-125,11.7],"p1":[64,2.2,"N"],"p2":[52,1.9,"N"]},"5":{"x":[72,19.3],"y":[62,31.1],"p1":[66,15.2,"N"],"p2":[61,0.8,"N"]},"6":{"x":[29,47.2],"y":[22,5.8],"p1":[52,59.6,"S"],"p2":[56,52.1,"S"]},"7":{"x":[30,1.6],"y":[7,35.8],"p1":[38,0.2,"N"],"p2":[48,26.1,"S"]},"8":{"x":[-66,0.4],"y":[-74,12.5],"p1":[4,22.3,"N"],"p2":[16,52.8,"N"]},"9":{"x":[142,24.9],"y":[131,45.2],"p1":[39,40.1,"N"],"p2":[9,18.9,"N"]}}},"lr3":{"1":{"a":[64,16.2],"b":[115,43.5],"c":[87,44.1],"A":[60,4.4],"B":[109,30.3],"C":[74,0.4]},"2":{"a":[77,13.4],"b":[148,28.6],"c":[113,21.3],"A":[92,2.7],"B":[98,17.7],"C":[102,16.7]},"3":{"a":[68,48.6],"b":[120,43.6],"c":[107,41.2],"A":[72,10.3],"B":[117,44.2],"C":[90,0]},"4":{"a":[66,0.6],"b":[118,14.8],"c":[90,0],"A":[61,21.6],"B":[123,2.8],"C":[76,1.2]},"5":{"a":[69,38.3],"b":[116,37.3],"c":[103,14.3],"A":[72,18.2],"B":[114,43.8],"C":[95,39.7]},"6":{"a":[60,19.8],"b":[123,43.6],"c":[94,3.8],"A":[84,33.2],"B":[122,41.7],"C":[87,16.6]},"7":{"a":[73,20],"b":[121,56.6],"c":[100,19.3],"A":[68,18.1],"B":[118,17.3],"C":[80,59.4]},"8":{"a":[63,33.4],"b":[119,0.8],"c":[96,0.8],"A":[82,55],"B":[132,9.9],"C":[86,15.3]},"9":{"a":[114,34.4],"b":[96,22.2],"c":[109,43.8],"A":[92,20.3],"B":[89,7.7],"C":[113,45.1]}},"lr4":{"1":{"1":{"pA":[21,18.4,"N"],"lA":[140,39.6,"E"],"pB":[37,20.4,"N"],"lB":[131,53.4,"W"]},"2":{"pA":[32,0.6,"N"],"lA":[133,44.6,"E"],"pB":[58,8.2,"N"],"lB":[121,11.3,"W"]},"3":{"pA":[15,55.3,"N"],"lA":[125,14.6,"E"],"pB":[47,59.2,"N"],"lB":[130,33.4,"W"]},"4":{"pA":[52,22.6,"N"],"lA":[119,22.2,"E"],"pB":[34,40.1,"N"],"lB":[128,22.9,"W"]},"5":{"pA":[28,20.4,"N"],"lA":[130,29.9,"E"],"pB":[41,11.2,"N"],"lB":[134,24.4,"W"]},"6":{"pA":[33,13.6,"N"],"lA":[128,8.8,"E"],"pB":[52,55.3,"N"],"lB":[118,18.3,"W"]},"7":{"pA":[44,28.7,"N"],"lA":[117,15.1,"E"],"pB":[24,12.8,"N"],"lB":[117,35.2,"W"]},"8":{"pA":[41,8.5,"N"],"lA":[131,20.2,"E"],"pB":[39,38.3,"N"],"lB":[132,42.1,"W"]},"9":{"pA":[36,33.5,"N"],"lA":[142,19.1,"E"],"pB":[30,54.6,"N"],"lB":[128,13.4,"W"]}},"2":{"1":{"pA":[41,14.1,"N"],"lA":[3,3.4,"E"],"pB":[43,38.4,"N"],"lB":[65,15.5,"W"]},"2":{"pA":[33,48.8,"N"],"lA":[2,2.2,"W"],"pB":[23,13.6,"N"],"lB":[71,17.3,"W"]},"3":{"pA":[50,3.2,"N"],"lA":[3,40.2,"E"],"pB":[39,19.9,"N"],"lB":[75,14.4,"W"]},"4":{"pA":[48,18.6,"N"],"lA":[11,43.9,"W"],"pB":[28,55.3,"N"],"lB":[69,50.2,"W"]},"5":{"pA":[39,29.9,"N"],"lA":[1,12.2,"E"],"pB":[36,16.1,"N"],"lB":[76,0.1,"W"]},"6":{"pA":[38,22.2,"N"],"lA":[7,3.4,"E"],"pB":[29,39.3,"N"],"lB":[74,44.2,"W"]},"7":{"pA":[29,54.4,"N"],"lA":[4,15.5,"W"],"pB":[17,2.3,"N"],"lB":[81,25.1,"W"]},"8":{"pA":[45,5.3,"N"],"lA":[12,33.6,"E"],"pB":[41,14.4,"N"],"lB":[67,36.3,"W"]},"9":{"pA":[35,22,"N"],"lA":[5,23.8,"E"],"pB":[25,33.5,"N"],"lB":[82,44.4,"W"]}},"3":{"1":{"pA":[39,56,"S"],"lA":[82,36.1,"W"],"pB":[28,6.8,"S"],"lB":[154,59.1,"E"]},"2":{"pA":[22,3.6,"S"],"lA":[71,18.2,"W"],"pB":[22,42.2,"S"],"lB":[152,8,"E"]},"3":{"pA":[38,20.1,"S"],"lA":[83,24.4,"W"],"pB":[36,26.8,"S"],"lB":[160,6.2,"E"]},"4":{"pA":[29,16.8,"S"],"lA":[69,23.8,"W"],"pB":[41,41.3,"S"],"lB":[153,43.3,"E"]},"5":{"pA":[43,16.1,"S"],"lA":[76,26.1,"W"],"pB":[38,55.1,"S"],"lB":[149,19.1,"E"]},"6":{"pA":[48,38.2,"S"],"lA":[60,24.8,"W"],"pB":[22,1.1,"S"],"lB":[155,40.8,"E"]},"7":{"pA":[19,55.1,"S"],"lA":[81,11.5,"W"],"pB":[33,32.2,"S"],"lB":[161,40.7,"E"]},"8":{"pA":[52,55.2,"S"],"lA":[63,13.8,"W"],"pB":[27,27.9,"S"],"lB":[146,26.6,"E"]},"9":{"pA":[33,16.2,"S"],"lA":[66,40.1,"W"],"pB":[30,42.2,"S"],"lB":[162,39.5,"E"]}},"4":{"1":{"pA":[3,28.1,"N"],"lA":[127,12.6,"E"],"pB":[33,28.9,"S"],"lB":[90,57.2,"W"]},"2":{"pA":[1,12.6,"N"],"lA":[119,19.4,"E"],"pB":[32,7.7,"S"],"lB":[74,17.4,"W"]},"3":{"pA":[6,3.5,"N"],"lA":[121,21,"E"],"pB":[41,16.6,"S"],"lB":[80,26.9,"W"]},"4":{"pA":[2,48.1,"N"],"lA":[122,2.6,"E"],"pB":[38,28.9,"S"],"lB":[77,37.4,"W"]},"5":{"pA":[5,5.5,"N"],"lA":[140,14.1,"E"],"pB":[27,17.7,"S"],"lB":[90,19.3,"W"]},"6":{"pA":[9,22.5,"N"],"lA":[128,32.1,"E"],"pB":[34,34.4,"S"],"lB":[92,37.2,"W"]},"7":{"pA":[11,11,"N"],"lA":[135,10.2,"E"],"pB":[30,2.4,"S"],"lB":[82,52,"W"]},"8":{"pA":[7,30.6,"N"],"lA":[131,31.3,"E"],"pB":[44,24.1,"S"],"lB":[79,9.6,"W"]},"9":{"pA":[8,8.8,"N"],"lA":[132,42.6,"E"],"pB":[40,20.9,"S"],"lB":[88,37.3,"W"]}}}};
 
 const $ = s => document.querySelector(s);
+
+/* ЛР5 — таблица 5 из методички. null означает прочерк. */
+const DB5 = {
+  1:[[54.21,53.39,52.22,51.99,53.52,52.58,54.48,54.06,53.33],[53.46,null,54.66,52.32,54.12,53.35,null,53.23,52.29],[52.18,54.66,52.89,null,55.12,54.41,53.39,55.05,54.14],[53.92,52.38,51.42,55.01,52.26,55.01,54.06,54.63,53.69],[55.03,53.26,53.08,54.68,54.04,53.83,52.88,52.92,54.11],[53.26,52.44,55.33,53.49,null,54.62,53.44,53.77,53.33],[null,55.36,53.13,52.44,55.47,52.29,55.06,54.28,54.42],[53.45,54.49,50.42,53.38,54.14,53.13,52.82,55.13,null],[54.35,55.03,51.68,54.01,53.38,54.14,53.06,53.36,55.03]],
+  2:[[357.5,359.4,0.6,359.3,null,1.1,358.3,1.6,358.3],[358.8,1.3,357.8,359.6,1.4,0.4,359.9,0.5,359.6],[null,358.8,null,357.4,1.2,358.2,357.6,358.2,null],[0.4,359.1,359,3.6,359.9,359.6,0.8,357.9,0.1],[359.2,0.3,358.8,359.7,358.2,null,1.1,359.4,359.2],[359.6,357.7,0.4,1.2,0.6,0.8,1.9,358.3,null],[1.2,359.9,null,3.4,357.2,358.3,358.2,357.7,357.6],[0.8,357.6,0.8,358.3,358.4,1.7,null,0.2,358.2],[358.6,358.4,1.4,357.9,0.2,0.1,359.4,359.6,1.1]],
+  3:[["39°02,2′","39°01,6′","38°57,7′","38°57,3′","38°56,8′","39°03,0′","38°56,3′","39°01,1′","39°00,8′"],[null,"38°57,3′","39°01,6′",null,"39°01,3′","39°01,4′","39°02,4′","39°02,7′","38°57,7′"],["38°58,6′","39°02,0′","39°00,8′","38°59,9′","39°02,2′","38°59,6′","39°03,6′","38°57,4′","38°58,6′"],["38°57,4′",null,"38°57,3′","39°02,2′","38°57,3′","38°58,1′","38°57,7′",null,"38°59,4′"],["39°00,4′","38°58,8′","38°57,6′","39°01,4′","38°58,8′","39°01,2′","39°02,2′","38°58,8′","39°01,3′"],["38°58,9′","38°59,2′","39°00,3′","39°01,0′","38°57,4′","39°02,4′","38°55,4′","39°00,7′","39°00,6′"],["39°01,3′","39°01,4′","38°57,2′","38°57,5′",null,"38°57,3′","38°56,8′","38°58,6′","39°02,1′"],["39°02,4′","39°00,7′","39°01,1′","38°57,5′","39°02,7′",null,"39°00,4′","38°59,4′","38°57,4′"],["38°57,6′","39°03,2′","38°56,6′","39°00,8′","39°01,1′","38°57,3′","39°02,6′","39°02,7′","38°59,3′"]]
+};
+const LR5_META = {
+  1:{title:'Дистанция до ориентира D',unit:'мили',short:'D'},
+  2:{title:'Пеленг на ориентир П',unit:'градусы',short:'П'},
+  3:{title:'Приведённая высота светила h',unit:'угловые минуты',short:'h'}
+};
+function lr5ParseHeight(s){
+  const m=String(s).replace(/,/g,'.').match(/(\d+)\D+(\d+(?:\.\d+)?)/);
+  if(!m) throw new Error('Не удалось разобрать значение h: '+s);
+  return Number(m[1])*60+Number(m[2]);
+}
+function lr5FormatHeight(minutes,decimals){
+  decimals=decimals==null?1:decimals;
+  let a=Math.abs(minutes),d=Math.floor(a/60);
+  let mm=Math.round((a-d*60)*Math.pow(10,decimals))/Math.pow(10,decimals);
+  if(mm>=60){d+=1;mm=0}
+  return (minutes<0?'−':'')+d+'°'+mm.toFixed(decimals).replace('.',',')+'′';
+}
+function lr5FormatBearing(v,decimals){
+  decimals=decimals==null?2:decimals;
+  let a=mod(v,360),d=Math.floor(a+1e-12);
+  let mm=Math.round((a-d)*60*Math.pow(10,decimals))/Math.pow(10,decimals);
+  if(mm>=60){d=(d+1)%360;mm=0}
+  return d+'°'+mm.toFixed(decimals).replace('.',',')+'′';
+}
+function lr5Prepare(code,variant){
+  const c=cleanCode(code);
+  if(!/^\d{9}$/.test(c)) throw new Error('Нужны ровно 9 цифр: каждая цифра — строка очередного измерения.');
+  variant=Number(variant);
+  if(!DB5[variant]) throw new Error('Выберите вариант 1–3.');
+  const rows=[...c].map(Number);
+  const raw=rows.map(function(row,col){return DB5[variant][row-1][col]});
+  const items=raw.map(function(value,i){return {i:i+1,row:rows[i],raw:value}}).filter(function(x){return x.raw!==null && x.raw!==undefined});
+  if(!items.length) throw new Error('По заданному номеру нет доступных измерений.');
+  let values=items.map(function(x){return variant===3?lr5ParseHeight(x.raw):Number(x.raw)});
+  let bearingAdjusted=false;
+  if(variant===2){
+    const rawMin=Math.min.apply(null,values), rawMax=Math.max.apply(null,values);
+    if(rawMax-rawMin>180){
+      values=values.map(function(v){return v<180?v+360:v;});
+      bearingAdjusted=true;
+    }
+  }
+  const n=values.length;
+  const sum=values.reduce(function(s,v){return s+v},0);
+  const X=sum/n;
+  const rowsCalc=items.map(function(item,j){
+    const v=values[j]-X;
+    return Object.assign({},item,{value:values[j],v:v,v2:v*v});
+  });
+  const sumV2=rowsCalc.reduce(function(s,x){return s+x.v2},0);
+  const mx=Math.sqrt(sumV2/(n-1));
+  const mX=mx/Math.sqrt(n);
+  const min=Math.min.apply(null,values),max=Math.max.apply(null,values);
+  const sumV=rowsCalc.reduce(function(s,x){return s+x.v},0);
+  return {code:c,variant:variant,meta:LR5_META[variant],items:items,rowsCalc:rowsCalc,n:n,sum:sum,X:X,sumV2:sumV2,mx:mx,mX:mX,min:min,max:max,sumV:sumV};
+}
+function lr5OriginalX(o,item){
+  if(o.variant===3) return item.raw;
+  if(o.variant===2) return fix(Number(item.raw),1)+'°';
+  return fix(Number(item.raw),2);
+}
+function lr5ResultX(o){
+  if(o.variant===1) return fix(o.X,8)+' мили';
+  if(o.variant===2) return fix(mod(o.X,360),8)+'° ≈ '+lr5FormatBearing(o.X,2);
+  return fix(o.X,8)+'′ = '+lr5FormatHeight(o.X,1);
+}
+function lr5DetailedHtml(o){
+  const m=o.meta;
+  const interval=o.variant===1
+    ? fix(o.min,8)+'…'+fix(o.max,8)+' мили'
+    : o.variant===2
+      ? fix(o.min,8)+'°…'+fix(o.max,8)+'°'
+      : fix(o.min,8)+'′…'+fix(o.max,8)+'′';
+  let h='';
+  h+='<div class="section-title">1. Рабочий интервал и количество измерений</div>';
+  h+=line('Рабочий интервал: '+interval);
+  h+=line('Количество учитываемых измерений: n = '+o.n);
+  if(o.variant===2) h+=line('0° и 360° считаются одним направлением; значения приведены к единой рабочей ветви перед усреднением.');
+  if(o.variant===3) h+=line('Исходные значения h переведены в угловые минуты перед обработкой.');
+  h+='<div class="answer">n = '+o.n+'; рабочий интервал: '+interval+'</div>';
+
+  h+='<div class="section-title">2. Вычисление среднего арифметического значения</div>';
+  h+=line('Σx = '+fix(o.sum,8)+' '+m.unit);
+  h+=line('X̄ = Σx / n = '+fix(o.sum,8)+' / '+o.n+' = '+fix(o.X,8)+' '+m.unit);
+  if(o.variant===2) h+=line('X̄ = '+fix(mod(o.X,360),8)+'° ≈ '+lr5FormatBearing(o.X,2));
+  if(o.variant===3) h+=line('X̄ = '+fix(o.X,8)+'′ = '+lr5FormatHeight(o.X,1));
+  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'</div>';
+
+  h+='<div class="section-title">3. Таблица обработки измерений</div>';
+  h+='<table><tr><th>№</th><th>x</th>'+(o.variant===2?'<th>Рабочее x</th>':'')+'<th>v = x − X̄</th><th>v²</th></tr>';
+  o.rowsCalc.forEach(function(r){
+    const work=o.variant===2?fix(r.value,8)+'°':(o.variant===3?fix(r.value,8)+'′':fix(r.value,8));
+    h+='<tr><td>'+r.i+'</td><td>'+lr5OriginalX(o,r)+'</td>'+(o.variant===2?'<td class="num">'+work+'</td>':'')+'<td class="num">'+fix(r.v,8)+'</td><td class="num">'+fix(r.v2,8)+'</td></tr>';
+  });
+  h+='<tr><th>Σ</th><th>'+fix(o.sum,8)+'</th>'+(o.variant===2?'<th></th>':'')+'<th>Σv = '+fix(o.sumV,8)+'</th><th>'+fix(o.sumV2,8)+'</th></tr></table>';
+
+  h+='<div class="section-title">4. Расчёт СКП единичного измерения по формуле Бесселя</div>';
+  h+=line('mₓ = √(Σv² / (n − 1))');
+  h+=line('mₓ = √('+fix(o.sumV2,8)+' / ('+o.n+' − 1)) = √('+fix(o.sumV2,8)+' / '+(o.n-1)+') = √'+fix(o.sumV2/(o.n-1),8)+' = '+fix(o.mx,8)+' '+m.unit);
+  h+='<div class="answer">mₓ = '+fix(o.mx,8)+' '+m.unit+'</div>';
+
+  h+='<div class="section-title">5. Расчёт СКП среднего арифметического</div>';
+  h+=line('mₓ̄ = mₓ / √n');
+  h+=line('mₓ̄ = '+fix(o.mx,8)+' / √'+o.n+' = '+fix(o.mx,8)+' / '+fix(Math.sqrt(o.n),8)+' = '+fix(o.mX,8)+' '+m.unit);
+  h+='<div class="answer">mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'</div>';
+
+  h+='<div class="section-title">6. Итог</div>';
+  h+=line('Среднее арифметическое: X̄ = '+lr5ResultX(o));
+  h+=line('СКП единичного измерения: mₓ = '+fix(o.mx,8)+' '+m.unit);
+  h+=line('СКП среднего арифметического: mₓ̄ = '+fix(o.mX,8)+' '+m.unit);
+  h+=line('Доверительная вероятность, соответствующая СКП: P = 68,3 %');
+  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'; mₓ = '+fix(o.mx,8)+' '+m.unit+'; mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'</div>';
+  return h;
+}
+function renderLR5(){
+  try{
+    const o=lr5Prepare($('#lr5code').value,$('#lr5variant').value);
+    setStatus('#lr5status','Вариант '+o.variant+' • '+o.meta.short+' • '+o.n+' измерений');
+    let inp='<table><tr><th>№</th><th>Строка</th><th>Исходное значение</th></tr>';
+    o.items.forEach(function(r){inp+='<tr><td>'+r.i+'</td><td>'+r.row+'</td><td>'+lr5OriginalX(o,r)+'</td></tr>'});
+    inp+='</table>';
+    const summary='<div class="grid3"><div class="kpi">X̄<b>'+lr5ResultX(o)+'</b></div><div class="kpi">mₓ<b>'+fix(o.mx,8)+' '+o.meta.unit+'</b></div><div class="kpi">mₓ̄<b>'+fix(o.mX,8)+' '+o.meta.unit+'</b></div></div>';
+    $('#lr5out').innerHTML=card('Исходные данные',inp)+card('Подробное решение',lr5DetailedHtml(o))+card('Итоговые значения',summary);
+    normalizeGreekSymbols($('#lr5out'));
+  }catch(e){
+    setStatus('#lr5status',e.message,true);
+    $('#lr5out').innerHTML='';
+  }
+}
 const rad = d => d * Math.PI / 180;
 const deg = r => r * 180 / Math.PI;
 const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
@@ -1953,6 +2109,7 @@ function renderLR4(){
 $("#lr2code").value = "235"; renderLR2();
 $("#lr3code").value = "5921"; renderLR3();
 $("#lr4code").value = "21 3415"; renderLR4();
+$("#lr5code").value = "693693693"; renderLR5();
 
 // --- Удобство для телефона: Enter = рассчитать, запоминание кодов и активной вкладки ---
 (function(){
@@ -1960,6 +2117,7 @@ $("#lr4code").value = "21 3415"; renderLR4();
     ["lr2code", renderLR2],
     ["lr3code", renderLR3],
     ["lr4code", renderLR4],
+    ["lr5code", renderLR5],
   ];
 
   labInputs.forEach(([id, fn])=>{
@@ -1982,6 +2140,18 @@ $("#lr4code").value = "21 3415"; renderLR4();
       }
     });
   });
+
+  const lr5variant = document.getElementById("lr5variant");
+  if(lr5variant){
+    try{
+      const savedVariant=localStorage.getItem("mos_lr5variant");
+      if(savedVariant && /^[123]$/.test(savedVariant)) lr5variant.value=savedVariant;
+    }catch(e){}
+    lr5variant.addEventListener("change",()=>{
+      try{localStorage.setItem("mos_lr5variant",lr5variant.value)}catch(e){}
+      renderLR5();
+    });
+  }
 
   const tabs = Array.from(document.querySelectorAll(".tab"));
   tabs.forEach(btn=>{
@@ -2051,7 +2221,7 @@ async function sharePDF(){
     // Даём браузеру два кадра на перерасчёт размеров перед rasterization.
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
 
-    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : 'ЛР4';
+    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : active.id==='lr4' ? 'ЛР4' : 'ЛР5';
     const codeEl=active.querySelector('.task');
     const code=codeEl ? cleanCode(codeEl.value) : '';
     const filename = `${labName}${code ? '_'+code : ''}.pdf`;

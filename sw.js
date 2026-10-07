@@ -1,4 +1,4 @@
-const CACHE='marine-calculators-2026-10-07-v11';
+const CACHE='marine-calculators-2026-10-07-v12';
 const APP_SHELL=["./", "./index.html", "./mos.html", "./astronomy.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./math-standard.woff2", "./mae-2025.rar"];
 
 self.addEventListener('install',event=>{
