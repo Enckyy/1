@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- BUILD: 2026-10-07-lr5-all-variants-one-page -->
+<!-- BUILD: 2026-10-18-lr7-line-of-position-elements -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -418,6 +418,25 @@ th{background:rgba(232,232,232,.75)}
 .pdf-export svg text {
   fill:#000 !important;
 }
+/* Компактное оформление ЛР5: только необходимые данные и расчёты. */
+.lr5-meta{margin:8px 0 12px;padding:8px 10px;border:1px solid #d9d9d9;border-radius:8px;font-size:14px;background:#fafafa}
+.lr5-calc{display:grid;gap:8px;margin-top:12px}
+.lr5-calc>div{padding:9px 10px;border-left:3px solid #111;background:#f7f7f7;line-height:1.45}
+#lr5out .card h2{margin-bottom:10px}
+#lr5out table{margin-bottom:0}
+
+
+/* ЛР7 — расчёт элементов линий положения */
+.lr7-note{margin:8px 0 12px;padding:8px 10px;border:1px solid #d9d9d9;border-radius:8px;background:#fafafa;font-size:14px}
+.lr7-table{font-size:14px}
+.lr7-table th,.lr7-table td{padding:7px 8px}
+.lr7-schemes{display:grid;grid-template-columns:1fr;gap:18px}
+.lr7-scheme{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;min-width:0;overflow:hidden}
+.lr7-scheme h3{margin:0 0 10px;font-size:18px}
+.lr7-scheme svg{display:block;width:100%;height:auto}
+.lr7-formula{font-size:14px}
+@media(max-width:900px){.lr7-scheme{padding:10px}.lr7-scheme h3{font-size:17px}.lr7-scheme svg{width:100%;height:auto}.lr7-table{font-size:13px}}
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -428,7 +447,7 @@ th{background:rgba(232,232,232,.75)}
     <a class="back-hub" href="./index.html">← Все расчёты</a>
     <div>
       <div class="brand">МОС — офлайн калькулятор</div>
-      <div class="sub">ЛР2, ЛР3, ЛР4, ЛР5. Работает без Excel и без интернета. Подходит для телефона.</div>
+      <div class="sub">ЛР2–ЛР5, ЛР7. Работает без Excel и без интернета. Подходит для телефона.</div>
     </div>
     <button class="btn secondary" onclick="sharePDF()">Печать / отправить</button>
   </div>
@@ -437,6 +456,7 @@ th{background:rgba(232,232,232,.75)}
     <button class="tab" data-lab="lr3">ЛР3</button>
     <button class="tab" data-lab="lr4">ЛР4</button>
     <button class="tab" data-lab="lr5">ЛР5</button>
+    <button class="tab" data-lab="lr7">ЛР7</button>
   </div>
 </div>
 
@@ -483,7 +503,7 @@ th{background:rgba(232,232,232,.75)}
   <section id="lr5" class="lab">
     <div class="hero">
       <h1>ЛР5 — Обработка прямых равноточных измерений</h1>
-      <p>Введите 9-значный номер. Один код рассчитывает сразу все три варианта: D, П и h.</p>
+      <p>Введите 9-значный номер задания.</p>
       <div class="inputbar">
         <input id="lr5code" class="task" inputmode="numeric" pattern="[0-9]*" maxlength="9" autocomplete="off" placeholder="например 693693693">
         <div id="lr5status" class="status">Введите 9-значный номер</div>
@@ -493,7 +513,20 @@ th{background:rgba(232,232,232,.75)}
     <div id="lr5out"></div>
   </section>
 
-  <div class="footer">ЛР5: В1–В3 на одной странице; компактный ИТОГ.</div>
+  <section id="lr7" class="lab">
+    <div class="hero">
+      <h1>ЛР7 — Расчёт элементов линий положения</h1>
+      <p>Введите 5-значный номер задачи: первая цифра — вариант, а все пять цифр задают строки пяти колонок исходных данных.</p>
+      <div class="inputbar">
+        <input id="lr7code" class="task" inputmode="numeric" pattern="[0-9]*" maxlength="5" autocomplete="off" placeholder="например 12345">
+        <div id="lr7status" class="status">Введите 5-значный номер</div>
+        <button class="btn" onclick="renderLR7()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr7out"></div>
+  </section>
+
+  <div class="footer">ЛР7: пять линий положения, расчёт СКП и схемы прокладки.</div>
 </main>
 
 <script>
@@ -575,46 +608,26 @@ function lr5ResultX(o){
 }
 function lr5DetailedHtml(o){
   const m=o.meta;
-  const interval=o.variant===1
-    ? fix(o.min,8)+'…'+fix(o.max,8)+' мили'
-    : o.variant===2
-      ? fix(o.min,8)+'°…'+fix(o.max,8)+'°'
-      : fix(o.min,8)+'′…'+fix(o.max,8)+'′';
   let h='';
-  h+='<div class="section-title">1. Рабочий интервал и количество измерений</div>';
-  h+=line('Рабочий интервал: '+interval);
-  h+=line('Количество учитываемых измерений: n = '+o.n);
-  if(o.variant===2) h+=line('0° и 360° считаются одним направлением; значения приведены к единой рабочей ветви перед усреднением.');
-  if(o.variant===3) h+=line('Исходные значения h переведены в угловые минуты перед обработкой.');
-  h+='<div class="answer">n = '+o.n+'; рабочий интервал: '+interval+'</div>';
 
-  h+='<div class="section-title">2. Вычисление среднего арифметического значения</div>';
-  h+=line('Σx = '+fix(o.sum,8)+' '+m.unit);
-  h+=line('X̄ = Σx / n = '+fix(o.sum,8)+' / '+o.n+' = '+fix(o.X,8)+' '+m.unit);
-  if(o.variant===2) h+=line('X̄ = '+fix(mod(o.X,360),8)+'° ≈ '+lr5FormatBearing(o.X,2));
-  if(o.variant===3) h+=line('X̄ = '+fix(o.X,8)+'′ = '+lr5FormatHeight(o.X,1));
-  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'</div>';
+  // Только необходимые для оформления работы данные: n, таблица и два расчёта СКП.
+  h+='<div class="lr5-meta"><b>n = '+o.n+'</b></div>';
 
-  h+='<div class="section-title">3. Таблица обработки измерений</div>';
   h+='<table><tr><th>№</th><th>x</th>'+(o.variant===2?'<th>Рабочее x</th>':'')+'<th>v = x − X̄</th><th>v²</th></tr>';
   o.rowsCalc.forEach(function(r){
     const work=o.variant===2?fix(r.value,8)+'°':(o.variant===3?fix(r.value,8)+'′':fix(r.value,8));
     h+='<tr><td>'+r.i+'</td><td>'+lr5OriginalX(o,r)+'</td>'+(o.variant===2?'<td class="num">'+work+'</td>':'')+'<td class="num">'+fix(r.v,8)+'</td><td class="num">'+fix(r.v2,8)+'</td></tr>';
   });
-  h+='<tr><th>Σ</th><th>'+fix(o.sum,8)+'</th>'+(o.variant===2?'<th></th>':'')+'<th>Σv = '+fix(o.sumV,8)+'</th><th>'+fix(o.sumV2,8)+'</th></tr></table>';
+  const sumXDisplay=o.variant===2?fix(o.X*o.n,8)+'°':(o.variant===3?fix(o.sum,8)+'′':fix(o.sum,8));
+  h+='<tr><th>Σ</th><th>Σx = '+sumXDisplay+'</th>'+(o.variant===2?'<th></th>':'')+'<th>Σv = '+fix(o.sumV,8)+'</th><th>Σv² = '+fix(o.sumV2,8)+'</th></tr></table>';
 
-  h+='<div class="section-title">4. Расчёт СКП единичного измерения по формуле Бесселя</div>';
-  h+=line('mₓ = √(Σv² / (n − 1))');
-  h+=line('mₓ = √('+fix(o.sumV2,8)+' / ('+o.n+' − 1)) = √('+fix(o.sumV2,8)+' / '+(o.n-1)+') = √'+fix(o.sumV2/(o.n-1),8)+' = '+fix(o.mx,8)+' '+m.unit);
-  h+='<div class="answer">mₓ = '+fix(o.mx,8)+' '+m.unit+'</div>';
+  h+='<div class="lr5-calc">';
+  h+='<div><b>Среднее арифметическое:</b><br>X̄ = Σx / n = '+fix(o.sum,8)+' / '+o.n+' = <b>'+lr5ResultX(o)+'</b></div>';
+  h+='<div><b>СКП единичного измерения:</b><br>mₓ = √(Σv² / (n − 1)) = √('+fix(o.sumV2,8)+' / '+(o.n-1)+') = <b>'+fix(o.mx,8)+' '+m.unit+'</b></div>';
+  h+='<div><b>СКП среднего:</b><br>mₓ̄ = mₓ / √n = '+fix(o.mx,8)+' / √'+o.n+' = <b>'+fix(o.mX,8)+' '+m.unit+'</b></div>';
+  h+='</div>';
 
-  h+='<div class="section-title">5. Расчёт СКП среднего арифметического</div>';
-  h+=line('mₓ̄ = mₓ / √n');
-  h+=line('mₓ̄ = '+fix(o.mx,8)+' / √'+o.n+' = '+fix(o.mx,8)+' / '+fix(Math.sqrt(o.n),8)+' = '+fix(o.mX,8)+' '+m.unit);
-  h+='<div class="answer">mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'</div>';
-
-  h+='<div class="section-title">6. ИТОГ</div>';
-  h+='<div class="answer">X̄ = '+lr5ResultX(o)+'<br>mₓ = '+fix(o.mx,8)+' '+m.unit+'<br>mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'<br>Σv² = '+fix(o.sumV2,8)+'<br>P = 68,3%</div>';
+  h+='<div class="answer">Итог: X̄ = '+lr5ResultX(o)+'; mₓ = '+fix(o.mx,8)+' '+m.unit+'; mₓ̄ = '+fix(o.mX,8)+' '+m.unit+'; P = 68,3%</div>';
   return h;
 }
 function renderLR5(){
@@ -631,13 +644,7 @@ function renderLR5(){
     if(!results.length) throw new Error(errors[0] ? errors[0].message : 'Не удалось выполнить расчёт.');
 
     setStatus('#lr5status','Код '+clean+' • В1–В3');
-    let summary='<div class="grid3">';
-    results.forEach(function(o){
-      summary+='<div class="kpi"><b>В'+o.variant+' · '+o.meta.short+'</b><div>X̄ = '+lr5ResultX(o)+'</div><div>mₓ = '+fix(o.mx,8)+' '+o.meta.unit+'</div><div>mₓ̄ = '+fix(o.mX,8)+' '+o.meta.unit+'</div></div>';
-    });
-    summary+='</div>';
-
-    let details=card('Итоги В1–В3',summary);
+    let details='';
     results.forEach(function(o){
       details+=card('В'+o.variant+' — '+o.meta.title,lr5DetailedHtml(o));
     });
@@ -749,13 +756,260 @@ function trigExact(v){
   return {s, c, ct:c/s};
 }
 
+
+/* ---------------- ЛР7: линии положения ----------------
+   Источник исходных данных: таблицы «СКП ЛИНИЙ ПОЛОЖЕНИЯ (2026)»,
+   варианты 1 и 2. Пять цифр номера задачи выбирают пять колонок:
+   П1, Дистанция, Высота-1, П2, Высота-2; первая цифра одновременно
+   задаёт вариант.
+*/
+const DB7 = {"1":{"p1":{"1":[41.6,12.8,-3.1,1.5],"2":[213.5,21.3,2.5,0.6],"3":[7.1,32.7,0.0,0.45],"4":[335.2,17.4,4.2,1.2],"5":[310.5,41.1,0.8,0.8],"6":[146.2,14.3,-1.6,1.3],"7":[298.4,39.2,-4.2,0.75],"8":[38.9,29.1,3.3,1.25],"9":[131.3,9.0,-2.6,0.9]},"dist":{"1":[18.8,322.8,2.8,0.0182],"2":[6.5,8.2,1.9,0.022],"3":[32.2,126.4,-3.2,0.0095],"4":[27.0,82.9,-2.7,0.013],"5":[21.4,12.4,-0.5,0.0176],"6":[45.1,356.2,1.6,0.0283],"7":[27.3,1.3,4.3,0.014],"8":[17.1,131.7,-1.6,0.0178],"9":[51.8,228.7,-0.8,0.0116]},"h1":{"1":["63,2 SE",-3.8,1.82],"2":["44,0 SW",4.0,0.9],"3":["27,2 NW",2.6,0.75],"4":["67,3 SE",-0.8,1.5],"5":["28,6  SE",-1.8,2.1],"6":["22,9  NE",3.4,0.8],"7":["8,6  NW",2.3,2.4],"8":["70,7 SW",-3.4,0.94],"9":["23,7  SE",-2.2,0.79]},"p2":{"1":[146.8,16.3,-4.6,1.26],"2":[301.2,31.5,3.3,0.92],"3":[263.5,9.8,5.4,1.34],"4":[13.4,25.9,-2.8,2.15],"5":[40.5,36.4,-1.3,1.63],"6":[331.4,22.1,4.8,0.85],"7":[70.5,17.6,3.8,2.25],"8":[19.3,40.3,-2.4,1.85],"9":[170.7,13.4,-3.6,0.75]},"h2":{"1":["30,8 SE",[41,6.8],[41,10.5],1.55],"2":["76,5 SW",[50,24.3],[50,27.6],2.24],"3":["20,0 NW",[22,50.6],[22,46.1],0.85],"4":["80,5 NE",[17,2.3],[16,58.8],2.45],"5":["14,8 SE",[40,6.5],[40,2.3],1.95],"6":["50,6 NW",[39,56.4],[40,1.2],2.55],"7":["63,3 SE",[27,17.3],[27,12.5],0.92],"8":["40,5 NW",[28,3.3],[27,57.6],2.15],"9":["10,5 SW",[32,58.4],[33,3.2],3.05]}},"2":{"p1":{"1":[268.0,34.2,2.9,1.3],"2":[2.1,9.2,-2.4,0.48],"3":[356.9,15.9,-1.7,1.25],"4":[228.3,42.3,-4.3,0.93],"5":[67.3,37.0,3.8,0.84],"6":[47.7,16.7,0.5,0.92],"7":[139.3,36.1,-3.3,1.4],"8":[258.2,44.1,-5.2,0.75],"9":[341.9,14.9,3.6,0.6]},"dist":{"1":[22.4,260.2,-3.4,0.0093],"2":[9.2,29.0,-1.2,0.0125],"3":[15.7,14.9,0.8,0.013],"4":[37.1,237.2,4.2,0.0282],"5":[14.9,298.1,-2.2,0.0156],"6":[41.3,193.2,-0.6,0.0142],"7":[33.9,352.4,0.0,0.0093],"8":[16.2,192.2,3.9,0.0117],"9":[12.4,45.3,-4.0,0.0181]},"h1":{"1":["83,4 NE",1.3,0.65],"2":["17,3 SE",-4.4,2.3],"3":["19,8 NW",-2.7,1.94],"4":["69,7 NW",0.6,0.78],"5":["35,8 SW",4.8,2.45],"6":["52,7 SE",-2.1,1.8],"7":["8,3 NE",-3.7,2.25],"8":["67,2 SE",3.1,2.55],"9":["59,8 NW",0.7,2.9]},"p2":{"1":[134.2,24.5,-3.3,1.25],"2":[26.4,14.6,0.0,2.36],"3":[310.5,33.8,4.2,1.84],"4":[180.3,40.2,5.1,0.92],"5":[228.8,19.2,-4.4,1.65],"6":[6.3,27.4,-2.8,3.25],"7":[282.6,41.3,3.3,2.65],"8":[70.3,25.8,-4.8,2.42],"9":[11.6,13.6,2.9,1.82]},"h2":{"1":["40,8 NW",[34,2.2],[33,58.3],0.85],"2":["63,4 SE",[40,46.4],[40,42.5],1.35],"3":["14,5 SW",[39,58.6],[40,4.4],2.3],"4":["79,3 SE",[17,26.3],[17,31.2],0.94],"5":["3,4 NW",[28,56.3],[29,1.9],1.85],"6":["73,7 NE",[18,2.2],[18,6.6],2.2],"7":["6,2 SW",[37,30.4],[37,25.8],1.54],"8":["87,3 NW",[20,22.2],[20,27.0],2.15],"9":["44,4 SE",[43,57.6],[44,2.3],3.14]}}};
+
+function lr7Azimuth(q){
+  const m = String(q).trim().match(/^([0-9]+(?:[.,][0-9]+)?)\s+(NE|SE|SW|NW)$/i);
+  if(!m) throw new Error("Не удалось определить азимут: "+q);
+  const a=Number(m[1].replace(",","."));
+  const quad=m[2].toUpperCase();
+  return mod(quad==="NE"?a:quad==="SE"?180-a:quad==="SW"?180+a:360-a,360);
+}
+function lr7HeightMinutes(v){
+  const d=Number(v[0]), m=Number(v[1]);
+  return d*60+m;
+}
+function lr7HeightText(v){
+  return `${v[0]}°${Number(v[1]).toFixed(1).replace(".",",")}′`;
+}
+function lr7Solve(code){
+  const c=cleanCode(code);
+  if(!/^[12][1-9]{4}$/.test(c)){
+    throw new Error("Нужны 5 цифр: первая — вариант 1 или 2, остальные — строки 1–9.");
+  }
+  const v=Number(c[0]);
+  const rows=[...c].map(Number);
+  const d=DB7[v];
+  const out=[];
+
+  // 1. Пеленг-1
+  {
+    const r=rows[0], [P,D,dn,mu]=d.p1[r];
+    const g=57.3/D;
+    const ml=mu/g;
+    const grad=mod(P-90,360);
+    out.push({key:"П1",title:"Пеленг — 1",row:r,dn,mu,g,grad,line:P,ml,
+      source:`П = ${fix(P,1)}°, D = ${fix(D,1)} миля, mп = ±${fix(mu,2)}°`,
+      calc:[
+        `g = 57,3 / D = 57,3 / ${fix(D,1)} = ${fix(g,3)}°/миля`,
+        `mлп = mп / g = ${fix(mu,2)} / ${fix(g,3)} = ${fix(ml,3)} мили`,
+        `Градиент = П − 90° = ${fix(P,1)}° − 90° = ${fix(grad,1)}°`
+      ]});
+  }
+
+  // 2. Дистанция
+  {
+    const r=rows[1], [D,P,dn,k]=d.dist[r];
+    const mu=D*k;
+    const g=1;
+    const ml=mu;
+    const grad=mod(P+180,360);
+    const lineAng=mod(P+90,360);
+    out.push({key:"D",title:"Дистанция",row:r,dn,mu,g,grad,line:lineAng,ml,
+      source:`D = ${fix(D,1)} мили, П = ${fix(P,1)}°, k = ${fix(k,4)}`,
+      calc:[
+        `mу = D × k = ${fix(D,1)} × ${fix(k,4)} = ${fix(mu,3)} мили`,
+        `g = 1`,
+        `mлп = mу / g = ${fix(mu,3)} мили`,
+        `Градиент = П + 180° = ${fix(P,1)}° + 180° = ${fix(grad,1)}°`
+      ]});
+  }
+
+  // 3. Высота светила-1
+  {
+    const r=rows[2], [A,dn,mh]=d.h1[r];
+    const az=lr7Azimuth(A);
+    const g=1;
+    const ml=mh;
+    const lineAng=mod(az+90,360);
+    out.push({key:"H1",title:"Высота светила — 1",row:r,dn,mu:mh,g,grad:az,line:lineAng,ml,
+      source:`Ас = ${A}, Δn = ${fix(dn,1)} мили, mh = ±${fix(mh,2)}′`,
+      calc:[
+        `Ас = ${A} → круговой азимут = ${fix(az,1)}°`,
+        `g = 1`,
+        `mлп = mh / g = ${fix(mh,2)} мили`,
+        `Направление ЛП = ${fix(az,1)}° + 90° = ${fix(lineAng,1)}°`
+      ]});
+  }
+
+  // 4. Пеленг-2
+  {
+    const r=rows[3], [P,D,dn,mu]=d.p2[r];
+    const g=57.3/D;
+    const ml=mu/g;
+    const grad=mod(P-90,360);
+    out.push({key:"П2",title:"Пеленг — 2",row:r,dn,mu,g,grad,line:P,ml,
+      source:`П = ${fix(P,1)}°, D = ${fix(D,1)} мили, mп = ±${fix(mu,2)}°`,
+      calc:[
+        `g = 57,3 / D = 57,3 / ${fix(D,1)} = ${fix(g,3)}°/миля`,
+        `mлп = mп / g = ${fix(mu,2)} / ${fix(g,3)} = ${fix(ml,3)} мили`,
+        `Градиент = П − 90° = ${fix(P,1)}° − 90° = ${fix(grad,1)}°`
+      ]});
+  }
+
+  // 5. Высота светила-2
+  {
+    const r=rows[4], [A,hi,hc,mh]=d.h2[r];
+    const az=lr7Azimuth(A);
+    const dn=lr7HeightMinutes(hi)-lr7HeightMinutes(hc);
+    const g=1;
+    const ml=mh;
+    const lineAng=mod(az+90,360);
+    out.push({key:"H2",title:"Высота светила — 2",row:r,dn,mu:mh,g,grad:az,line:lineAng,ml,
+      source:`Ас = ${A}, hи = ${lr7HeightText(hi)}, hс = ${lr7HeightText(hc)}, mh = ±${fix(mh,2)}′`,
+      calc:[
+        `Δn = hи − hс = ${lr7HeightText(hi)} − ${lr7HeightText(hc)} = ${fix(dn,1)}′ = ${fix(dn,1)} мили`,
+        `g = 1`,
+        `mлп = mh / g = ${fix(mh,2)} мили`,
+        `Направление ЛП = ${fix(az,1)}° + 90° = ${fix(lineAng,1)}°`
+      ]});
+  }
+  return {code:c,v,rows,items:out};
+}
+
+function lr7Scheme(item,index){
+  /*
+    Схема по образцу методички. Вся графика строится динамически в SVG.
+    Текстовые подписи вынесены в свободные зоны рисунка, чтобы они не
+    накладывались на шкалу, вектор градиента и полосу СКП.
+  */
+  const W=760,H=430,cx=420,cy=270;
+  const maxAbs=Math.max(3,Math.abs(item.dn));
+  const span=Math.max(5,Math.ceil(maxAbs+item.ml+1.5));
+  const scale=Math.min(34,(W-260)/(2*span),(H-155)/(2*span));
+  const eg={x:Math.sin(rad(item.grad)),y:-Math.cos(rad(item.grad))};
+  const el={x:Math.sin(rad(item.line)),y:-Math.cos(rad(item.line))};
+  const pt=(dist)=>({x:cx+dist*scale*eg.x,y:cy+dist*scale*eg.y});
+  const off=pt(item.dn);
+  const axisA=pt(-span), axisB=pt(span);
+  const lopLen=Math.min(165,Math.max(125,scale*2.7));
+  const lp1={x:off.x-lopLen*el.x,y:off.y-lopLen*el.y};
+  const lp2={x:off.x+lopLen*el.x,y:off.y+lopLen*el.y};
+  const band=Math.min(42,Math.max(10,item.ml*scale));
+  const b1a={x:lp1.x-band*eg.x,y:lp1.y-band*eg.y};
+  const b1b={x:lp2.x-band*eg.x,y:lp2.y-band*eg.y};
+  const b2a={x:lp1.x+band*eg.x,y:lp1.y+band*eg.y};
+  const b2b={x:lp2.x+band*eg.x,y:lp2.y+band*eg.y};
+  const arrowStart=pt(Math.max(-span+0.5,0));
+  const arrowEnd=pt(Math.min(span-0.5,Math.max(2.6,Math.abs(item.dn)+1.1)));
+  const tickStart=Math.ceil(-span), tickEnd=Math.floor(span);
+  const ticks=[];
+  for(let d=tickStart; d<=tickEnd; d++){
+    if(d===0) continue;
+    const q=pt(d);
+    const tl=10;
+    ticks.push(`<line x1="${(q.x-tl*el.x).toFixed(1)}" y1="${(q.y-tl*el.y).toFixed(1)}" x2="${(q.x+tl*el.x).toFixed(1)}" y2="${(q.y+tl*el.y).toFixed(1)}" stroke="#222" stroke-width="1.7"/>`);
+    const lx=q.x+17*el.x, ly=q.y+17*el.y+5;
+    ticks.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="17" text-anchor="middle">${d>0?`+${d}`:d}</text>`);
+  }
+
+  // Безопасные зоны подписей.
+  const dnBox={x:30,y:145};
+  const gradBox={x:W-250,y:145};
+  const mlBox={x:W-285,y:H-45};
+  const lopMid={x:(lp1.x+lp2.x)/2,y:(lp1.y+lp2.y)/2};
+  const lopLabel={x:Math.min(W-65,Math.max(28,lopMid.x+18*eg.x)),y:Math.min(H-105,Math.max(155,lopMid.y+18*eg.y))};
+  const dnSign=item.dn>=0?'+':'';
+  const dataText=[
+    `Δn = ${dnSign}${fix(item.dn,1)} мили`,
+    `g = ${fix(item.g,3)}${item.key.startsWith('П')?'°/миля':''}`,
+    `mлп = ±${fix(item.ml,3)} мили`
+  ];
+
+  return `<div class="lr7-scheme">
+    <h3>${index+1}. ${item.title}</h3>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${item.title}, схема линии положения">
+      <defs>
+        <marker id="lr7arr${index}" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+          <path d="M0,0 L12,6 L0,12 Z" fill="#222"/>
+        </marker>
+      </defs>
+
+      <!-- исходные расчётные значения -->
+      <text x="24" y="30" font-size="18" font-weight="700">${dataText[0]}</text>
+      <text x="24" y="57" font-size="18" font-weight="700">${dataText[1]}</text>
+      <text x="24" y="84" font-size="18" font-weight="700">${dataText[2]}</text>
+      <text x="24" y="120" font-size="17">N</text>
+      <text x="${W-35}" y="${H-70}" font-size="17">E</text>
+
+      <!-- ось градиента и шкала -->
+      <line x1="${axisA.x.toFixed(1)}" y1="${axisA.y.toFixed(1)}" x2="${axisB.x.toFixed(1)}" y2="${axisB.y.toFixed(1)}" stroke="#222" stroke-width="2.5"/>
+      ${ticks.join('')}
+
+      <!-- полоса СКП и осевая ЛП -->
+      <polygon points="${b1a.x.toFixed(1)},${b1a.y.toFixed(1)} ${b1b.x.toFixed(1)},${b1b.y.toFixed(1)} ${b2b.x.toFixed(1)},${b2b.y.toFixed(1)} ${b2a.x.toFixed(1)},${b2a.y.toFixed(1)}" fill="#222" opacity=".10"/>
+      <line x1="${b1a.x.toFixed(1)}" y1="${b1a.y.toFixed(1)}" x2="${b1b.x.toFixed(1)}" y2="${b1b.y.toFixed(1)}" stroke="#555" stroke-width="1.6" stroke-dasharray="7 6"/>
+      <line x1="${b2a.x.toFixed(1)}" y1="${b2a.y.toFixed(1)}" x2="${b2b.x.toFixed(1)}" y2="${b2b.y.toFixed(1)}" stroke="#555" stroke-width="1.6" stroke-dasharray="7 6"/>
+      <line x1="${lp1.x.toFixed(1)}" y1="${lp1.y.toFixed(1)}" x2="${lp2.x.toFixed(1)}" y2="${lp2.y.toFixed(1)}" stroke="#222" stroke-width="4"/>
+
+      <!-- вектор градиента -->
+      <line x1="${arrowStart.x.toFixed(1)}" y1="${arrowStart.y.toFixed(1)}" x2="${arrowEnd.x.toFixed(1)}" y2="${arrowEnd.y.toFixed(1)}" stroke="#222" stroke-width="3" marker-end="url(#lr7arr${index})"/>
+
+      <!-- СМ и точка ЛП -->
+      <line x1="${cx-11}" y1="${cy}" x2="${cx+11}" y2="${cy}" stroke="#222" stroke-width="4"/>
+      <line x1="${cx}" y1="${cy-11}" x2="${cx}" y2="${cy+11}" stroke="#222" stroke-width="4"/>
+      <circle cx="${off.x.toFixed(1)}" cy="${off.y.toFixed(1)}" r="7" fill="#222"/>
+      <text x="${cx+15}" y="${cy+30}" font-size="18" font-weight="700">СМ</text>
+
+      <!-- Δn: выноска из точки ЛП в свободную область -->
+      <line x1="${off.x.toFixed(1)}" y1="${off.y.toFixed(1)}" x2="${dnBox.x+125}" y2="${dnBox.y+4}" stroke="#555" stroke-width="1.4"/>
+      <text x="${dnBox.x}" y="${dnBox.y}" font-size="18" font-weight="700">Δn = ${dnSign}${fix(item.dn,1)} мили</text>
+
+      <!-- направление градиента и направление ЛП -->
+      <line x1="${arrowEnd.x.toFixed(1)}" y1="${arrowEnd.y.toFixed(1)}" x2="${gradBox.x}" y2="${gradBox.y+4}" stroke="#555" stroke-width="1.2"/>
+      <text x="${gradBox.x}" y="${gradBox.y}" font-size="18" font-weight="700">g = ${fix(item.grad,1)}°</text>
+      <text x="${W-245}" y="120" font-size="18" font-weight="700">ЛП = ${fix(item.line,1)}°</text>
+      <text x="${lopLabel.x.toFixed(1)}" y="${lopLabel.y.toFixed(1)}" font-size="18" font-weight="700">ЛП</text>
+
+      <!-- СКП -->
+      <line x1="${(off.x+band*0.3).toFixed(1)}" y1="${(off.y+band*0.3).toFixed(1)}" x2="${mlBox.x}" y2="${mlBox.y-8}" stroke="#555" stroke-width="1.2"/>
+      <text x="${mlBox.x}" y="${mlBox.y}" font-size="18" font-weight="700">mлп = ±${fix(item.ml,3)} мили</text>
+    </svg>
+    <div class="scheme-caption">СМ → Δn по градиенту; ЛП ⟂ градиенту; полоса ±mлп. Масштаб: 1 см — 1 миля.</div>
+  </div>`;
+}
+
+function renderLR7(){
+  try{
+    const o=lr7Solve($("#lr7code").value);
+    setStatus("#lr7status",`Вариант ${o.v} • строки ${o.rows.join(" / ")}`);
+    const sourceRows=o.items.map(x=>`<tr>
+      <td>${x.title}</td><td class="num">${x.row}</td><td>${x.source}</td><td class="num">${fix(x.dn,3)}</td><td class="num">${fix(x.grad,1)}°</td><td class="num">${fix(x.ml,3)} м</td>
+    </tr>`).join("");
+    const calc=o.items.map(x=>`<div class="pane">
+      <div class="pane-title">${x.title}</div>
+      ${x.calc.map(line).join("")}
+      <div class="answer">Δn = ${fix(x.dn,3)} мили • g = ${fix(x.g,3)} • mлп = ±${fix(x.ml,3)} мили</div>
+    </div>`).join("");
+    const schemes=o.items.map(lr7Scheme).join("");
+    const summary=o.items.map(x=>`<tr><td>${x.title}</td><td class="num">${fix(x.grad,1)}°</td><td class="num">${fix(x.line,1)}°</td><td class="num">${fix(x.dn,1)}</td><td class="num">±${fix(x.ml,3)}</td></tr>`).join("");
+    $("#lr7out").innerHTML =
+      card("Исходные данные",`<div class="lr7-note">Код <b>${o.code}</b>: вариант ${o.v}; строки пяти колонок — ${o.rows.join(", ")}.</div>
+      <div style="overflow-x:auto"><table class="lr7-table"><tr><th>Линия положения</th><th>Строка</th><th>Исходные данные</th><th>Δn, миля</th><th>Градиент</th><th>mлп, миля</th></tr>${sourceRows}</table></div>`) +
+      card("Расчёт",`<div class="grid2">${calc}</div>`) +
+      card("Сводный результат",`<div style="overflow-x:auto"><table class="lr7-table"><tr><th>ЛП</th><th>Градиент</th><th>Направление ЛП</th><th>Δn, миля</th><th>СКП, миля</th></tr>${summary}</table></div>`) +
+      card("Прокладка линий положения",`<div class="lr7-schemes">${schemes}</div>`);
+    normalizeGreekSymbols($("#lr7out"));
+  }catch(e){
+    setStatus("#lr7status",e.message,true);
+    $("#lr7out").innerHTML="";
+  }
+}
+
 document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
   document.querySelectorAll(".lab").forEach(x => x.classList.remove("active"));
   b.classList.add("active");
   $("#" + b.dataset.lab).classList.add("active");
 }));
-["lr2code","lr3code","lr4code"].forEach(id => $( "#" + id).addEventListener("keydown", e => {
+["lr2code","lr3code","lr4code","lr7code"].forEach(id => $( "#" + id).addEventListener("keydown", e => {
   if(e.key === "Enter") window["render" + id.slice(0,3).toUpperCase()]();
 }));
 
@@ -2121,6 +2375,7 @@ $("#lr2code").value = "235"; renderLR2();
 $("#lr3code").value = "5921"; renderLR3();
 $("#lr4code").value = "21 3415"; renderLR4();
 $("#lr5code").value = "693693693"; renderLR5();
+$("#lr7code").value = "12345"; renderLR7();
 
 // --- Удобство для телефона: Enter = рассчитать, запоминание кодов и активной вкладки ---
 (function(){
@@ -2129,6 +2384,7 @@ $("#lr5code").value = "693693693"; renderLR5();
     ["lr3code", renderLR3],
     ["lr4code", renderLR4],
     ["lr5code", renderLR5],
+    ["lr7code", renderLR7],
   ];
 
   labInputs.forEach(([id, fn])=>{
@@ -2221,7 +2477,7 @@ async function sharePDF(){
     // Даём браузеру два кадра на перерасчёт размеров перед rasterization.
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
 
-    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : active.id==='lr4' ? 'ЛР4' : 'ЛР5';
+    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : active.id==='lr4' ? 'ЛР4' : active.id==='lr5' ? 'ЛР5' : 'ЛР7';
     const codeEl=active.querySelector('.task');
     const code=codeEl ? cleanCode(codeEl.value) : '';
     const filename = `${labName}${code ? '_'+code : ''}.pdf`;
