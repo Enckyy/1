@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- BUILD: 2026-10-18-lr7-line-of-position-elements -->
+<!-- BUILD: 2026-10-20-lr6-weighted-measurements -->
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -437,6 +437,21 @@ th{background:rgba(232,232,232,.75)}
 .lr7-formula{font-size:14px}
 @media(max-width:900px){.lr7-scheme{padding:10px}.lr7-scheme h3{font-size:17px}.lr7-scheme svg{width:100%;height:auto}.lr7-table{font-size:13px}}
 
+
+/* ЛР6 — единая таблица неравноточных измерений для трёх вариантов. */
+.lr6-table-wrap{max-width:100%;overflow-x:auto}
+.lr6-table{width:100%;font-size:15px;border-collapse:collapse}
+.lr6-table th,.lr6-table td{padding:7px 9px;vertical-align:middle}
+.lr6-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lr6-meta{margin:0 0 10px;font-size:15px}
+.lr6-calc{margin-top:12px;display:grid;gap:7px}
+.lr6-calc>div{padding:7px 9px;border-left:2px solid #777;background:rgba(245,245,245,.7)}
+.lr6-answer{margin-top:12px;font-size:17px;font-weight:bold}
+@media(max-width:520px){.lr6-table{font-size:13px}.lr6-table th,.lr6-table td{padding:6px}.lr6-calc{font-size:14px}.lr6-answer{font-size:15px}}
+.pdf-export #lr6out .lr6-table-wrap{overflow:visible!important}
+.pdf-export #lr6out .lr6-table{font-size:13px!important}
+.pdf-export #lr6out .lr6-table th,.pdf-export #lr6out .lr6-table td{padding:5px 6px!important;overflow-wrap:normal!important}
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -447,7 +462,7 @@ th{background:rgba(232,232,232,.75)}
     <a class="back-hub" href="./index.html">← Все расчёты</a>
     <div>
       <div class="brand">МОС — офлайн калькулятор</div>
-      <div class="sub">ЛР2–ЛР5, ЛР7. Работает без Excel и без интернета. Подходит для телефона.</div>
+      <div class="sub">ЛР2–ЛР7. Работает без Excel и без интернета. Подходит для телефона.</div>
     </div>
     <button class="btn secondary" onclick="sharePDF()">Печать / отправить</button>
   </div>
@@ -456,6 +471,7 @@ th{background:rgba(232,232,232,.75)}
     <button class="tab" data-lab="lr3">ЛР3</button>
     <button class="tab" data-lab="lr4">ЛР4</button>
     <button class="tab" data-lab="lr5">ЛР5</button>
+    <button class="tab" data-lab="lr6">ЛР6</button>
     <button class="tab" data-lab="lr7">ЛР7</button>
   </div>
 </div>
@@ -513,6 +529,19 @@ th{background:rgba(232,232,232,.75)}
     <div id="lr5out"></div>
   </section>
 
+  <section id="lr6" class="lab">
+    <div class="hero">
+      <h1>ЛР6 — Обработка прямых неравноточных измерений</h1>
+      <p>Введите 6 цифр: каждая цифра задаёт строку своей колонки таблицы 6 (1–6).</p>
+      <div class="inputbar">
+        <input id="lr6code" class="task" inputmode="numeric" pattern="[1-6]*" maxlength="6" autocomplete="off" placeholder="например 146342">
+        <div id="lr6status" class="status">Введите 6-значный номер</div>
+        <button class="btn" onclick="renderLR6()">Рассчитать</button>
+      </div>
+    </div>
+    <div id="lr6out"></div>
+  </section>
+
   <section id="lr7" class="lab">
     <div class="hero">
       <h1>ЛР7 — Расчёт элементов линий положения</h1>
@@ -526,7 +555,7 @@ th{background:rgba(232,232,232,.75)}
     <div id="lr7out"></div>
   </section>
 
-  <div class="footer">ЛР7: пять линий положения, расчёт СКП и схемы прокладки.</div>
+  <div class="footer">МОС — лабораторные работы 2–7.</div>
 </main>
 
 <script>
@@ -756,6 +785,112 @@ function trigExact(v){
   return {s, c, ct:c/s};
 }
 
+
+
+/* ---------------- ЛР6: Таблица 6 методички, три варианта, шесть колонок.
+   Формат ячейки: [значение, СКП], null — измерение отсутствует.
+   Для высот значения х хранятся в угловых минутах (37°58,3′ = 2278,3′).
+*/
+const DB6 = {
+  1: [
+    [[52.4,1.2],[54.7,.7],[55.3,1.3],[51.1,.8],[52.9,1.2],[52.7,.8]],
+    [[55.8,.8],[53.7,1.3],null,[54.4,1.3],[51.7,.7],[53.0,1.4]],
+    [[54.5,.6],[55.0,.4],[52.2,.7],[51.7,1.5],[53.6,1.7],[52.9,1.8]],
+    [null,[52.8,.7],[54.6,1.5],[54.9,.9],[54.2,1.3],[55.1,.4]],
+    [[53.3,.9],[54.6,1.5],[53.9,.7],[52.7,1.4],null,[54.2,2.6]],
+    [[52.6,1.5],[51.8,2.1],[54.7,2.3],[55.3,2.0],[52.2,.9],[52.8,1.8]]
+  ],
+  2: [
+    [[357.2,1.2],[2.8,1.3],[356.3,1.6],[.5,1.5],null,[359.9,2.4]],
+    [[.4,.6],[358.8,.6],[357.5,2.2],[2.6,2.2],[356.9,1.4],[2.7,1.4]],
+    [[1.2,2.1],null,[3.1,.7],null,[2.5,.7],[1.4,.8]],
+    [[358.8,1.5],[357.4,.9],[.9,1.3],[357.9,.7],[2.0,1.4],null],
+    [[359.4,.7],[359.0,2.3],[358.7,1.1],[358.7,.9],[.3,1.6],[358.6,1.3]],
+    [[2.1,1.4],[1.8,2.1],[1.6,1.5],[1.3,1.3],[358.5,.5],[359.3,1.4]]
+  ],
+  3: [
+    [[2278.3,1.8],[2282.0,2.4],[2282.4,3.3],[2281.3,3.2],[2282.5,2.9],[2276.2,1.1]],
+    [null,[2280.2,1.3],[2277.6,2.5],[2279.0,4.2],[2280.4,3.0],[2274.9,2.4]],
+    [[2281.6,1.2],[2278.7,.3],[2281.8,1.6],[2282.3,2.8],[2277.5,2.4],[2281.9,1.8]],
+    [[2277.5,2.0],[2279.9,1.6],null,[2280.9,.7],[2283.0,.3],[2283.6,1.4]],
+    [[2280.7,.9],[2281.5,3.1],[2280.7,1.1],[2277.5,3.5],null,[2275.5,.9]],
+    [[2279.4,1.5],[2278.3,1.7],[2281.5,2.2],[2280.7,1.7],[2278.8,.9],[2282.7,1.6]]
+  ]
+};
+const LR6_META = {
+  1:{label:'Дистанция до ориентира',letter:'D',unit:'мили',precision:1},
+  2:{label:'Пеленг Полярной звезды',letter:'П',unit:'°',precision:1},
+  3:{label:'Высота светила',letter:'h',unit:'′',precision:1}
+};
+function lr6Solve(code,variant){
+  const c=cleanCode(code);
+  if(!/^[1-6]{6}$/.test(c)) throw new Error('Нужны 6 цифр от 1 до 6.');
+  if(!DB6[variant]) throw new Error('Неизвестный вариант.');
+  const chosen=[...c].map((digit,i)=>{
+    const row=Number(digit);
+    const raw=DB6[variant][row-1][i];
+    return {i:i+1,row,raw};
+  });
+  const available=chosen.filter(item=>item.raw!==null);
+  if(available.length<2) throw new Error('Для расчёта нужны хотя бы два измерения.');
+  const C=Math.max(...available.map(item=>item.raw[1]));
+  // Для пеленгов переходим через 0°/360°, не усредняя противоположные числовые представления.
+  const wrap=variant===2 && available.some(item=>item.raw[0]<180) && available.some(item=>item.raw[0]>180);
+  const items=chosen.map(item=>{
+    if(item.raw===null) return {...item,missing:true};
+    const [x,m]=item.raw;
+    const work=wrap && x<180 ? x+360 : x;
+    const p=(C/m)**2;
+    return {...item,x,m,work,p,px:p*work};
+  });
+  const valid=items.filter(item=>!item.missing);
+  const sumP=valid.reduce((s,item)=>s+item.p,0);
+  const sumPx=valid.reduce((s,item)=>s+item.px,0);
+  const mean=sumPx/sumP;
+  const error=C/Math.sqrt(sumP);
+  return {code:c,variant,meta:LR6_META[variant],C,items,n:valid.length,sumP,sumPx,mean,error,wrap};
+}
+function lr6Fmt(v,d=5){return Number(v).toFixed(d).replace('.',',')}
+function lr6Source(o,r){
+  if(r.missing)return '—';
+  const x=o.variant===3 ? lr5FormatHeight(r.x,1) : lr6Fmt(r.x,1)+(o.variant===2?'°':'');
+  const unit=o.variant===3?'′':(o.variant===2?'°':' мили');
+  return x+' ± '+lr6Fmt(r.m,1)+unit;
+}
+function lr6Result(o){
+  const x=o.variant===2?mod(o.mean,360):o.mean;
+  if(o.variant===3)return lr6Fmt(o.mean,3)+'′ = '+lr5FormatHeight(o.mean,3);
+  return lr6Fmt(x,3)+(o.variant===2?'°':' мили');
+}
+function lr6Detail(o){
+  let rows=o.items.map(r=>{
+    if(r.missing) return '<tr><td>'+r.i+'</td><td>'+r.row+'</td><td>—</td><td class="num">—</td><td class="num">—</td></tr>';
+    const work=o.wrap && r.work!==r.x ? ' <span title="Для усреднения: '+lr6Fmt(r.work,1)+'°">('+lr6Fmt(r.work,1)+'°)</span>' : '';
+    return '<tr><td>'+r.i+'</td><td>'+r.row+'</td><td>'+lr6Source(o,r)+work+'</td><td class="num">'+lr6Fmt(r.p,5)+'</td><td class="num">'+lr6Fmt(r.px,5)+'</td></tr>';
+  }).join('');
+  const unit=o.meta.unit;
+  const meanUnit=o.variant===3?'′':(o.variant===2?'°':' мили');
+  const result=lr6Result(o);
+  return '<div class="lr6-meta">C = '+lr6Fmt(o.C,1)+' '+unit+'; n = '+o.n+'</div>'+
+    '<div class="lr6-table-wrap"><table class="lr6-table"><thead><tr><th>№</th><th>Строка</th><th>x ± m</th><th>p</th><th>px</th></tr></thead><tbody>'+rows+
+    '<tr><th colspan="3">Σ</th><th class="num">'+lr6Fmt(o.sumP,5)+'</th><th class="num">'+lr6Fmt(o.sumPx,5)+'</th></tr></tbody></table></div>'+
+    '<div class="lr6-calc"><div>p = (C / m)²</div>'+
+    '<div>X̄ₚ = Σpx / Σp = '+lr6Fmt(o.sumPx,5)+' / '+lr6Fmt(o.sumP,5)+' = <b>'+lr6Fmt(o.mean,5)+meanUnit+'</b></div>'+
+    '<div>mₓ̄ₚ = C / √Σp = '+lr6Fmt(o.C,5)+' / √'+lr6Fmt(o.sumP,5)+' = <b>'+lr6Fmt(o.error,5)+' '+unit+'</b></div></div>'+
+    '<div class="answer lr6-answer">'+o.meta.letter+' = '+result+' ± '+lr6Fmt(o.error,3)+' '+unit+' (P = 68,3%)</div>';
+}
+function renderLR6(){
+  try{
+    const code=cleanCode($('#lr6code').value);
+    const results=[1,2,3].map(variant=>lr6Solve(code,variant));
+    $('#lr6out').innerHTML=results.map(o=>card('Вариант '+o.variant+' — '+o.meta.label,lr6Detail(o))).join('');
+    setStatus('#lr6status','Задание '+code+' · варианты 1–3');
+    normalizeGreekSymbols($('#lr6out'));
+  }catch(e){
+    setStatus('#lr6status',e.message,true);
+    $('#lr6out').innerHTML='';
+  }
+}
 
 /* ---------------- ЛР7: линии положения ----------------
    Источник исходных данных: таблицы «СКП ЛИНИЙ ПОЛОЖЕНИЯ (2026)»,
@@ -2375,6 +2510,7 @@ $("#lr2code").value = "235"; renderLR2();
 $("#lr3code").value = "5921"; renderLR3();
 $("#lr4code").value = "21 3415"; renderLR4();
 $("#lr5code").value = "693693693"; renderLR5();
+$("#lr6code").value = "146342"; renderLR6();
 $("#lr7code").value = "12345"; renderLR7();
 
 // --- Удобство для телефона: Enter = рассчитать, запоминание кодов и активной вкладки ---
@@ -2384,6 +2520,7 @@ $("#lr7code").value = "12345"; renderLR7();
     ["lr3code", renderLR3],
     ["lr4code", renderLR4],
     ["lr5code", renderLR5],
+    ["lr6code", renderLR6],
     ["lr7code", renderLR7],
   ];
 
@@ -2393,7 +2530,10 @@ $("#lr7code").value = "12345"; renderLR7();
 
     try{
       const saved = localStorage.getItem("mos_"+id);
-      if(saved) el.value = saved;
+      if(saved){
+        el.value = saved;
+        if(id === "lr6code") fn();
+      }
     }catch(e){}
 
     el.addEventListener("input", ()=>{
@@ -2477,7 +2617,7 @@ async function sharePDF(){
     // Даём браузеру два кадра на перерасчёт размеров перед rasterization.
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
 
-    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : active.id==='lr4' ? 'ЛР4' : active.id==='lr5' ? 'ЛР5' : 'ЛР7';
+    const labName = active.id==='lr2' ? 'ЛР2' : active.id==='lr3' ? 'ЛР3' : active.id==='lr4' ? 'ЛР4' : active.id==='lr5' ? 'ЛР5' : active.id==='lr6' ? 'ЛР6' : 'ЛР7';
     const codeEl=active.querySelector('.task');
     const code=codeEl ? cleanCode(codeEl.value) : '';
     const filename = `${labName}${code ? '_'+code : ''}.pdf`;
