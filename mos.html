@@ -633,7 +633,7 @@ function lr5OriginalX(o,item){
 function lr5ResultX(o){
   if(o.variant===1) return fix(o.X,8)+' мили';
   if(o.variant===2) return fix(mod(o.X,360),8)+'° ≈ '+lr5FormatBearing(o.X,2);
-  return fix(o.X,8)+'′ = '+lr5FormatHeight(o.X,1);
+  return lr5FormatHeight(o.X,3).replace(/°(?=\d,)/,'°0');
 }
 function lr5DetailedHtml(o){
   const m=o.meta;
@@ -646,11 +646,18 @@ function lr5DetailedHtml(o){
   o.rowsCalc.forEach(function(r){
     h+='<tr><td>'+r.i+'</td><td>'+lr5OriginalX(o,r)+'</td><td class="num">'+fix(r.v,8)+'</td><td class="num">'+fix(r.v2,8)+'</td></tr>';
   });
-  const sumXDisplay=o.variant===2?fix(o.X*o.n,8)+'°':(o.variant===3?fix(o.sum,8)+'′':fix(o.sum,8));
+  // В таблице показаны исходные пеленги (0–360°), поэтому Σx должна
+  // суммировать именно значения столбца x, а не приведённые для расчёта.
+  const rawSum=o.variant===2?o.rowsCalc.reduce(function(a,r){return a+Number(r.raw)},0):o.sum;
+  const sumXDisplay=o.variant===2?fix(rawSum,8)+'°':(o.variant===3?lr5FormatHeight(o.sum,1).replace(/°(\d),/,'°0$1,'):fix(o.sum,8));
   h+='<tr><th>Σ</th><th>Σx = '+sumXDisplay+'</th><th>Σv = '+fix(o.sumV,8)+'</th><th>Σv² = '+fix(o.sumV2,8)+'</th></tr></table>';
 
+  const bearingShifted=o.variant===2&&Math.abs(rawSum-o.sum)>1e-7;
+  if(bearingShifted){
+    h+='<div class="lr5-meta">Для среднего: пеленги около 0° приведены через 360°.</div>';
+  }
   h+='<div class="lr5-calc">';
-  h+='<div><b>Среднее арифметическое:</b><br>X̄ = Σx / n = '+fix(o.sum,8)+' / '+o.n+' = <b>'+lr5ResultX(o)+'</b></div>';
+  h+='<div><b>Среднее арифметическое:</b><br>X̄ = '+(bearingShifted?'Σxпр':'Σx')+' / n = '+(o.variant===3?lr5FormatHeight(o.sum,1).replace(/°(\d),/,'°0$1,'):fix(o.sum,8))+' / '+o.n+' = <b>'+lr5ResultX(o)+'</b></div>';
   h+='<div><b>СКП единичного измерения:</b><br>mₓ = √(Σv² / (n − 1)) = √('+fix(o.sumV2,8)+' / '+(o.n-1)+') = <b>'+fix(o.mx,8)+' '+m.unit+'</b></div>';
   h+='<div><b>СКП среднего:</b><br>mₓ̄ = mₓ / √n = '+fix(o.mx,8)+' / √'+o.n+' = <b>'+fix(o.mX,8)+' '+m.unit+'</b></div>';
   h+='</div>';
